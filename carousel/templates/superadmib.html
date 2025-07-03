@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manage Carousel Images</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    h2 {
+      color: #D911BD;
+    }
+
+    .input-group input[type="file"] {
+      background-color: #fff;
+      border: 2px solid #D911BD;
+      border-right: none;
+    }
+
+    .btn-upload {
+      background: linear-gradient(to right, #D911BD, #00CFFF);
+      color: white;
+      border: none;
+    }
+
+    .btn-upload:hover {
+      background: linear-gradient(to right, #00CFFF, #D911BD);
+    }
+
+    .card {
+      border: 1px solid #444;
+      background-color: #1c1c1c;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 12px;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px #D911BD44;
+    }
+
+    .card-img-top {
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .btn-danger {
+      background-color: #ff4d6d;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #ff1a4f;
+    }
+
+    .card-body {
+      padding: 0.75rem 1rem;
+    }
+  </style>
+</head>
+<body class="py-5">
+
+<div class="container">
+  <h2 class="mb-4 text-center">Carousel Image Manager</h2>
+
+  <!-- Upload Form -->
+  <form method="POST" enctype="multipart/form-data" class="mb-5">
+    {% csrf_token %}
+    <div class="input-group">
+      {{ form.image }}
+      <button class="btn btn-upload" type="submit">Upload</button>
+    </div>
+  </form>
+
+  <!-- Gallery -->
+  <div class="row">
+    {% for img in images %}
+      <div class="col-md-4 col-lg-3 mb-4">
+        <div class="card h-100">
+          <img src="{{ img.image.url }}" class="card-img-top" alt="Image">
+          <div class="card-body text-center">
+            <a href="{% url 'delete_carousel_image' img.id %}" class="btn btn-danger btn-sm w-100">Delete</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+</body>
+</html>

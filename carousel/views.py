@@ -1,6 +1,29 @@
-from django.shortcuts import render
 from .models import CarouselImage
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import CarouselImageForm
+
 
 def carousel_view(request):
     images = CarouselImage.objects.order_by('-created_at')
     return render(request, 'carousel.html', {'images': images})
+
+def superadmib_view(request):
+    images = CarouselImage.objects.all().order_by('-created_at')
+
+    if request.method == 'POST':
+        form = CarouselImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('superadmib')
+    else:
+        form = CarouselImageForm()
+
+    return render(request, 'superadmib.html', {
+        'images': images,
+        'form': form
+    })
+
+def delete_carousel_image(request, image_id):
+    image = get_object_or_404(CarouselImage, id=image_id)
+    image.delete()
+    return redirect('superadmib')

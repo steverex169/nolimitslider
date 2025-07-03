@@ -12,10 +12,18 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: transparent;
+      background: black;
     }
 
     .carousel-container {
+      width: 1300;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel {
         max-width: 1212px;
         margin: 0 auto;
         position: relative;
@@ -46,6 +54,7 @@
       top: 50%;
       transform: translateY(-50%);
       background-color: transparent;
+      
       border: none;
     }
 
@@ -62,6 +71,8 @@
       fill: #bf0572;
     }
 
+    
+
     @media (max-width: 1200px) {
       .carousel-control-prev {
         left: 0;
@@ -73,11 +84,11 @@
     }
 
     .carousel-control-prev {
-      left: -60px;
+      left: 260px;
     }
 
     .carousel-control-next {
-      right: -60px;
+      right: 260px;
     }
   </style>
 </head>
@@ -93,7 +104,9 @@
       {% endfor %}
     </div>
 
-    <!-- Arrows -->
+   
+  </div>
+   <!-- Arrows -->
     <button class="carousel-control-prev" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="prev">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -106,7 +119,6 @@
       </svg>
       <span class="visually-hidden">Next</span>
     </button>
-  </div>
 </div>
 
 <!-- Bootstrap 5 JS -->

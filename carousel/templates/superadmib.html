@@ -16,16 +16,33 @@
       color: #D911BD;
     }
 
-    .input-group input[type="file"] {
-      background-color: #fff;
-      border: 2px solid #D911BD;
-      border-right: none;
+    .form-section {
+      background-color: transparent;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border: 1px solid #333;
+    }
+
+    .form-label {
+      color: #ccc;
+      font-weight: 500;
+    }
+
+    input[type="file"], input[type="date"] {
+      background-color: #2a2a2a;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 8px;
     }
 
     .btn-upload {
       background: linear-gradient(to right, #D911BD, #00CFFF);
       color: white;
       border: none;
+      padding: 2px 20px;
+      border-radius: 10px;
+      transition: 0.3s ease;
     }
 
     .btn-upload:hover {
@@ -60,6 +77,12 @@
       background-color: #ff1a4f;
     }
 
+    .badge {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 20px;
+    }
+
     .card-body {
       padding: 0.75rem 1rem;
     }
@@ -70,24 +93,56 @@
 <div class="container">
   <h2 class="mb-4 text-center">Carousel Image Manager</h2>
 
-  <!-- Upload Form -->
-  <form method="POST" enctype="multipart/form-data" class="mb-5">
-    {% csrf_token %}
-    <div class="input-group">
+<form method="POST" enctype="multipart/form-data" class="form-section">
+  {% csrf_token %}
+
+  <div class="row align-items-center justify-content-center text-start">
+    
+    <div class="col-12 col-md-4 mb-3">
+      <label class="form-label d-block text-start">Select Image</label>
       {{ form.image }}
+    </div>
+
+    <div class="col-6 col-md-2 mb-3">
+      <label class="form-label d-block text-start">Start Date</label>
+      {{ form.start_date }}
+    </div>
+
+    <div class="col-6 col-md-2 mb-3">
+      <label class="form-label d-block text-start">End Date</label>
+      {{ form.end_date }}
+    </div>
+
+    <div class="col-4 col-md-2 mt-3">
+      <label class="form-label invisible">Upload</label>
       <button class="btn btn-upload" type="submit">Upload</button>
     </div>
-  </form>
+    
+  </div>
+</form>
+
+
+
+
 
   <!-- Gallery -->
   <div class="row">
     {% for img in images %}
-      <div class="col-md-4 col-lg-3 mb-4">
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
         <div class="card h-100">
           <img src="{{ img.image.url }}" class="card-img-top" alt="Image">
           <div class="card-body text-center">
-            <a href="{% url 'delete_carousel_image' img.id %}" class="btn btn-danger btn-sm w-100">Delete</a>
-          </div>
+            <p class="mb-2">
+              <span class="badge {% if img.status == 'Active' %}bg-success{% elif img.status == 'Expired' %}bg-secondary{% else %}bg-warning text-dark{% endif %}">
+                {{ img.status }}
+              </span>
+            </p>
+            <a href="{% url 'delete_carousel_image' img.id %}"
+            class="btn btn-danger btn-sm w-100"
+            onclick="return confirm('Are you sure you want to delete this image?');">
+            Delete
+            </a>
+                    </div>
         </div>
       </div>
     {% endfor %}

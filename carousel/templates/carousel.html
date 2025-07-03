@@ -16,7 +16,7 @@
     }
 
     .carousel-container {
-        max-width: 1140px;
+        max-width: 1212px;
         margin: 0 auto;
         position: relative;
         border: 2px solid #337ab7;
@@ -28,14 +28,16 @@
 
     .carousel-inner {
       width: 100%;
-      height: 305.56px;
+      height: 274px;
     }
 
     .carousel-item img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: cover; /* Fill container while maintaining aspect ratio */
+      object-position: center; /* Center the image */
     }
+
 
     .carousel-control-prev,
     .carousel-control-next {

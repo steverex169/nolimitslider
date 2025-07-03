@@ -13,18 +13,18 @@ def carousel_view(request):
     return render(request, 'carousel.html', {'images': images})
 
 
-def superadmib_view(request):
+def superadmin_view(request):
     images = CarouselImage.objects.all().order_by('-created_at')
 
     if request.method == 'POST':
         form = CarouselImageForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('superadmib')
+            return redirect('superadmin')
     else:
         form = CarouselImageForm()
 
-    return render(request, 'superadmib.html', {
+    return render(request, 'superadmin.html', {
         'images': images,
         'form': form
     })
@@ -32,4 +32,4 @@ def superadmib_view(request):
 def delete_carousel_image(request, image_id):
     image = get_object_or_404(CarouselImage, id=image_id)
     image.delete()
-    return redirect('superadmib')
+    return redirect('superadmin')

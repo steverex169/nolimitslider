@@ -12,11 +12,11 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: black;
+      background: transparent;
     }
 
     .carousel-container {
-      width: 1300;
+      width: 1300px;
       height: 300px;
       margin: 0 auto;
       position: relative;
@@ -24,15 +24,14 @@
     }
 
     .carousel {
-        max-width: 1212px;
-        margin: 0 auto;
-        position: relative;
-        border: 2px solid #337ab7;
-        box-shadow: 0 4px 12px rgba(51, 122, 183, 0.4); /* optional shadow */
-        border-radius: 8px; /* optional rounded corners */
-        overflow: hidden;  /* clip content inside border */
+      max-width: 1212px;
+      margin: 0 auto;
+      position: relative;
+      border: 2px solid #337ab7;
+      box-shadow: 0 4px 12px rgba(51, 122, 183, 0.4);
+      border-radius: 8px;
+      overflow: hidden;
     }
-
 
     .carousel-inner {
       width: 100%;
@@ -42,10 +41,9 @@
     .carousel-item img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Fill container while maintaining aspect ratio */
-      object-position: center; /* Center the image */
+      object-fit: cover;
+      object-position: center;
     }
-
 
     .carousel-control-prev,
     .carousel-control-next {
@@ -54,8 +52,9 @@
       top: 50%;
       transform: translateY(-50%);
       background-color: transparent;
-      
       border: none;
+      position: absolute;
+      z-index: 10;
     }
 
     .carousel-control-prev svg,
@@ -71,8 +70,6 @@
       fill: #bf0572;
     }
 
-    
-
     @media (max-width: 1200px) {
       .carousel-control-prev {
         left: 0;
@@ -84,18 +81,18 @@
     }
 
     .carousel-control-prev {
-      left: 260px;
+      left: 10px;
     }
 
     .carousel-control-next {
-      right: 260px;
+      right: 10px;
     }
   </style>
 </head>
 <body>
 
 <div class="carousel-container">
-  <div id="freeSpinsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+  <div id="freeSpinsCarousel" class="carousel slide carousel" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
       {% for img in images %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
@@ -104,9 +101,7 @@
       {% endfor %}
     </div>
 
-   
-  </div>
-   <!-- Arrows -->
+    <!-- Arrows inside .carousel -->
     <button class="carousel-control-prev" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="prev">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
@@ -119,6 +114,7 @@
       </svg>
       <span class="visually-hidden">Next</span>
     </button>
+  </div>
 </div>
 
 <!-- Bootstrap 5 JS -->

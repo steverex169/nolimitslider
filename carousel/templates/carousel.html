@@ -1,124 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Carousel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: transparent;
-    }
+  .carousel-container {
+    width: 1140px;
+    height: 300px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+  }
 
-    .carousel-container {
-      width: 1300px;
-      height: 300px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-    }
+  .carousel {
+    background-color: #337ab7;
+    margin: 0 auto;
+    position: relative;
+    border: 1px solid #069cbe;
+    box-shadow: 0 4px 12px rgba(51, 122, 183, 0.4);
+    border-radius: 8px;
+    overflow: hidden;
+    width: 1140px;
+    height: 300px;
+  }
 
+  .carousel-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .carousel-item {
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 48px;
+    height: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    z-index: 10;
+  }
+
+  .carousel-control-prev svg,
+  .carousel-control-next svg {
+    width: 38px;
+    height: 38px;
+    fill: rgb(152, 167, 181);
+    transition: fill 0.3s ease;
+  }
+
+  .carousel-control-prev:hover svg,
+  .carousel-control-next:hover svg {
+    fill: #bf0572;
+  }
+
+  .carousel-control-prev {
+    left: 10px;
+  }
+
+  .carousel-control-next {
+    right: 10px;
+  }
+
+  /* ✅ RESPONSIVENESS BELOW */
+
+  @media (max-width: 1199.98px) {
+
+    .carousel-container,
     .carousel {
-      max-width: 1212px;
-      margin: 0 auto;
-      position: relative;
-      border: 2px solid #337ab7;
-      box-shadow: 0 4px 12px rgba(51, 122, 183, 0.4);
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .carousel-inner {
       width: 100%;
-      height: 274px;
+      max-width: 100%;
+      height: auto;
     }
 
     .carousel-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+      height: auto;
+      max-height: 300px;
     }
+  }
+
+  @media (max-width: 768px) {
 
     .carousel-control-prev,
     .carousel-control-next {
-      width: 48px;
-      height: 48px;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: transparent;
-      border: none;
-      position: absolute;
-      z-index: 10;
+      width: 36px;
+      height: 36px;
     }
 
     .carousel-control-prev svg,
     .carousel-control-next svg {
-      width: 38px;
-      height: 38px;
-      fill: rgb(152, 167, 181);
-      transition: fill 0.3s ease;
+      width: 28px;
+      height: 28px;
     }
+  }
+</style>
 
-    .carousel-control-prev:hover svg,
-    .carousel-control-next:hover svg {
-      fill: #bf0572;
-    }
-
-    @media (max-width: 1200px) {
-      .carousel-control-prev {
-        left: 0;
-      }
-
-      .carousel-control-next {
-        right: 0;
-      }
-    }
-
-    .carousel-control-prev {
-      left: 10px;
-    }
-
-    .carousel-control-next {
-      right: 10px;
-    }
-  </style>
 </head>
+
 <body>
 
-<div class="carousel-container">
-  <div id="freeSpinsCarousel" class="carousel slide carousel" data-bs-ride="carousel" data-bs-interval="3000">
+  <div class="carousel-container">
+    <div id="freeSpinsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
       {% for img in images %}
-        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-          <img src="{{ img.image.url }}" alt="Slide {{ forloop.counter }}">
-        </div>
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <a href="{% url 'carousel_image_detail' img.id %}" style="display:block; height:100%; width:100%;">
+          <img src="{{ img.image.url }}" alt="Slide {{ forloop.counter }}"
+            style="height:100%; width:100%; object-fit:cover; border-radius:8px;">
+        </a>
+      </div>
       {% endfor %}
     </div>
 
-    <!-- Arrows inside .carousel -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="prev">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-      </svg>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="next">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
-      </svg>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</div>
 
-<!-- Bootstrap 5 JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Arrows inside .carousel -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="prev">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+        </svg>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!*di*qq!nd0d+z5u^)s%2bfd8(7@jj0pkms8nv20se#%%qs6&9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['3.85.112.46', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['3.85.112.46', 'localhost', '127.0.0.1', 'banners.nolimitbet.ag' ]
 
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -132,3 +132,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# TRUST PROXY/NGINX FOR HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Redirect all HTTP to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# If using sessions/cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

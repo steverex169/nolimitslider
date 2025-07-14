@@ -21,7 +21,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('carousel/', include('carousel.urls')),  # 👈 mount carousel app
+    path('', include('carousel.urls')),
 ]
 
 if settings.DEBUG:

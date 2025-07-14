@@ -6,6 +6,7 @@ class CarouselImage(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    terms = models.TextField(blank=True, null=True)
 
     @property
     def status(self):

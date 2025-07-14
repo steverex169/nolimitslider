@@ -1,5 +1,25 @@
+# Ignore compiled files
+*.pyc
+*.py[cod]
+__pycache__/
+
+# Ignore virtual environment
+env/
+venv/
+
+# Ignore SQLite DB
 db.sqlite3
+<<<<<<< HEAD
 *.pyc
 __pycache__/
 
 venv/
+=======
+*.sqlite3
+
+# Ignore Django migration files, but keep __init__.py
+**/migrations/*.py
+!**/migrations/__init__.py
+**/migrations/*.pyc
+>>>>>>> 63c4af638f58b48d52841a5c181aadc28879c12c
+db.sqlite3

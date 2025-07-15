@@ -131,14 +131,14 @@
   <div class="carousel-container">
     <div id="freeSpinsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
-      {% for img in images %}
-      <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        <a href="{% url 'carousel_image_detail' img.id %}" style="display:block; height:100%; width:100%;">
-          <img src="{{ img.image.url }}" alt="Slide {{ forloop.counter }}"
-            style="height:100%; width:100%; object-fit:cover; border-radius:8px;">
-        </a>
-      </div>
-      {% endfor %}
+    {% for img in images %}
+    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+      <a href="{% url 'carousel_image_detail' img.id %}" target="_parent" style="display:block; height:100%; width:100%;">
+        <img src="{{ img.image.url }}" alt="Slide {{ forloop.counter }}"
+          style="height:100%; width:100%; object-fit:cover; border-radius:8px;">
+      </a>
+    </div>
+    {% endfor %}
     </div>
 
 

@@ -77,6 +77,19 @@ def delete_carousel_image(request, image_id):
     image.delete()
     return redirect('superadmin')
 
+def edit_carousel_image(request, image_id):
+    image = get_object_or_404(CarouselImage, pk=image_id)
+
+    if request.method == 'POST':
+        form = CarouselImageForm(request.POST, request.FILES, instance=image)
+        if form.is_valid():
+            form.save()
+            return redirect('superadmin')  # redirect to your list page
+    else:
+        form = CarouselImageForm(instance=image)
+
+    return render(request, 'carousel/edit_image.html', {'form': form, 'image': image})
+
 def logout_view(request):
     logout(request)
     return redirect('login')

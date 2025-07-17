@@ -119,3 +119,7 @@ from .models import CarouselImage
 def carousel_image_detail(request, image_id):
     image = get_object_or_404(CarouselImage, id=image_id)
     return render(request, 'preview_terms.html', {'image': image})
+def general_termscondition(request):
+    return render(request, 'generalT&C.html')
+def general_AboutUs(request):
+    return render(request, 'AboutUs.html')

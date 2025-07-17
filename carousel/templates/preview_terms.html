@@ -6,6 +6,8 @@
   <title>Image Details</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     body {
       background-color: white;
@@ -59,6 +61,104 @@
   <div class="terms-container">
     {{ image.terms|safe }}
   </div>
+  <custom-footer></custom-footer>
+
+<script>
+  class CustomFooter extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `
+        <style>
+          .custom-footer {
+            background-color: #11161f;
+            padding: 30px 0px;
+            text-align: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            font-size: 14px;
+            color: #ccc;
+            width: 100%;
+          }
+
+          .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+          }
+
+          .footer-links a {
+            color: #00e6e6;
+            margin: 0 12px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+          }
+
+          .footer-links a:hover {
+            color: #ff4d94;
+          }
+
+          .footer-copy {
+            font-size: 12px;
+            color: #888;
+            margin-top: 20px;
+          }
+
+          .social-icons {
+            margin-top: 10px;
+          }
+
+          .social-icons a {
+            display: inline-block;
+            margin: 0 8px;
+            color: #00e6e6;
+            font-size: 20px;
+            transition: color 0.3s ease;
+          }
+
+          .social-icons a:hover {
+            color: #ff4d94;
+          }
+
+          @media (max-width: 600px) {
+            .footer-links a {
+              display: block;
+              margin: 8px 0;
+            }
+            .social-icons a {
+              font-size: 18px;
+              margin: 6px;
+            }
+          }
+        </style>
+
+        <footer class="custom-footer">
+          <div class="footer-container">
+            <div class="footer-links">
+              <a href="/terms-conditions/">Terms & Conditions</a>
+              <a href="/about-us/">About Us</a>
+
+            </div>
+
+            <div class="social-icons">
+              <a href="https://www.facebook.com/share/1G93J4ixnD/" target="_blank" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="https://x.com/No_Limit_ag?t=ED_e-sQY5BX2dBP93HU1Lw&s=08" target="_blank" title="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="https://www.instagram.com/no.limit.ag?igsh=MXF2cW1yOW91b3dkMg==" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+            </div>
+
+            <div class="footer-copy">
+              &copy; 2025 NOLIMITBET. All rights reserved.
+            </div>
+          </div>
+        </footer>
+      `;
+    }
+  }
+  customElements.define('custom-footer', CustomFooter);
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

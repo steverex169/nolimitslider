@@ -69,44 +69,52 @@
         <style>
           .custom-footer {
             background-color: #11161f;
-            padding: 30px 0px;
-            text-align: center;
+            padding: 40px 0;
+            color: #ccc;
             font-family: 'Segoe UI', Arial, sans-serif;
             font-size: 14px;
-            color: #ccc;
             width: 100%;
           }
 
           .footer-container {
             max-width: 1100px;
-            margin: 0 auto;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: left;
+            padding: 0 20px;
           }
 
-          .footer-links a {
+          .footer-section h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-bottom: 2px solid #00e6e6;
+            display: inline-block;
+            padding-bottom: 5px;
+          }
+
+          .footer-section a {
             color: #00e6e6;
-            margin: 0 12px;
+            display: block;
+            margin-bottom: 10px;
             text-decoration: none;
-            font-weight: 500;
             transition: color 0.3s ease;
           }
 
-          .footer-links a:hover {
+          .footer-section a:hover {
             color: #ff4d94;
           }
 
-          .footer-copy {
-            font-size: 12px;
-            color: #888;
-            margin-top: 20px;
-          }
-
-          .social-icons {
-            margin-top: 10px;
+          .footer-section p {
+            margin: 5px 0;
+            line-height: 1.6;
           }
 
           .social-icons a {
             display: inline-block;
-            margin: 0 8px;
+            margin: 0 8px 0 0;
             color: #00e6e6;
             font-size: 20px;
             transition: color 0.3s ease;
@@ -116,41 +124,60 @@
             color: #ff4d94;
           }
 
+          .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #888;
+          }
+
           @media (max-width: 600px) {
-            .footer-links a {
-              display: block;
-              margin: 8px 0;
+            .footer-container {
+              grid-template-columns: 1fr;
+              text-align: center;
             }
-            .social-icons a {
-              font-size: 18px;
-              margin: 6px;
+
+            .footer-section {
+              margin-bottom: 20px;
+            }
+
+            .social-icons {
+              justify-content: center;
             }
           }
         </style>
 
         <footer class="custom-footer">
           <div class="footer-container">
-            <div class="footer-links">
-              <a href="/terms-conditions/">Terms & Conditions</a>
+            <!-- Contact Us -->
+            <div class="footer-section">
+              <h4>Contact Us</h4>
+              <p>Email: support@nolimitbet.org</p>
+              <div class="social-icons">
+                <a href="https://www.facebook.com/share/1G93J4ixnD/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/No_Limit_ag?t=ED_e-sQY5BX2dBP93HU1Lw&s=08" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.instagram.com/no.limit.ag?igsh=MXF2cW1yOW91b3dkMg==" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+              <h4>Quick Links</h4>
               <a href="/about-us/">About Us</a>
-
+              <a href="/terms-conditions/">Terms & Conditions</a>
+              <a href="https://banners.nolimitbet.ag/carousel/image/13/">Promotions</a>
             </div>
 
-            <div class="social-icons">
-              <a href="https://www.facebook.com/share/1G93J4ixnD/" target="_blank" title="Facebook">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="https://x.com/No_Limit_ag?t=ED_e-sQY5BX2dBP93HU1Lw&s=08" target="_blank" title="Twitter">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="https://www.instagram.com/no.limit.ag?igsh=MXF2cW1yOW91b3dkMg==" target="_blank" title="Instagram">
-                <i class="fab fa-instagram"></i>
-              </a>
+            <!-- Become an Affiliate -->
+            <div class="footer-section">
+              <h4>Become an Affiliate</h4>
+              <p>Join our affiliate program and earn with every referral.</p>
+              <p> style="color: #ff4d94; font-weight: bold;">support@nolimitbet.org</p>
             </div>
+          </div>
 
-            <div class="footer-copy">
-              All rights reserved &copy; Copyright www.nolimitbet.org &copy; 2025. .
-            </div>
+          <div class="footer-bottom">
+            All rights reserved &copy; 2025 <strong>www.nolimitbet.org</strong>
           </div>
         </footer>
       `;
@@ -158,6 +185,7 @@
   }
   customElements.define('custom-footer', CustomFooter);
 </script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

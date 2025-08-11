@@ -56,10 +56,10 @@
 
   <custom-footer></custom-footer>
 
-  <script>
-    class CustomFooter extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+<script>
+class CustomFooter extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
 <style>
 .custom-footer {
   background-color: #11161f;
@@ -74,9 +74,14 @@
   max-width: 1100px;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 30px;
   padding: 0 20px;
+  align-items: start; /* aligns all columns to the top */
+}
+
+.footer-section {
+  text-align: left; /* keep all left aligned */
 }
 
 .footer-section h4 {
@@ -105,9 +110,13 @@
   line-height: 1.6;
 }
 
+.social-icons {
+  margin-top: 10px;
+}
+
 .social-icons a {
   display: inline-block;
-  margin: 0 8px 0 0;
+  margin-right: 8px;
   color: #00e6e6;
   font-size: 20px;
   transition: color 0.3s ease;
@@ -124,16 +133,12 @@
   color: #888;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .footer-container {
     grid-template-columns: 1fr;
-    text-align: center;
   }
   .footer-section {
     margin-bottom: 20px;
-  }
-  .social-icons {
-    justify-content: center;
   }
 }
 </style>
@@ -184,8 +189,8 @@
         `;
       }
     }
-    customElements.define('custom-footer', CustomFooter);
-  </script>
+customElements.define('custom-footer', CustomFooter);
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

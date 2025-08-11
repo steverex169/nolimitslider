@@ -51,21 +51,16 @@
 
 <body>
 
-  <!-- <a href="https://nolimitbet.ag/" class="back-link">&larr; Back to Carousel</a>
-
-  <div class="image-container">
-    <img src="{{ image.image.url }}" alt="Carousel Image" />
-  </div> -->
-
   <div class="terms-container">
     {{ image.terms|safe }}
   </div>
-    <custom-footer></custom-footer>
 
-<script>
-class CustomFooter extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
+  <custom-footer></custom-footer>
+
+  <script>
+    class CustomFooter extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
 <style>
 .custom-footer {
   background-color: #11161f;
@@ -82,6 +77,73 @@ class CustomFooter extends HTMLElement {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
+  padding: 0 20px;
+}
+
+.footer-section h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-bottom: 2px solid #00e6e6;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-section a {
+  color: #00e6e6;
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #ff4d94;
+}
+
+.footer-section p {
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin: 0 8px 0 0;
+  color: #00e6e6;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #ff4d94;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+  color: #888;
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-section {
+    margin-bottom: 20px;
+  }
+  .social-icons {
+    justify-content: center;
+  }
+}
+</style>
+
+<footer class="custom-footer">
+  <div class="footer-container">
+    <!-- Contact Us -->
+    <div class="footer-section">
+      <h4>Contact Us</h4>
       <p>Email: support@nolimitbet.ag</p>
       <div class="social-icons">
         <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -118,12 +180,11 @@ class CustomFooter extends HTMLElement {
     All rights reserved © 2025 <strong>nolimitbet.ag</strong>
   </div>
 </footer>
-    `;
-  }
-}
-customElements.define('custom-footer', CustomFooter);
-</script>
-
+        `;
+      }
+    }
+    customElements.define('custom-footer', CustomFooter);
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

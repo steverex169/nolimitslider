@@ -27,13 +27,14 @@ DEBUG = True
 X_FRAME_OPTIONS = 'ALLOWALL'
 
 
-ALLOWED_HOSTS = ['3.85.112.46', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['3.85.112.46', 'localhost', '127.0.0.1', 'banners.nolimitbet.ag' ]
 
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+X_FRAME_OPTIONS = 'ALLOWALL'
 
 # Application definition
 
@@ -133,3 +134,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# TRUST PROXY/NGINX FOR HTTPS
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Redirect all HTTP to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# If using sessions/cookies
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

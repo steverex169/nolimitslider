@@ -123,3 +123,7 @@ def general_termscondition(request):
     return render(request, 'generalT&C.html')
 def general_AboutUs(request):
     return render(request, 'AboutUs.html')
+def promotion(request):
+    return render(request, 'promotion.html')
+def promotion1(request):
+    return render(request, 'promotion1.html')

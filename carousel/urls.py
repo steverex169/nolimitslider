@@ -12,6 +12,8 @@ urlpatterns = [
     path('preview-terms/', views.preview_terms_view, name='preview_terms'),
     path('terms-conditions/', views.general_termscondition, name='terms-conditions'),
     path('about-us/', views.general_AboutUs, name='about-us'),
+    path('promotions/', views.promotion, name='promotions'),
+    path('promotions/promotions1/', views.promotion1, name='promotions1'),
     path('carousel/image/<int:image_id>/', views.carousel_image_detail, name='carousel_image_detail'),
 
 ]

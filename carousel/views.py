@@ -127,3 +127,23 @@ def promotion(request):
     return render(request, 'promotion.html')
 def promotion1(request):
     return render(request, 'promotion1.html')
+def promotion2(request):
+    return render(request, 'promotion2.html')
+def promotion3(request):
+    return render(request, 'promotion3.html')
+def promotion4(request):
+    return render(request, 'promotion4.html')
+def promotion5(request):
+    return render(request, 'promotion5.html')
+def promotion6(request):
+    return render(request, 'promotion6.html')
+def promotion7(request):
+    return render(request, 'promotion7.html')
+def promotion8(request):
+    return render(request, 'promotion8.html')
+def promotion9(request):
+    return render(request, 'promotion9.html')
+def promotion10(request):
+    return render(request, 'promotion10.html')
+def licence(request):
+    return render(request, 'licence.html')

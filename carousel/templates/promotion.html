@@ -39,32 +39,39 @@
     color: transparent;
 }
 
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 29px;
+  justify-content: center;
+  margin-top: 40px;
+  max-width: 1600px; /* limit maximum width */
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-  .promotions-grid {
-    width: 1592px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 29px;
-    justify-content: flex-start;
-    margin-top: 40px;
-  }
-  .promo-card {
-    width: 511px;
-    height: 613px;
-    background-color: #2C2E35;
-    border-radius: 18px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .promo-image {
-    width: 473px;
-    height: 266px;
-    border-radius: 12px;
-    object-fit: cover;
-    margin-top: 16px;
-  }
+.promo-card {
+  width: 100%; /* har card grid ke hisaab se adjust hoga */
+  max-width: 511px; 
+  height: auto; /* fixed height ki jagah auto */
+  background-color: #2C2E35;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.promo-image {
+  width: 100%;  /* responsive */
+  max-width: 473px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-top: 16px;
+}
+
   .promo-content {
     padding: 20px 24px;
     display: flex;
@@ -124,6 +131,17 @@
   .read-more:hover {
     background-color: #FF4D95;
   }
+  @media (max-width: 992px) {
+  .promotions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .promotions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 </style>
 </head>
 <body>

@@ -1,276 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<title>Promotions</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #0f1a1e;
-    color: white;
-  }
-  .main-div {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 50px;
+  <title>Promotions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  }
-  .promotions-section {
-    padding: 40px 0;
-  }
-.section-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: inline-block; /* important for gradient text clipping */
-    background: linear-gradient(90deg, #00E6E6, #FF4D94);
-    background-size: 100%;
-    background-repeat: repeat;
-    -webkit-background-clip: text;      
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0f1a1e;
+      color: white;
+    }
 
-.promotions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 29px;
-  justify-content: center;
-  margin-top: 40px;
-  max-width: 1600px; /* limit maximum width */
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
+    .main-div {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 50px;
 
-.promo-card {
-  width: 100%; /* har card grid ke hisaab se adjust hoga */
-  max-width: 511px; 
-  height: auto; /* fixed height ki jagah auto */
-  background-color: #2C2E35;
-  border-radius: 18px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    }
 
-.promo-image {
-  width: 100%;  /* responsive */
-  max-width: 473px;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
-  margin-top: 16px;
-}
+    .promotions-section {
+      padding: 40px 0;
+    }
 
-  .promo-content {
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    width: 100%;
-    gap: 14px;
-  }
-  .promo-title {
-    width: 357px;
-    font-size: 25px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #ffffff;
-    font-style: bold;
-  }
-  .promo-text {
-    font-size: 20px;
-    font-weight: 700PX;
-    font-style: bold;
-    line-height: 1.5;
-    color: #e1e1e1;
-    /* margin-top: 10px; */
-  }
-  .promo-text strong {
-    color: #fff;
-  }
-  .bonus-code {
-    font-size: 20px;
-    font-style: bold;
-    font-weight: 700;
-    color: #ffffff;
-    /* margin-top: 10px; */
-  }
-  .bonus-code span {
-    margin-left: 10px;
-    font-size: 20px;
-    font-weight: 500px;
-    color: #00E6E6;
-    /* margin-top: 10px; */
-  }
-  .read-more {
-    margin-top: auto;
-    display: block;
-    background-color: #FF4D95;
-    color: white;
-    font-size: 23px;
-    font-weight: 700;
-    text-align: center;
-    padding: 16px 0;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    width: 218px;
-    height: 61px;
-  }
-  .read-more:hover {
-    background-color: #FF4D95;
-  }
-  @media (max-width: 992px) {
-  .promotions-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 576px) {
-  .promotions-grid {
-    grid-template-columns: 1fr;
-  }
-}
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: inline-block;
+      /* important for gradient text clipping */
+      background: linear-gradient(90deg, #00E6E6, #FF4D94);
+      background-size: 100%;
+      background-repeat: repeat;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
 
-</style>
+    .promotions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      /* Fixed 3 columns */
+      gap: 29px;
+      justify-content: center;
+      /* Center the grid itself */
+      margin-top: 40px;
+      width: 100%;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+
+    .promo-card {
+      width: 100%;
+      /* har card grid ke hisaab se adjust hoga */
+      max-width: 511px;
+      height: auto;
+      /* fixed height ki jagah auto */
+      background-color: #2C2E35;
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .promo-card:hover {
+      transform: translateY(-10px);
+      /* slight lift on hover */
+      box-shadow: 0 10px 30px rgba(0, 230, 230, 0.25);
+      /* glow shadow */
+    }
+
+    .promo-image {
+      width: 100%;
+      /* responsive */
+      max-width: 473px;
+      height: auto;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-top: 16px;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .promo-image:hover {
+      transform: scale(1.03);
+      filter: brightness(1.1);
+    }
+
+    .promo-content {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      gap: 14px;
+    }
+
+    .promo-title {
+      width: 357px;
+      font-size: 25px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #ffffff;
+      font-style: bold;
+    }
+
+    .promo-text {
+      font-size: 20px;
+      font-weight: 700PX;
+      font-style: bold;
+      line-height: 1.5;
+      color: #e1e1e1;
+      /* margin-top: 10px; */
+    }
+
+    .promo-text strong {
+      color: #fff;
+    }
+
+    .bonus-code {
+      font-size: 20px;
+      font-style: bold;
+      font-weight: 700;
+      color: #ffffff;
+      /* margin-top: 10px; */
+    }
+
+    .bonus-code span {
+      margin-left: 10px;
+      font-size: 20px;
+      font-weight: 500px;
+      color: #00E6E6;
+      /* margin-top: 10px; */
+    }
+
+    .read-more {
+      margin-top: auto;
+      display: block;
+      background-color: #FF4D95;
+      color: white;
+      font-size: 23px;
+      font-weight: 700;
+      text-align: center;
+      padding: 16px 0;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      width: 218px;
+      height: 61px;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+    }
+
+    .read-more:hover {
+      background: linear-gradient(90deg, #00e6e6, #ff4d94);
+      color: #101820;
+      box-shadow: 0 0 20px rgba(255, 77, 148, 0.7),
+        0 0 30px rgba(0, 230, 230, 0.6);
+    }
+
+    .read-more:active {
+      transform: scale(0.95);
+      /* press-down effect */
+    }
+
+    @media (max-width: 992px) {
+      .promotions-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .promotions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <div class="main-div"> 
-<section class="promotions-section">
-  <h2 class="section-title">Promotions</h2>
-  <div class="promotions-grid">
+  <div class="main-div">
+    <section class="promotions-section">
+      <h2 class="section-title">Promotions</h2>
+      <div class="promotions-grid">
 
-    <div class="promo-card">
-      <img src="/media/promotion/Mask group (1).png" alt="Welcome Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
-        <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $5000USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME50</span></p>
-        <a href="promotions1/" class="read-more">REAM MORE</a>
-      </div>
-    </div>
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (1).png" alt="Welcome Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
+            <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $5000USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME50</span></p>
+            <a href="promotions1/" class="read-more">REAM MORE</a>
+          </div>
+        </div>
 
-    <div class="promo-card">
-      <img src="/media/promotion/Mask group (2).png" alt="10% Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">Ultimate Welcome Bonus</h3>
-        <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $10,000USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME10</span></p>
-        <a href="promotions2/" class="read-more">READ MORE</a>
-      </div>
-    </div>
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (2).png" alt="10% Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">Ultimate Welcome Bonus</h3>
+            <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $10,000USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME10</span></p>
+            <a href="promotions2/" class="read-more">READ MORE</a>
+          </div>
+        </div>
 
-    <div class="promo-card">
-      <img src="/media/promotion/Mask group (3).png" alt="15% Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">Ultimate Welcome Bonus</h3>
-        <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $7000USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME15</span></p>
-        <a href="promotions3/" class="read-more">READ MORE</a>
-      </div>
-    </div>
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (3).png" alt="15% Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">Ultimate Welcome Bonus</h3>
+            <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $7000USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME15</span></p>
+            <a href="promotions3/" class="read-more">READ MORE</a>
+          </div>
+        </div>
 
 
-    <!-- 2nd Row -->
+        <!-- 2nd Row -->
 
-     <div class="promo-card">
-      <img src="/media/promotion/Mask group (4).png" alt="Welcome Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
-        <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $4000USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME25</span></p>
-        <a href="promotions4/" class="read-more">REAM MORE</a>
-      </div>
-    </div>
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (4).png" alt="Welcome Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
+            <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $4000USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME25</span></p>
+            <a href="promotions4/" class="read-more">REAM MORE</a>
+          </div>
+        </div>
 
-    <div class="promo-card">
-      <img src="/media/promotion/Mask group (5).png" alt="10% Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">Ultimate Welcome Bonus</h3>
-        <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $3000USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME35</span></p>
-        <a href="promotions5/" class="read-more">READ MORE</a>
-      </div>
-    </div>
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (5).png" alt="10% Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">Ultimate Welcome Bonus</h3>
+            <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $3000USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME35</span></p>
+            <a href="promotions5/" class="read-more">READ MORE</a>
+          </div>
+        </div>
 
-    <div class="promo-card">
-      <img src="/media/promotion/Mask group (6).png" alt="15% Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">Ultimate Welcome Bonus</h3>
-        <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $2000USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME55</span></p>
-        <a href="promotions6/" class="read-more">READ MORE</a>
-      </div>
-    </div>
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (6).png" alt="15% Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">Ultimate Welcome Bonus</h3>
+            <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $2000USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME55</span></p>
+            <a href="promotions6/" class="read-more">READ MORE</a>
+          </div>
+        </div>
 
         <!-- 3nd Row -->
 
-     <div class="promo-card">
-      <img src="/media/promotion/Mask group (7).png" alt="Welcome Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
-        <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $1500USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME75</span></p>
-        <a href="promotions7/" class="read-more">REAM MORE</a>
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (7).png" alt="Welcome Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
+            <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $1500USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME75</span></p>
+            <a href="promotions7/" class="read-more">REAM MORE</a>
+          </div>
+        </div>
+
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (8).png" alt="10% Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">Ultimate Welcome Bonus</h3>
+            <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $1000USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME100</span></p>
+            <a href="promotions8/" class="read-more">READ MORE</a>
+          </div>
+        </div>
+
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (9).png" alt="15% Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">Ultimate Welcome Bonus</h3>
+            <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $700USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME150</span></p>
+            <a href="promotions9/" class="read-more">READ MORE</a>
+          </div>
+        </div>
+
+        <!-- 4nd Row -->
+
+        <div class="promo-card">
+          <img src="/media/promotion/Mask group (10).png" alt="Welcome Bonus" class="promo-image">
+          <div class="promo-content">
+            <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
+            <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $500USD On Your First Deposit!</p>
+            <p class="bonus-code">BONUS CODE: <span>WELCOME200</span></p>
+            <a href="promotions10/" class="read-more">REAM MORE</a>
+          </div>
+        </div>
+
+
+
+
+
+
       </div>
-    </div>
-
-    <div class="promo-card">
-      <img src="/media/promotion/Mask group (8).png" alt="10% Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">Ultimate Welcome Bonus</h3>
-        <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $1000USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME100</span></p>
-        <a href="promotions8/" class="read-more">READ MORE</a>
-      </div>
-    </div>
-
-    <div class="promo-card">
-      <img src="/media/promotion/Mask group (9).png" alt="15% Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">Ultimate Welcome Bonus</h3>
-        <p class="promo-text"><strong>Triple the Fun!</strong> Claim Up To $700USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME150</span></p>
-        <a href="promotions9/" class="read-more">READ MORE</a>
-      </div>
-    </div>
-
-            <!-- 4nd Row -->
-
-     <div class="promo-card">
-      <img src="/media/promotion/Mask group (10).png" alt="Welcome Bonus" class="promo-image">
-      <div class="promo-content">
-        <h3 class="promo-title">ULTIMATE WELCOME BONUS</h3>
-        <p class="promo-text"><strong>Triple the Fun!:</strong> Claim Up To $500USD On Your First Deposit!</p>
-        <p class="bonus-code">BONUS CODE: <span>WELCOME200</span></p>
-        <a href="promotions10/" class="read-more">REAM MORE</a>
-      </div>
-    </div>
-
-
-
-
-    
-
-  </div>
-</section>
+    </section>
   </div>
   <custom-footer></custom-footer>
 
-<script>
-class CustomFooter extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
+  <script>
+    class CustomFooter extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
 <style>
 .custom-footer {
   background-color: #11161f;
@@ -417,8 +461,9 @@ class CustomFooter extends HTMLElement {
         `;
       }
     }
-customElements.define('custom-footer', CustomFooter);
-</script>
+    customElements.define('custom-footer', CustomFooter);
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

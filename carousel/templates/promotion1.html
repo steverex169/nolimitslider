@@ -141,6 +141,88 @@
     .section-title::first-letter {
         text-transform: uppercase; /* sirf pehla capital */
     }
+    /* Responsive Fixes */
+@media (max-width: 1440px) {
+  .top-banner {
+    width: 100%;
+    height: 500px;
+  }
+
+  .promotion-content {
+    width: 100%;
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .top-banner {
+    height: 400px;
+  }
+
+  .promotion-button {
+    font-size: 20px;
+    padding: 12px 30px;
+  }
+
+  .promotion-description {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-banner {
+    height: 300px;
+  }
+
+  .promotion-description,
+  ul,
+  li {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    margin-left: 30px;
+  }
+
+  .promotion-button {
+    font-size: 18px;
+    width: 90%;
+  }
+}
+
+@media (max-width: 576px) {
+  .promotions-container {
+    padding: 16px;
+  }
+
+  .top-banner {
+    height: 200px;
+    border-radius: 8px;
+  }
+
+  .promotion-description,
+  ul,
+  li {
+    font-size: 15px;
+  }
+
+  .promotion-title {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin-top: 30px;
+  }
+
+  .promotion-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+
 
   </style>
 </head>

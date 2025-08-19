@@ -63,6 +63,7 @@
     .promo-card {
       width: 100%;
       max-width: 511px;
+      height: auto;
       background-color: #2C2E35;
       border-radius: 18px;
       overflow: hidden;
@@ -84,12 +85,12 @@
     /* --- Fix for .promo-image --- */
     .promo-image {
       width: 100%;
+      max-width: 473px;
       height: auto;
       border-radius: 12px;
       object-fit: cover;
       margin-top: 16px;
       transition: transform 0.3s ease, filter 0.3s ease;
-      max-width: 100%;
     }
 
     .promo-image:hover {
@@ -195,6 +196,17 @@
         width: 100%;
         max-width: 100%;
       }
+
+      .promo-image {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        object-fit: cover;
+        margin-top: 16px;
+        transition: transform 0.3s ease, filter 0.3s ease;
+        max-width: 100%;
+      }
+
 
       .promo-title,
       .promo-text,

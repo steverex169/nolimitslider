@@ -59,13 +59,10 @@
       margin-right: auto;
     }
 
-
+    /* --- Fix for .promo-card --- */
     .promo-card {
       width: 100%;
-      /* har card grid ke hisaab se adjust hoga */
       max-width: 511px;
-      height: auto;
-      /* fixed height ki jagah auto */
       background-color: #2C2E35;
       border-radius: 18px;
       overflow: hidden;
@@ -73,6 +70,7 @@
       flex-direction: column;
       align-items: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin: 0 auto;
     }
 
     .promo-card:hover {
@@ -82,15 +80,16 @@
       /* glow shadow */
     }
 
+
+    /* --- Fix for .promo-image --- */
     .promo-image {
       width: 100%;
-      /* responsive */
-      max-width: 473px;
       height: auto;
       border-radius: 12px;
       object-fit: cover;
       margin-top: 16px;
       transition: transform 0.3s ease, filter 0.3s ease;
+      max-width: 100%;
     }
 
     .promo-image:hover {
@@ -177,12 +176,37 @@
     @media (max-width: 992px) {
       .promotions-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .promo-card {
+        max-width: 100%;
       }
     }
 
     @media (max-width: 576px) {
       .promotions-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 0 15px;
+      }
+
+      .promo-card {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .promo-title,
+      .promo-text,
+      .bonus-code {
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .read-more {
+        width: 100%;
+        font-size: 18px;
+        padding: 12px 0;
       }
     }
   </style>

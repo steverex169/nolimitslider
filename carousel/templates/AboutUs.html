@@ -149,17 +149,23 @@
           /* Ensures text is aligned to the left */
         }
 
-        h4.promotion-title {
-          color: #f8f8f8;
-          font-size: 34px;
-          text-transform: uppercase;
-          font-weight: bold;
-          text-align: left;
-          /* Changed to left alignment */
-          background: linear-gradient(90deg, #00e6e6, #ff4d94);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-        }
+h4.promotion-title {
+  font-size: 34px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: left;
+  
+  /* Gradient effect */
+  background: linear-gradient(90deg, #00e6e6 0%, #66f0f0 0%, #ff7abf 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* For Firefox */
+  
+  display: inline-block;
+}
+
+
+
 
         .promotion-description,
         ul {
@@ -243,7 +249,7 @@
       <!-- Promotion Section -->
       <div class="promotions-container">
         <div class="promotion-content">
-          <h4 class="promotion-title">About NoLimitBet</h4>
+          <h4 class="promotion-title">No Limit Bet - General About Us</h4>
           <h2>Your Trusted Partner in Premium Online Gaming</h2>
           <p class="promotion-description">
             <!-- Let’s begin the Fun! Claim Up To <b>$5000 USD</b> On Your First Deposit! -->

@@ -193,20 +193,38 @@
       }
     }
 
-    @media (max-width: 576px) {
+      @media (max-width: 576px) {
       .promotions-grid {
         grid-template-columns: 1fr;
         gap: 16px;
         padding: 0 5px;
       }
-      .promo-content {
-        padding: 20px 24px;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        width: 100%;
-        gap: 2px;
-      }
+    .promo-content {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      gap: 8px;
+      align-items: flex-start; /* left side pe content */
+      text-align: left;        /* text left align */
+    }
+    
+    /* Agar headings aur paragraphs center ho rahe hain */
+    .promo-content h4,
+    .promo-content p,
+    .promo-content h2,
+    .promo-content ul,
+    .promo-content li {
+      text-align: left !important;
+    }
+    .bonus-code span {
+      margin-left: 0px;
+      font-size: 20px;
+      font-weight: 500px;
+      color: #00E6E6;
+      /* margin-top: 10px; */
+    }
 
       .promo-card {
         width: 100%;
@@ -230,13 +248,12 @@
       .promo-text,
       .bonus-code {
         font-size: 14px;
-        text-align: center;
       }
 
       .read-more {
         width: 100%;
         font-size: 18px;
-        padding: 12px 0;
+        padding: 7px 0;
         height: 42px;
       }
       

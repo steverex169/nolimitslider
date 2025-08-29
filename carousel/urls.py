@@ -26,5 +26,6 @@ urlpatterns = [
     path('licence/', views.licence, name='licence'),
 
     path('carousel/image/<int:image_id>/', views.carousel_image_detail, name='carousel_image_detail'),
+    path("posts/", views.post_gallery, name="post_gallery"),
 
 ]

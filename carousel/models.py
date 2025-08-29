@@ -2,11 +2,20 @@ from django.db import models
 from django.utils import timezone
 
 class CarouselImage(models.Model):
+    IMAGE_TYPE_CHOICES = [
+        ('banner', 'Banner'),
+        ('post', 'Post'),
+    ]
     image = models.ImageField(upload_to='carousel/')
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     terms = models.TextField(blank=True, null=True)
+    image_type = models.CharField(
+        max_length=10,
+        choices=IMAGE_TYPE_CHOICES,
+        default='banner'
+    )
 
     @property
     def status(self):

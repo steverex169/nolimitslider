@@ -31,7 +31,8 @@ def carousel_view(request):
     today = timezone.now().date()
     images = CarouselImage.objects.filter(
         start_date__lte=today,
-        end_date__gte=today
+        end_date__gte=today,
+        image_type="banner"
     ).order_by('-created_at')
     
     return render(request, 'carousel.html', {'images': images})
@@ -118,7 +119,7 @@ from .models import CarouselImage
 
 def carousel_image_detail(request, image_id):
     # Yahan pk + image_type filter dono lagayenge
-    image = get_object_or_404(CarouselImage, pk=image_id, image_type="banner")
+    image = get_object_or_404(CarouselImage, pk=image_id)
     
     return render(request, 'preview_terms.html', {'image': image})
 

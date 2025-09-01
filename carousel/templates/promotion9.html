@@ -13,11 +13,15 @@
       background-color: #101820;
       font-family: Arial, Helvetica, sans-serif;
       margin: 0;
-      padding: 40px 0;
     }
+    .main-div {
+      justify-content: center;
+      margin-bottom: 50px;
+      padding: 40px 40px;
 
+    }
     .promotions-container {
-  max-width: 1595px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px 20px 60px;
   background-color: #2C2E34;
@@ -28,7 +32,7 @@
 
 .top-banner {
   height: 600px;
-  width: 1552px;
+  max-width: 1552px;
   background-image: url('/media/promotion/9.png');
   background-size: cover;
   background-position: center;
@@ -141,6 +145,11 @@
     .section-title::first-letter {
         text-transform: uppercase; /* sirf pehla capital */
     }
+        .footer-section a {
+        position: relative;
+        z-index: 9999;
+        pointer-events: auto;
+      }
     /* Responsive Fixes */
 @media (max-width: 1440px) {
   .top-banner {
@@ -150,7 +159,7 @@
 
   .promotion-content {
     width: 100%;
-    padding: 0 30px;
+    padding: 0 5px;
   }
 }
 
@@ -193,7 +202,7 @@
 
 @media (max-width: 576px) {
   .promotions-container {
-    padding: 16px;
+    padding: 5px;
   }
 
   .top-banner {
@@ -220,6 +229,7 @@
   .promotion-button {
     font-size: 16px;
     padding: 10px 20px;
+    margin-bottom: 20px;
   }
 }
 
@@ -227,7 +237,7 @@
 </head>
 
 <body>
-  <h2 class="section-title">Promotions</h2>
+    <div class="main-div">
   <div class="promotions-container">
   <div class="top-banner">
     <div class="top-banner-inner">
@@ -277,19 +287,20 @@
           registered players on the site.</li>
       </ul>
 
-      <button class="promotion-button">DEPOSIT NOW</button>
+<button class="promotion-button" onclick="window.open('https://nolimitbet.ag/', '_blank')">
+  DEPOSIT NOW
+</button>
     </div>
-  </div>
+  </div></div>
     <custom-footer></custom-footer>
-
-<script>
-class CustomFooter extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
+  <script>
+    class CustomFooter extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
 <style>
 .custom-footer {
   background-color: #11161f;
-  padding: 40px 0 0 0;
+  padding: 40px 90px;
   color: #ccc;
   font-family: 'Segoe UI', Arial, sans-serif;
   font-size: 14px;
@@ -432,8 +443,8 @@ class CustomFooter extends HTMLElement {
         `;
       }
     }
-customElements.define('custom-footer', CustomFooter);
-</script>
+    customElements.define('custom-footer', CustomFooter);
+  </script>
 
 </body>
 </html>

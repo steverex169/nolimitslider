@@ -117,8 +117,11 @@ from django.shortcuts import render, get_object_or_404
 from .models import CarouselImage
 
 def carousel_image_detail(request, image_id):
-    image = get_object_or_404(CarouselImage, id=image_id)
+    # Yahan pk + image_type filter dono lagayenge
+    image = get_object_or_404(CarouselImage, pk=image_id, image_type="banner")
+    
     return render(request, 'preview_terms.html', {'image': image})
+
 def general_termscondition(request):
     return render(request, 'generalT&C.html')
 def general_AboutUs(request):

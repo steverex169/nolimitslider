@@ -19,3 +19,6 @@ media/
 
 # Ignore media files (adjust as needed)
 db.sqlite3
+*.crt
+*.key
+

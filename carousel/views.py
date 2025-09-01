@@ -147,3 +147,7 @@ def promotion10(request):
     return render(request, 'promotion10.html')
 def licence(request):
     return render(request, 'licence.html')
+
+def post_gallery(request):
+    images = CarouselImage.objects.filter(image_type="post").order_by('-created_at')
+    return render(request, "post_gallery.html", {"images": images})

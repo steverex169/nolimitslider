@@ -27,7 +27,6 @@
       background-color: transparent;
       padding: 20px;
       border-radius: 12px;
-      color: black;
       text-align: left;
       max-width: 1100px;
       margin: 0 auto;
@@ -86,7 +85,7 @@
           background-repeat: no-repeat;
 
           padding: 0 20px;
-                    /* Adjusted to span the full width */
+          /* Adjusted to span the full width */
           margin: 40px 0;
         }
 
@@ -103,32 +102,38 @@
           border-radius: 8px;
         }
 
-.promotions-container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
+        .promotions-container {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
 
-.top-banner {
-  height: 300px;
-  background-image: url('https://i.postimg.cc/QdzWFXG4/Nolimitbet-T-C-Banner.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin-bottom: 40px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  margin-left: 32px;
-}
+        .top-banner {
+          height: 300px;
+          background-image: url('https://i.postimg.cc/QdzWFXG4/Nolimitbet-T-C-Banner.png');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          margin-bottom: 40px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          /* center content */
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        }
 
-.top-banner-inner {
-  width: 100%;
-  padding: 0 32px;
-  margin: 0 auto;
-  max-width: 1100px; /* Same as container */
-  text-align: center; /* optional: center content inside */
-}
+        .top-banner-inner {
+          width: 100%;
+          padding: 0 32px;
+          margin: 0 auto;
+          max-width: 1100px;
+          /* Same as container */
+          text-align: center;
+          /* optional: center content inside */
+        }
 
         .promotion {
           background: linear-gradient(135deg, #1e2a36, #162129 80%);
@@ -143,46 +148,48 @@
         .promotion-content {
           display: flex;
           flex-direction: column;
-          gap: 25px;
-          padding: 32px;
+          gap: 20px;
+          padding: 20px;
           text-align: left;
-          /* Ensures text is aligned to the left */
         }
 
+
         h4.promotion-title {
-          color: #f8f8f8;
-          font-size: 34px;
-          text-transform: uppercase;
+          font-size: clamp(22px, 4vw, 34px);
           font-weight: bold;
-          text-align: left;
-          /* Changed to left alignment */
-          background: linear-gradient(90deg, #00e6e6, #ff4d94);
+          background: linear-gradient(90deg, #00e6e6 0%, #66f0f0 0%, #ff7abf 60%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        h2 {
+          font-size: clamp(18px, 3vw, 22px);
+          color: #00e6e6;
+          margin-top: 20px;
         }
 
         .promotion-description,
         ul {
-          color: #d6d6d6;
-          font-size: 18px;
+          font-size: clamp(14px, 2.5vw, 18px);
           line-height: 1.6;
         }
 
         ul {
-          margin-left: 30px;
+          margin-left: 20px;
         }
+
+        .promotion-button {
+          font-size: clamp(14px, 2.5vw, 16px);
+          padding: 10px 30px;
+          margin-top: 20px;
+          align-self: center;
+        }
+
+
 
         li {
           padding: 5px 0;
-        }
-
-        h2 {
-          color: #00e6e6;
-          /* Miami aqua */
-          text-transform: uppercase;
-          margin-top: 30px;
-          font-size: 22px;
-          letter-spacing: 1px;
         }
 
         b {
@@ -195,19 +202,6 @@
           text-decoration: underline;
         }
 
-        .promotion-button {
-          background: transparent;
-          color: #ffffff;
-          padding: 12px 40px;
-          font-size: 16px;
-          border: 2px solid #00e6e6;
-          border-radius: 8px;
-          cursor: pointer;
-          text-transform: uppercase;
-          align-self: center;
-          transition: all 0.3s ease-in-out;
-        }
-
         .promotion-button:hover {
           background: linear-gradient(90deg, #00e6e6, #ff4d94);
           color: #101820;
@@ -217,23 +211,29 @@
         }
 
         @media (max-width: 768px) {
-      .promotions-container {
-        padding: 0 15px;
-      }
-
-      .top-banner {
-        height: 200px;
-      }
-          h4.promotion-title {
-            font-size: 26px;
+          body {
+            background-color: #101820;
+            /* deep dark for contrast */
+            font-family: Arial, Helvetica, sans-serif;
+            color: #f1f1f1;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 0px;
+            text-align: center;
           }
 
-          .promotion-description {
-            font-size: 15px;
+          .top-banner {
+            height: 180px;
+            border-radius: 6px;
+            padding: 0 10px;
           }
 
-          .promotion-button {
-            font-size: 14px;
+          .promotion-content {
+            padding: 0px;
+            gap: 4px;
+          }
+
+          ul {
+            margin-left: 15px;
           }
         }
       </style>
@@ -243,47 +243,82 @@
       <!-- Promotion Section -->
       <div class="promotions-container">
         <div class="promotion-content">
-          <h4 class="promotion-title">About NoLimitBet</h4>
+          <h4 class="promotion-title">No Limit Bet - General About Us</h4>
           <h2>Your Trusted Partner in Premium Online Gaming</h2>
           <p class="promotion-description">
             <!-- Let’s begin the Fun! Claim Up To <b>$5000 USD</b> On Your First Deposit! -->
-            Founded in 2019, NoLimitBet has rapidly become a leading destination for serious bettors and casino enthusiasts worldwide. We’re not just another betting site — we are a licensed and regulated platform under the jurisdiction of Curacao eGaming, committed to delivering an unparalleled gaming experience with state-of-the-art technology and ironclad security.
+            Founded in 2019, NoLimitBet has rapidly become a leading destination for serious bettors and casino
+            enthusiasts worldwide. We’re not just another betting site — we are a licensed and regulated platform under
+            the jurisdiction of Curacao eGaming, committed to delivering an unparalleled gaming experience with
+            state-of-the-art technology and ironclad security.
           </p>
 
           <h2>What Sets Us Apart</h2>
           <ul>
-            <li><h2>Lightning-Fast Payouts</h2>
-              While others leave you waiting for weeks, NoLimitBet processes 98% of withdrawals within 24 hours, with an average payout time of just 6 hours for verified accounts. We believe in fast, reliable, and hassle-free access to your winnings.</li>
-            <li><h2>Competitive Odds Guaranteed</h2>
-              Bet with confidence knowing you’re getting some of the best odds in the industry, starting at 1.95 for major sports. We also offer enhanced odds on weekend fixtures and price boosts on popular markets daily — ensuring you always get the most value for your bets.</li>
-              <li><h2>Massive Game Selection</h2>
-              Dive into a massive collection of over 400 games, including 250+ slots, 40+ live dealer tables, and a comprehensive sportsbook covering 30+ sports and esports. Whether you’re looking for high-stakes action or casual fun, we’ve got something for everyone.</li>
-              <li><h2>24/7 Global Access</h2>
-              Play seamlessly on desktop, mobile, or tablet, with our responsive platform that adapts perfectly to your device. Our platform is available in 8+ languages, ensuring that players from all corners of the world can enjoy the thrill of NoLimitBet.</li>
+            <li>
+              <h2>Lightning-Fast Payouts</h2>
+              While others leave you waiting for weeks, NoLimitBet processes 98% of withdrawals within 24 hours, with an
+              average payout time of just 6 hours for verified accounts. We believe in fast, reliable, and hassle-free
+              access to your winnings.
+            </li>
+            <li>
+              <h2>Competitive Odds Guaranteed</h2>
+              Bet with confidence knowing you’re getting some of the best odds in the industry, starting at 1.95 for
+              major sports. We also offer enhanced odds on weekend fixtures and price boosts on popular markets daily —
+              ensuring you always get the most value for your bets.
+            </li>
+            <li>
+              <h2>Massive Game Selection</h2>
+              Dive into a massive collection of over 400 games, including 250+ slots, 40+ live dealer tables, and a
+              comprehensive sportsbook covering 30+ sports and esports. Whether you’re looking for high-stakes action or
+              casual fun, we’ve got something for everyone.
+            </li>
+            <li>
+              <h2>24/7 Global Access</h2>
+              Play seamlessly on desktop, mobile, or tablet, with our responsive platform that adapts perfectly to your
+              device. Our platform is available in 8+ languages, ensuring that players from all corners of the world can
+              enjoy the thrill of NoLimitBet.
+            </li>
           </ul>
           <h2>Our Commitment to You</h2>
           <ul>
-            <li><h2>Uncompromising Security</h2>
-              Your protection is paramount. We utilize 256-bit SSL encryption, partner exclusively with tier-1 processors including Visa, Mastercard, and leading cryptocurrency wallets, while safeguarding all funds in segregated accounts with AAA-rated banking </li>
-              <li><h2>Certified Fair Play</h2>
-              Every game is independently certified by eCOGRA and undergoes monthly third-party audits. Our Random Number Generators are rigorously tested to ensure 100% fair and unbiased outcomes on every spin, hand, and bet.</li>
-              <li><h2>Responsible Gaming Leadership</h2>
-              Gaming should enhance your life, not complicate it. We provide comprehensive protection tools including customizable deposit limits, session timers, cooling-off periods, and immediate self-exclusion options. Direct support through GamCare and Gambling Therapy is always available.</li>
+            <li>
+              <h2>Uncompromising Security</h2>
+              Your protection is paramount. We utilize 256-bit SSL encryption, partner exclusively with tier-1
+              processors including Visa, Mastercard, and leading cryptocurrency wallets, while safeguarding all funds in
+              segregated accounts with AAA-rated banking
+            </li>
+            <li>
+              <h2>Certified Fair Play</h2>
+              Every game is independently certified by eCOGRA and undergoes monthly third-party audits. Our Random
+              Number Generators are rigorously tested to ensure 100% fair and unbiased outcomes on every spin, hand, and
+              bet.
+            </li>
+            <li>
+              <h2>Responsible Gaming Leadership</h2>
+              Gaming should enhance your life, not complicate it. We provide comprehensive protection tools including
+              customizable deposit limits, session timers, cooling-off periods, and immediate self-exclusion options.
+              Direct support through GamCare and Gambling Therapy is always available.
+            </li>
           </ul>
-           <h2>Join the NoLimitBet Community</h2>
-           <h2>Sign up today and claim your Welcome Bonus Package:</h2>
+          <h2>Join the NoLimitBet Community</h2>
+          <h2>Sign up today and claim your Welcome Bonus Package:</h2>
           <ul>
             <li>
               50% match up to $5000</li>
-              </ul>
+          </ul>
           <p class="promotion-description">
-            But that’s not all! Become a part of the NoLimitBet community and enjoy our exclusive VIP Rewards Program, offering faster withdrawals, personal account management, and tailored bonuses just for you.
+            But that’s not all! Become a part of the NoLimitBet community and enjoy our exclusive VIP Rewards Program,
+            offering faster withdrawals, personal account management, and tailored bonuses just for you.
           </p>
           <p class="promotion-description">
-            Sports and Casino will have different bonuses, ensuring you get the most relevant offers for your favorite games.</p>
-            <h2>Ready to Experience the NoLimitBet Difference?</h2>
+            Sports and Casino will have different bonuses, ensuring you get the most relevant offers for your favorite
+            games.</p>
+          <h2>Ready to Experience the NoLimitBet Difference?</h2>
           <p class="promotion-description">
-           Create your account now and see why over 250,000 players trust NoLimitBet for their gaming entertainment. Whether you're here for sports betting or to enjoy the best casino games, we’re committed to providing an exciting and secure environment for all our players.</p>
+            Create your account now and see why over 250,000 players trust NoLimitBet for their gaming entertainment.
+            Whether you're here for sports betting or to enjoy the best casino games, we’re committed to providing an
+            exciting and secure environment for all our players.</p>
         </div>
       </div>
     </div>

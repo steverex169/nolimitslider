@@ -4,7 +4,7 @@ from .models import CarouselImage
 class CarouselImageForm(forms.ModelForm):
     class Meta:
         model = CarouselImage
-        fields = ['image', 'start_date', 'end_date', 'terms']  # ✅ include 'terms'
+        fields = ['image', 'start_date', 'end_date', 'terms', 'image_type']  # ✅ include image_type
         widgets = {
             'image': forms.ClearableFileInput(attrs={'class': 'form-control form-control-sm'}),
             'start_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control form-control-sm'}),
@@ -14,6 +14,7 @@ class CarouselImageForm(forms.ModelForm):
                 'rows': 4,
                 'placeholder': 'Enter terms and conditions (HTML supported)'
             }),
+            'image_type': forms.Select(attrs={'class': 'form-control form-control-sm'}),  # ✅ dropdown
         }
 
     def __init__(self, *args, **kwargs):

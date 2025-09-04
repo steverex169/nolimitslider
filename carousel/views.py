@@ -155,3 +155,6 @@ def licence(request):
 def post_gallery(request):
     images = CarouselImage.objects.filter(image_type="post").order_by('-created_at')
     return render(request, "post_gallery.html", {"images": images})
+def post_3rdsection(request):
+    images = CarouselImage.objects.filter(image_type="others").order_by('-created_at')
+    return render(request, "3rdSection.html", {"images": images})

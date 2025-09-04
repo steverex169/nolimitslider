@@ -5,6 +5,7 @@ class CarouselImage(models.Model):
     IMAGE_TYPE_CHOICES = [
         ('banner', 'Banner'),
         ('post', 'Post'),
+        ('others', 'Others'),
     ]
     image = models.ImageField(upload_to='carousel/')
     start_date = models.DateField(null=True, blank=True)

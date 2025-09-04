@@ -27,5 +27,6 @@ urlpatterns = [
 
     path('carousel/image/<int:image_id>/', views.carousel_image_detail, name='carousel_image_detail'),
     path("posts/", views.post_gallery, name="post_gallery"),
+    path("3rdSection/", views.post_3rdsection, name="post_3rdsection"),
 
 ]

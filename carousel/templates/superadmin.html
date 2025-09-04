@@ -211,10 +211,15 @@
           <label for="id_end_date" class="form-label">End Date</label>
           {{ form.end_date }}
         </div>
-        <div class="col-6 col-md-2">
-          <label for="id_image_type" class="form-label">Type</label>
-          {{ form.image_type }}
+        <div class="mb-3">
+          <label class="form-label">Type</label>
+          <select name="image_type" class="form-control">
+            <option value="banner" {% if img.image_type == "banner" %}selected{% endif %}>Banner</option>
+            <option value="post" {% if img.image_type == "post" %}selected{% endif %}>Post</option>
+            <option value="others" {% if img.image_type == "others" %}selected{% endif %}>Others</option>
+          </select>
         </div>
+
 
         <div class="col-12 col-md-8">
           <label for="id_terms" class="form-label">Terms & Conditions (HTML allowed)</label>
@@ -286,6 +291,7 @@
               <select name="image_type" class="form-control">
                 <option value="banner" {% if img.image_type == "banner" %}selected{% endif %}>Banner</option>
                 <option value="post" {% if img.image_type == "post" %}selected{% endif %}>Post</option>
+                <option value="post" {% if img.image_type == "post" %}selected{% endif %}>Others</option>
               </select>
             </div>
 

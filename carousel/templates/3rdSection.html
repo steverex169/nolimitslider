@@ -133,17 +133,15 @@
     <div class="carousel-inner">
     {% for img in images %}
     <div class="carousel-item {% if forloop.first %}active{% endif %}">
-      <a href="{% url 'carousel_image_detail' img.id %}" target="_parent" style="display:block; height:100%; width:100%;">
         <img src="{{ img.image.url }}" alt="Slide {{ forloop.counter }}"
           style="height:100%; width:100%; object-fit:cover; border-radius:8px;">
-      </a>
     </div>
     {% endfor %}
     </div>
 
 
       <!-- Arrows inside .carousel -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="prev">
+      <!-- <button class="carousel-control-prev" type="button" data-bs-target="#freeSpinsCarousel" data-bs-slide="prev">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
@@ -154,22 +152,9 @@
           <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
         </svg>
         <span class="visually-hidden">Next</span>
-      </button>
+      </button> -->
     </div>
   </div>
-
-
-
-  <iframe src="https://banners.nolimitbet.ag/posts/" 
-        width="100%" 
-        height="240px" 
-        frameborder="0" 
-        scrolling="no"></iframe>
-
-  <iframe src="https://banners.nolimitbet.ag/3rdSection/" width="1140" height="320" frameborder="0"></iframe>
-
-        
-
 
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

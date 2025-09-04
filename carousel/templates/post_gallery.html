@@ -43,24 +43,22 @@
 </head>
 <body>
 
-<div class="container-fluid">
   <div class="Posts">
-  <div class="row g-3">
-    {% for img in images %}
-      {% if img.image_type == "post" %}
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="post-card shadow">
-          <a href="{% url 'carousel_image_detail' img.id %}" target="_parent" style="display:block; height:100%; width:100%;">
-          <img src="{{ img.image.url }}" alt="Post Image">
-          </a>
+    <div class="row g-3">
+      {% for img in images %}
+        {% if img.image_type == "post" %}
+        <div class="col-12 col-sm-6 col-md-4">
+          <div class="post-card shadow">
+            <a href="{% url 'carousel_image_detail' img.id %}" target="_parent" style="display:block; height:100%; width:100%;">
+            <img src="{{ img.image.url }}" alt="Post Image">
+            </a>
+          </div>
         </div>
-      </div>
-      {% endif %}
-    {% endfor %}
-  </div>
+        {% endif %}
+      {% endfor %}
+    </div>
   </div>
 
-</div>
 
 </body>
 </html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promotions</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      background-color: #101820;
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+    }
+    .main-div {
+      justify-content: center;
+      margin-bottom: 50px;
+      padding: 40px 40px;
+
+    }
+    .promotions-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+  background-color: #2C2E34;
+  border-radius: 12px;
+  margin-bottom: 70px;
+}
+
+
+
+.top-banner {
+  height: 600px;
+  max-width: 1552px;
+  background-image: url('/media/promotion/reload\ details\ image\ bonus.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.top-banner-inner {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1100px; /* Same as container */
+  text-align: center; /* optional: center content inside */
+}
+
+    .promotion-content {
+      width: 1400px;
+      margin: 0 auto;
+      color: #f1f1f1;
+    }
+
+    .promotion-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: inline-block; /* important for gradient text clipping */
+      background: linear-gradient(90deg, #00E6E6, #FF4D94);
+      background-size: 100%;
+      background-repeat: repeat;
+      -webkit-background-clip: text;      
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .promotion-description {
+      font-size: 18px;
+      color: #d6d6d6;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      color: #00e6e6;
+      text-transform: uppercase;
+      font-size: 22px;
+      margin-top: 40px;
+      margin-bottom: 12px;
+    }
+
+    ul {
+      padding-left: 22px;
+      color: #d6d6d6;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    b {
+      color: #ff4d94;
+    }
+
+    a {
+      color: #00e6e6;
+      text-decoration: underline;
+    }
+
+    .promotion-button {
+      background: #ff4d94;
+      color: #ffffff;
+      padding: 14px 40px;
+      font-size: 23px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: none;
+      display: block;
+      margin: 50px auto 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .promotion-button:hover {
+      background: linear-gradient(90deg, #00e6e6, #ff4d94);
+      color: #101820;
+      box-shadow: 0 0 20px rgba(255, 77, 148, 0.7),
+                  0 0 30px rgba(0, 230, 230, 0.6);
+    }
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        display: inline-block; /* important for gradient text clipping */
+        background: linear-gradient(90deg, #00E6E6, #FF4D94);
+        background-size: 100%;
+        background-repeat: repeat;
+        -webkit-background-clip: text;      
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+        margin-left: 150px;
+        margin-bottom: 30px;
+
+        text-transform: lowercase; /* sab letters small */
+    }
+
+    .section-title::first-letter {
+        text-transform: uppercase; /* sirf pehla capital */
+    }
+    .footer-section a {
+        position: relative;
+        z-index: 9999;
+        pointer-events: auto;
+      }
+    /* Responsive Fixes */
+@media (max-width: 1440px) {
+  .top-banner {
+    width: 100%;
+    height: 500px;
+  }
+
+  .promotion-content {
+    width: 100%;
+    padding: 0 5px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .top-banner {
+    height: 400px;
+  }
+
+  .promotion-button {
+    font-size: 20px;
+    padding: 12px 30px;
+  }
+
+  .promotion-description {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-banner {
+    height: 300px;
+  }
+
+  .promotion-description,
+  ul,
+  li {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    margin-left: 30px;
+  }
+
+  .promotion-button {
+    font-size: 18px;
+    width: 90%;
+  }
+}
+
+@media (max-width: 576px) {
+  .promotions-container {
+    padding: 5px;
+  }
+
+  .top-banner {
+    height: 200px;
+    border-radius: 8px;
+  }
+
+  .promotion-description,
+  ul,
+  li {
+    font-size: 15px;
+  }
+
+  .promotion-title {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin-top: 30px;
+  }
+
+  .promotion-button {
+    font-size: 16px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+  }
+}
+  </style>
+</head>
+
+<body>
+  <div class="main-div">
+  <div class="promotions-container">
+  <div class="top-banner">
+    <div class="top-banner-inner">
+      <!-- Any text, heading, etc. goes here -->
+    </div>
+  </div>
+<div class="promotion-content">
+      <h4 class="promotion-title">SPORTS RELOAD BONUS</h4>
+      <p class="promotion-description">
+        Let’s begin the Fun! Claim Up To <b>$5000 USD</b> On Your Next Deposit!
+      </p>
+
+      <h2>HOW IT WORKS:</h2>
+      <p class="promotion-description">
+        Receive a <b>20% bonus up to $5000</b> or currency equivalent with the bonus code:
+        <b>RELOAD20</b> on your next deposit with us.<br>
+        To activate the bonus, complete your successful deposit transaction. Go to the ‘Cashier’,
+        select your preferred payment method, and enter code: <b>RELOAD20</b>. Click on the
+        ‘Continue Deposit’ button. Your bonus will be activated instantly.
+      </p>
+
+      <h2>TERMS AND CONDITIONS:</h2>
+      <ul>
+        <li>Our Sports Betting Bonus is only valid for the next deposit during the qualifying
+          promotion period on <b>nolimitbet.ag</b>.</li>
+        <li>A minimum deposit of <b>$10 USD</b> (or currency equivalent) is required to activate
+          the bonus.</li>
+        <li>In order to withdraw your balance, wagering requirements must be met.</li>
+        <li>There is a <b>7x wagering requirement</b> (rollover) on the deposit amount for sports
+          betting only.</li>
+        <li>Maximum bet per wager is <b>$5000 USD</b> or the equivalent in other currencies.</li>
+        <li>Wagering requirements must be met within <b>30 days</b> of the bonus activation date.</li>
+        <li>If the player decides to withdraw the bonus before its expiration, the full amount of
+          the bonus, as well as any winnings, will be withdrawn from the player's balance.</li>
+        <li>The maximum winnings that will be paid out from the Sports Betting Bonus is
+          <b>$5000 USD</b> or currency equivalent.</li>
+        <li>Eligible Sports: All sports & esports, with a minimum odds of <b>1.6</b> for each
+          selection.</li>
+        <li>Only winning or losing bets count toward the rollover for playing with the bonus. Bets
+          with any other status (canceled, pre-closed, etc.) will not be counted.</li>
+        <li>No Limit Bet General Bonus Terms & Conditions apply, ie: bonus offers are limited
+          to one: IP address, <a href="https://banners.nolimitbet.ag/terms-conditions/">click
+            here</a>.</li>
+        <li>No Limit Bet reserves the right to change the parameters of the bonus offer and T&Cs
+          at any time during this promotion.</li>
+        <li>No Limit Bet reserves the right to prohibit, limit, or cancel the bonus offer for any
+          registered players on the site.</li>
+      </ul>
+
+<button class="promotion-button" onclick="window.open('https://nolimitbet.ag/', '_blank')">
+  DEPOSIT NOW
+</button>
+    </div>
+  </div>
+  </div>
+    <custom-footer></custom-footer>
+
+  <script>
+    class CustomFooter extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+<style>
+.custom-footer {
+  background-color: #11161f;
+  padding: 40px 90px;
+  color: #ccc;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  width: 100%;
+  border-top: 1px solid #00E6E6;
+}
+
+.footer-container {
+  max-width: 1283px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 130px; /* EXACT 130px gap between columns */
+  padding: 0 20px;
+  align-items: start;
+}
+
+.footer-section {
+  text-align: left;
+}
+
+.footer-section h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-bottom: 2px solid #00e6e6;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-section a {
+  color: #00e6e6;
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #ff4d94;
+}
+
+.footer-section p {
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #00e6e6;
+  border-radius: 50%;
+  color: #00e6e6;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  border-color: #ff4d94;
+  color: #ff4d94;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px 0;
+  font-size: 12px;
+  color: #888;
+  border-top: 1px solid #333;
+}
+
+@media (max-width: 1024px) {
+  .footer-container {
+    column-gap: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+  .footer-section {
+    margin-bottom: 20px;
+  }
+}
+</style>
+
+<footer class="custom-footer">
+  <div class="footer-container">
+
+    <!-- Contact Us -->
+    <div class="footer-section">
+      <h4>Contact Us</h4>
+      <p>Email: support@nolimitbet.ag</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/1G93J4ixnD/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/No_Limit_ag?t=ED_e-sQY5BX2dBP93HU1Lw&s=08" target="_blank" title="X"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://www.instagram.com/nolimitbet_ag?igsh=Zmo3N3RoOHdrOTls" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@nolimitbet.ag?_t=ZS-8yog8g87W23&_r=1" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <a href="/about-us/">About Us</a>
+      <a href="/terms-conditions/">Terms & Conditions</a>
+      <a href="/promotions/">Promotions</a>
+    </div>
+
+    <!-- Become an Affiliate -->
+    <div class="footer-section">
+      <h4>Become an Affiliate</h4>
+      <p>Join our affiliate program and earn with every referral.</p>
+      <p><a href="mailto:support@nolimitbet.ag" style="color:#ff4d94; font-weight:bold;">support@nolimitbet.ag</a></p>
+    </div>
+
+    <!-- License -->
+    <div class="footer-section">
+      <h4>License</h4>
+      
+      <!-- ✅ Image added here -->
+      
+      <p><a href="/licence/" style="color:#ff4d94; font-weight:bold;"><img src="/media/promotion/cga-logo.png" alt="License Logo" style="width:120px; margin:10px 0; border-radius:8px;"></a></p>
+    </div>
+
+
+  </div>
+
+  <div class="footer-bottom">
+    All rights reserved © 2025 <strong>nolimitbet.ag</strong>
+  </div>
+</footer>
+        `;
+      }
+    }
+    customElements.define('custom-footer', CustomFooter);
+  </script>
+  
+</body>
+</html>

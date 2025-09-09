@@ -15,6 +15,7 @@ urlpatterns = [
     path('promotions/', views.promotion, name='promotions'),
     path('promotions/promotions1/', views.promotion1, name='promotions1'),
     path('promotions/promotionsNFL/', views.promotionNFL, name='promotionsNFL'),
+    path('promotions/promotionsRELOAD/', views.promotionRELOAD, name='promotionsRELOAD'),
     path('promotions/promotions2/', views.promotion2, name='promotions2'),
     path('promotions/promotions3/', views.promotion3, name='promotions3'),
     path('promotions/promotions4/', views.promotion4, name='promotions4'),

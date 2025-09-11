@@ -122,6 +122,28 @@
       height: 28px;
     }
   }
+  .responsive-iframe {
+    height: 300px; /* ✅ default (desktop) */
+  }
+
+  /* Tablet (<= 991px) */
+  @media (max-width: 991px) {
+    .responsive-iframe {
+      height: 696px;
+    }
+  }
+  @media (max-width: 835px) {
+    .responsive-iframe {
+      height: 600px;
+    }
+  }
+
+  /* Mobile (<= 576px) */
+  @media (max-width: 767px) {
+    .responsive-iframe {
+      height: 200px;
+    }
+  }
 </style>
 
 </head>
@@ -159,16 +181,26 @@
   </div>
 
 
+    <div style="max-width:1126px; margin:0 auto;">
+      <iframe 
+        src="https://127.0.0.1:8000/posts/" 
+        class="responsive-iframe"
+        style="border:0; display:block; width:100%;" 
+        scrolling="yes"
+        allowfullscreen>
+      </iframe>
+    </div>
 
-  <iframe src="https://127.0.0.1:8000/posts/" 
-        width="100%" 
-        height="240px" 
-        frameborder="0" 
-        scrolling="no"></iframe>
 
-  <iframe src="https://127.0.0.1:8000/3rdSection/" width="1140" height="180" frameborder="0"></iframe>
+    <div style="max-width:1140px; margin:0 auto;">
+      <iframe 
+        src="https://127.0.0.1:8000/3rdSection/" 
+        style="border:0; display:block; width:100%; height:200px;" 
+        scrolling="no"
+        allowfullscreen>
+      </iframe>
+    </div>
 
-        
 
 
   <!-- Bootstrap 5 JS -->

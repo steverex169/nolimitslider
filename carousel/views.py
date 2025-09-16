@@ -222,7 +222,14 @@ def agent_register(request):
 @csrf_exempt
 def agent_dashboard(request):
     # Get online status
-    status, _ = AgentStatus.objects.get_or_create(agent__user=request.user)
+    # pehle ensure karo ke AgentProfile exist karta hai
+    agent_profile = getattr(request.user, "agent_profile", None)
+    if not agent_profile:
+        # agar user ka agent_profile nahi hai, create karo ya error handle karo
+        agent_profile = AgentProfile.objects.create(user=request.user)
+
+    # ab AgentStatus get_or_create karo
+    status, _ = AgentStatus.objects.get_or_create(agent=agent_profile)
 
     # Base queryset of chats excluding closed
     chats_qs = ChatSession.objects.filter(closed=False).annotate(

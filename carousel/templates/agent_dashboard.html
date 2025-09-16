@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f7;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #222;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding-top: 20px;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer;
+      white-space: nowrap;
+      /* prevent wrapping */
+      overflow: hidden;
+      /* hide overflow */
+      text-overflow: ellipsis;
+      /* add "..." at the end */
+      max-width: 180px;
+      /* adjust to sidebar width */
+    }
+
+    .sidebar a:hover {
+      background: #444;
+    }
+
+    .dropdown-content {
+      display: none;
+      flex-direction: column;
+      background: #333;
+    }
+
+    .dropdown-content a,
+    .dropdown-content span {
+      padding: 10px 20px;
+      font-size: 14px;
+      color: #ccc;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background: #555;
+      color: #fff;
+    }
+
+    /* Main content */
+    .main {
+      margin-left: 220px;
+      padding: 20px;
+    }
+
+    .status-toggle {
+      margin: 10px 0;
+    }
+
+    .summary {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .summary div {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      text-align: center;
+    }
+
+    .summary div h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .summary div p {
+      margin: 5px 0 0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #222;
+    }
+
+    /* Chat panel */
+    .chat-panel {
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      height: 500px;
+    }
+
+    .chat-header {
+      padding: 12px 20px;
+      background: #111;
+      color: #fff;
+      border-bottom: 1px solid #222;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .chat-header form button {
+      background: #D911BD;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .chat-header form button:hover {
+      background: #b30fa0;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f0f0f5;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message-bubble {
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .message-bubble.user {
+      background: #e0e0e0;
+      align-self: flex-start;
+    }
+
+    .message-bubble.agent {
+      background: #D911BD;
+      color: #fff;
+      align-self: flex-end;
+    }
+
+    .message-bubble:hover {
+      opacity: 0.9;
+      transition: 0.2s;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 12px 15px;
+      border: none;
+      outline: none;
+      border-radius: 0;
+    }
+
+    .chat-input button {
+      padding: 12px 20px;
+      border: none;
+      background: #D911BD;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .chat-input button:hover {
+      background: #b30fa0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Agent Dashboard</h2>
+
+    <a onclick="toggleDropdown('chat-dropdown')">💬 Chats ▾</a>
+    <div id="chat-dropdown" class="dropdown-content">
+      <strong style="padding: 10px 20px; color:#fff;">Active Chats</strong>
+      {% for s in active_chats %}
+      <a href="?chat={{ s.session_id }}">{{ s.session_id }}</a>
+      {% empty %}
+      <span>No active chats</span>
+      {% endfor %}
+
+      <strong style="padding: 10px 20px; color:#bbb;">New Chats</strong>
+      {% for s in new_chats %}
+      <a href="?chat={{ s.session_id }}">{{ s.session_id }}</a>
+      {% empty %}
+      <span>No new chats</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <h2>Welcome, {{ request.user.username }}</h2>
+
+    <div class="status-toggle">
+      Current Status:
+      {% if status.is_online %}
+      <span style="color:green;">🟢 Online</span>
+      <form method="post" style="display:inline;" action="{% url 'set_online' %}">
+        {% csrf_token %}
+        <button type="submit" name="action" value="go_offline">Go Offline</button>
+      </form>
+      {% else %}
+      <span style="color:red;">🔴 Offline</span>
+      <form method="post" style="display:inline;" action="{% url 'set_online' %}">
+        {% csrf_token %}
+        <button type="submit" name="action" value="go_online">Go Online</button>
+      </form>
+      {% endif %}
+    </div>
+
+    <div class="summary">
+      <div>
+        <h3>Total Chats</h3>
+        <p>{{ total_chats }}</p>
+      </div>
+      <div>
+        <h3>Active Chats</h3>
+        <p>{{ active_chats|length }}</p>
+      </div>
+      <div>
+        <h3>New Chats</h3>
+        <p>{{ new_chats|length }}</p>
+      </div>
+    </div>
+
+    {% if selected_chat %}
+    <div class="chat-panel">
+      <div class="chat-header">
+        <span>Chat with {{ selected_chat.user_name|default:"Guest" }}</span>
+        <div style="margin:10px 0;">
+          <label>
+            <input type="checkbox" id="sound-toggle" checked>
+            Enable Notification Sound
+          </label>
+        </div>
+
+        {% if not selected_chat.closed %}
+        <form method="post" action="{% url 'close_chat' selected_chat.session_id %}" style="margin:0;">
+          {% csrf_token %}
+          <button type="submit">Close Chat</button>
+        </form>
+        {% else %}
+        <span style="color:gray; font-size:12px;">This chat is closed</span>
+        {% endif %}
+      </div>
+
+      <div class="chat-messages" id="chat-box"></div>
+
+      <div class="chat-input">
+        <input type="text" id="msg" placeholder="Type a message" {% if selected_chat.closed %}disabled{% endif %}>
+        <button onclick="sendMessage()" {% if selected_chat.closed %}disabled{% endif %}>Send</button>
+      </div>
+    </div>
+    {% else %}
+    <p>Select a chat from the sidebar to start messaging.</p>
+    {% endif %}
+  </div>
+  <audio id="notification-sound" src="https://www.myinstants.com/media/sounds/notification.mp3" preload="auto"></audio>
+
+
+  <script>
+    function toggleDropdown(id) {
+      let el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Chat JS
+    {% if selected_chat %}
+    let lastMessageCount = 0;
+
+    function loadMessages() {
+      fetch("/agent/chat/{{ selected_chat.session_id }}/messages/")
+        .then(res => res.json())
+        .then(data => {
+          let box = document.getElementById("chat-box");
+          box.innerHTML = "";
+          data.forEach(m => {
+            let color = m.sender === "agent" ? "#D911BD" : "#222";
+            box.innerHTML += `<p><b style="color:${color}">${m.sender}:</b> ${m.content}</p>`;
+          });
+          box.scrollTop = box.scrollHeight;
+
+          // ✅ Play sound if new message arrives
+          if (data.length > lastMessageCount) {
+            const soundEnabled = document.getElementById("sound-toggle").checked;
+            if (soundEnabled && data.length > 0) {
+              document.getElementById("notification-sound").play();
+            }
+          }
+          lastMessageCount = data.length;
+        });
+    }
+
+
+    function sendMessage() {
+      let msg = document.getElementById("msg").value.trim();
+      if (!msg) return;
+
+      fetch("/agent/chat/{{ selected_chat.session_id }}/send/", {
+        method: "POST",
+        headers: { "X-CSRFToken": "{{ csrf_token }}" },
+        body: new URLSearchParams({ "content": msg })
+      }).then(res => res.json()).then(data => {
+        document.getElementById("msg").value = "";
+        loadMessages();
+      });
+    }
+
+    function loadDashboard() {
+      fetch("{% url 'agent_dashboard' %}")
+        .then(res => res.json())
+        .then(data => {
+          // Update summary counts
+          document.querySelector(".summary div:nth-child(1) p").innerText = data.total_chats;
+          document.querySelector(".summary div:nth-child(2) p").innerText = data.active_chats.length;
+          document.querySelector(".summary div:nth-child(3) p").innerText = data.new_chats.length;
+
+          // Update sidebar lists
+          let activeList = "";
+          if (data.active_chats.length) {
+            data.active_chats.forEach(c => {
+              activeList += `<a href="?chat=${c.session_id}">${c.user_name || c.session_id}</a>`;
+            });
+          } else {
+            activeList = "<span>No active chats</span>";
+          }
+          document.querySelector("#chat-dropdown strong:nth-of-type(1)").nextElementSibling.innerHTML = activeList;
+
+          let newList = "";
+          if (data.new_chats.length) {
+            data.new_chats.forEach(c => {
+              newList += `<a href="?chat=${c.session_id}">${c.user_name || c.session_id}</a>`;
+            });
+          } else {
+            newList = "<span>No new chats</span>";
+          }
+          document.querySelector("#chat-dropdown strong:nth-of-type(2)").nextElementSibling.innerHTML = newList;
+        });
+    }
+
+    // Refresh every 5 sec
+    setInterval(loadDashboard, 5000);
+    loadDashboard();
+
+
+    setInterval(loadMessages, 2000);
+    loadMessages();
+    {% endif %}
+  </script>
+
+</body>
+
+</html>

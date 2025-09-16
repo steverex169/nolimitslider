@@ -1,11 +1,18 @@
-from .models import CarouselImage
+from .models import CarouselImage, Message, AgentStatus, ChatSession, AgentStatus, AgentProfile
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CarouselImageForm
+from .forms import CarouselImageForm, AgentRegisterForm
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.contrib.auth import logout
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+import uuid
+from django.db.models import Q
+from django.db.models import Count
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -15,14 +22,26 @@ def login_view(request):
 
         if user:
             login(request, user)
+
             if user.is_superuser:
                 return redirect('superadmin')
-            else:
-                return redirect('carousel')  # Or any other page for non-superusers
+
+            # agent check: does this user have an AgentProfile and which role
+            if hasattr(user, 'agent_profile'):
+                role = user.agent_profile.role
+                # change redirects per role as needed
+                if role == 'manager':
+                    return redirect('manager_dashboard')   # create if needed
+                return redirect('agent_dashboard')
+
+            # normal client
+            return redirect('carousel')  # existing client page
+
         else:
             return render(request, 'login.html', {'error': 'Invalid credentials'})
 
     return render(request, 'login.html')
+
 
 
 
@@ -114,8 +133,6 @@ def preview_terms_view(request):
         'end_date': data['end_date'],
         'terms_html': data['terms'],
     })
-from django.shortcuts import render, get_object_or_404
-from .models import CarouselImage
 
 def carousel_image_detail(request, image_id):
     # Yahan pk + image_type filter dono lagayenge
@@ -162,3 +179,265 @@ def post_gallery(request):
 def post_3rdsection(request):
     images = CarouselImage.objects.filter(image_type="others").order_by('-created_at')
     return render(request, "3rdSection.html", {"images": images})
+
+@csrf_exempt  # agar iframe/static me chalana ho
+def chat_send(request):
+    if request.method == "POST":
+        session_id = request.POST.get("session_id") or str(uuid.uuid4())
+        content = request.POST.get("content")
+
+        # Save user message
+        Message.objects.create(
+            sender="user",
+            content=content,
+            session_id=session_id
+        )
+
+        # Dummy bot reply (aap chahe to AI/knowledge base se connect karna)
+        reply = "Thanks! We'll get back to you soon."
+
+        Message.objects.create(
+            sender="bot",
+            content=reply,
+            session_id=session_id
+        )
+
+        return JsonResponse({
+            "from": "Bot",
+            "reply": reply
+        })
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+def agent_register(request):
+    if request.method == "POST":
+        form = AgentRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")   # or redirect to agent_dashboard
+    else:
+        form = AgentRegisterForm()
+    return render(request, "agent_register.html", {"form": form})
+
+@login_required
+@csrf_exempt
+def agent_dashboard(request):
+    # Get online status
+    status, _ = AgentStatus.objects.get_or_create(agent__user=request.user)
+
+    # Base queryset of chats excluding closed
+    chats_qs = ChatSession.objects.filter(closed=False)
+
+    print("chats qa", chats_qs)
+
+    # Annotate counts
+    chats_qs = chats_qs.annotate(
+        total_messages=Count('message'),
+        user_messages=Count('message', filter=Q(message__sender='user')),
+        agent_messages=Count('message', filter=Q(message__sender='agent')),
+    )
+    print("countss", chats_qs)
+    # Active chats: assigned to this agent AND agent has sent message OR both user+agent messages
+    active_chats = chats_qs.filter(
+        assigned_agent=request.user
+    ).filter(
+        Q(agent_messages__gte=1) | Q(agent_messages__gte=0, user_messages__gte=1)
+    )
+    print("activate chats", active_chats)
+
+    # New chats: not assigned OR only user messages (agent hasn't replied yet)
+    new_chats = chats_qs.filter(
+        Q(assigned_agent=None) | Q(agent_messages=0, user_messages__gte=1)
+    )
+
+    # Total chats count
+    total_chats = active_chats.count() + new_chats.count()
+
+    # Optional: selected chat (for chat panel)
+    session_id = request.GET.get("chat")
+    selected_chat = None
+    if session_id:
+        selected_chat = ChatSession.objects.filter(session_id=session_id).first()
+
+    context = {
+        "status": status,
+        "active_chats": active_chats,
+        "new_chats": new_chats,
+        "total_chats": total_chats,
+        "selected_chat": selected_chat,
+    }
+
+    return render(request, "agent_dashboard.html", context)
+
+@login_required
+def dashboard_data(request):
+    # Base queryset excluding closed
+    chats_qs = ChatSession.objects.filter(closed=False).annotate(
+        total_messages=Count('message'),
+        user_messages=Count('message', filter=Q(message__sender='user')),
+        agent_messages=Count('message', filter=Q(message__sender='agent')),
+    )
+
+    active_chats = chats_qs.filter(
+        assigned_agent=request.user
+    ).filter(
+        Q(agent_messages__gte=1) | Q(agent_messages__gte=0, user_messages__gte=1)
+    )
+
+    new_chats = chats_qs.filter(
+        Q(assigned_agent=None) | Q(agent_messages=0, user_messages__gte=1)
+    )
+
+    data = {
+        "total_chats": active_chats.count() + new_chats.count(),
+        "active_chats": list(active_chats.values("session_id", "user_name")),
+        "new_chats": list(new_chats.values("session_id", "user_name")),
+    }
+    return JsonResponse(data)
+
+# ---------------- USER SIDE ----------------
+@csrf_exempt
+def send_message(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request"}, status=400)
+
+    session_id = request.POST.get("session_id") or str(uuid.uuid4())
+    sender = request.POST.get("sender", "user")
+    content = request.POST.get("content", "").strip()
+
+    if not content:
+        return JsonResponse({"error": "Empty message"}, status=400)
+
+    # Get or create chat session
+    chat, _ = ChatSession.objects.get_or_create(session_id=session_id)
+
+    # Save user message
+    msg = Message.objects.create(chat=chat, sender=sender, content=content)
+
+    reply = None
+
+    # Assign agent if none assigned
+    if not chat.assigned_agent:
+        online_agents = AgentStatus.objects.filter(is_online=True)
+        if online_agents.exists():
+            chat.assigned_agent = online_agents.first().agent.user
+            chat.save()
+        else:
+            # Bot fallback
+            keywords = {
+                "price": "Our pricing details are available on the Pricing page.",
+                "contact": "You can contact us via email support@example.com.",
+                "refund": "Refunds are processed within 5-7 business days.",
+            }
+            reply = "Sorry, I don’t understand your question."
+            for key, val in keywords.items():
+                if key in content.lower():
+                    reply = val
+                    break
+            Message.objects.create(chat=chat, sender="bot", content=reply)
+
+    return JsonResponse({
+        "status": "ok",
+        "message": msg.content,
+        "reply": reply,
+        "session_id": chat.session_id,
+    })
+
+
+def get_messages(request, session_id):
+    msgs = Message.objects.filter(chat__session_id=session_id).order_by("timestamp")
+    data = [
+        {"sender": m.sender, "content": m.content, "time": m.timestamp.strftime("%H:%M")}
+        for m in msgs
+    ]
+    return JsonResponse(data, safe=False)
+
+
+# ---------------- AGENT SIDE ----------------
+@login_required
+def agent_chat_view(request, session_id):
+    chat = get_object_or_404(ChatSession, session_id=session_id)
+    return render(request, "agent_chat.html", {"chat": chat})
+
+
+@csrf_exempt
+@login_required
+def agent_send_message(request, session_id):
+    if request.method == "POST":
+        chat = get_object_or_404(ChatSession, session_id=session_id)
+        content = request.POST.get("content")
+        msg = Message.objects.create(chat=chat, sender="agent", content=content)
+        return JsonResponse({"status": "ok", "message": msg.content})
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+
+@login_required
+def agent_get_messages(request, session_id):
+    chat = get_object_or_404(ChatSession, session_id=session_id)
+    msgs = chat.message_set.order_by("timestamp")  # ← default reverse relation
+    data = [
+        {"sender": m.sender, "content": m.content, "time": m.timestamp.strftime("%H:%M")}
+        for m in msgs
+    ]
+    return JsonResponse(data, safe=False)
+@login_required
+def close_chat(request, session_id):
+    chat = get_object_or_404(ChatSession, session_id=session_id)
+    
+    # Only assigned agent can close
+    if chat.assigned_agent == request.user:
+        chat.closed = True
+        chat.assigned_agent = None
+        chat.save()
+    
+    return redirect('agent_dashboard')
+
+
+# ✅ Get agent status
+def agent_status(request):
+    try:
+        agent = AgentProfile.objects.filter(role="agent").first()
+        if agent:
+            status, _ = AgentStatus.objects.get_or_create(agent=agent)
+            return JsonResponse({
+                "name": agent.user.username,
+                "online": status.is_online,
+                "typing": agent.is_typing
+            })
+        else:
+            return JsonResponse({"name": "No Agent", "online": False, "typing": False})
+    except:
+        return JsonResponse({"name": "Error", "online": False, "typing": False})
+
+
+# ✅ Update online/offline (for agents)
+@login_required
+def set_online_status(request):
+    if request.method == "POST":
+        action = request.POST.get("action")
+        agent = get_object_or_404(AgentProfile, user=request.user)
+        status, _ = AgentStatus.objects.get_or_create(agent=agent)
+
+        # Map form button values to status
+        if action == "go_online":
+            status.is_online = True
+        elif action == "go_offline":
+            status.is_online = False
+
+        status.save()
+        return redirect("agent_dashboard")  # Redirect back to dashboard
+
+    return redirect("agent_dashboard")
+
+# ✅ Update typing status (for agents)
+@login_required
+def set_typing_status(request):
+    if request.method == "POST":
+        typing = request.POST.get("typing") == "true"
+        agent = get_object_or_404(AgentProfile, user=request.user)
+        status, _ = AgentStatus.objects.get_or_create(agent=agent)
+
+        agent.is_typing = typing
+        status.save()
+
+        return JsonResponse({"success": True, "typing": agent.is_typing})
+    return JsonResponse({"success": False})

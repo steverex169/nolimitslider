@@ -1,5 +1,7 @@
 from django import forms
-from .models import CarouselImage
+from .models import CarouselImage, AgentProfile
+from django.contrib.auth.models import User
+
 
 class CarouselImageForm(forms.ModelForm):
     class Meta:
@@ -21,3 +23,29 @@ class CarouselImageForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.required = True  # 👈 makes all fields required
+
+class AgentRegisterForm(forms.ModelForm):
+    username = forms.CharField(max_length=150)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = AgentProfile
+        fields = ["phone", "department", "role"]   # 👈 role add kar diya
+        widgets = {
+            "phone": forms.TextInput(attrs={"class": "form-control"}),
+            "department": forms.TextInput(attrs={"class": "form-control"}),
+            "role": forms.Select(attrs={"class": "form-select"}),  # 👈 dropdown style
+        }
+
+    def save(self, commit=True):
+        # pehle User banao
+        user = User.objects.create_user(
+            username=self.cleaned_data["username"],
+            password=self.cleaned_data["password"],
+        )
+        agent = super().save(commit=False)
+        agent.user = user
+        if commit:
+            agent.save()
+        return agent
+

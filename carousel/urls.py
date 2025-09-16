@@ -26,9 +26,20 @@ urlpatterns = [
     path('promotions/promotions9/', views.promotion9, name='promotions9'),
     path('promotions/promotions10/', views.promotion10, name='promotions10'),
     path('licence/', views.licence, name='licence'),
-
     path('carousel/image/<int:image_id>/', views.carousel_image_detail, name='carousel_image_detail'),
     path("posts/", views.post_gallery, name="post_gallery"),
     path("3rdSection/", views.post_3rdsection, name="post_3rdsection"),
+    path('chat/send/', views.send_message, name='send_message'),
+    path("chat/chat/", views.chat_send, name="chat_send"),
+    path("chat/messages/<str:session_id>/", views.get_messages, name="get_messages"),
+    path("agent/dashboard/", views.agent_dashboard, name="agent_dashboard"),
+    path("agent/chat/<str:session_id>/", views.agent_chat_view, name="agent_chat"),
+    path("agent/chat/<str:session_id>/send/", views.agent_send_message, name="agent_send_message"),
+    path("agent/chat/<str:session_id>/messages/", views.agent_get_messages, name="agent_get_messages"),
+    path("agent/register/", views.agent_register, name="agent_register"),
+    path("chat/agent-status/", views.agent_status, name="agent_status"),
+    path("chat/set-online/", views.set_online_status, name="set_online"),
+    path("chat/set-typing/", views.set_typing_status, name="set_typing"),
+    path('agent/chat/<str:session_id>/close/', views.close_chat, name='close_chat'),
 
 ]

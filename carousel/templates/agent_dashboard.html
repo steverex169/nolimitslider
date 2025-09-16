@@ -216,14 +216,20 @@
     <div id="chat-dropdown" class="dropdown-content">
       <strong style="padding: 10px 20px; color:#fff;">Active Chats</strong>
       {% for s in active_chats %}
-      <a href="?chat={{ s.session_id }}">{{ s.session_id }}</a>
+      <a href="?chat={{ s.session_id }}" onclick="resetMessageCounter()">
+        {{ s.session_id }}
+      </a>
+
       {% empty %}
       <span>No active chats</span>
       {% endfor %}
 
       <strong style="padding: 10px 20px; color:#bbb;">New Chats</strong>
       {% for s in new_chats %}
-      <a href="?chat={{ s.session_id }}">{{ s.session_id }}</a>
+      <a href="?chat={{ s.session_id }}" onclick="resetMessageCounter()">
+        {{ s.session_id }}
+      </a>
+
       {% empty %}
       <span>No new chats</span>
       {% endfor %}
@@ -291,8 +297,11 @@
 
       <div class="chat-input">
         <input type="text" id="msg" placeholder="Type a message" {% if selected_chat.closed %}disabled{% endif %}>
-        <button onclick="sendMessage()" {% if selected_chat.closed %}disabled{% endif %}>Send</button>
+        <button onclick="sendMessage()" {% if selected_chat.closed %}disabled{% endif %}>
+          Send
+        </button>
       </div>
+
     </div>
     {% else %}
     <p>Select a chat from the sidebar to start messaging.</p>
@@ -304,37 +313,112 @@
   <script>
     function toggleDropdown(id) {
       let el = document.getElementById(id);
-      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+      el.style.display = el.style.display === "block" ? "none" : "block";
     }
 
-    // Chat JS
     {% if selected_chat %}
-    let lastMessageCount = 0;
+    let lastMessageCount = null; // null = means first render, ignore sound
 
     function loadMessages() {
       fetch("/agent/chat/{{ selected_chat.session_id }}/messages/")
         .then(res => res.json())
         .then(data => {
+          const clientMessages = data.filter(m => m.sender === "client").length;
+
+          // 🔔 Play sound ONLY if not first render AND count increased
+          if (lastMessageCount !== null && clientMessages > lastMessageCount) {
+            if (document.getElementById("sound-toggle").checked) {
+              let audio = document.getElementById("notification-sound");
+              audio.play().catch(err => console.warn("Sound blocked:", err));
+            }
+          }
+
+          // ✅ Render messages
           let box = document.getElementById("chat-box");
           box.innerHTML = "";
           data.forEach(m => {
-            let color = m.sender === "agent" ? "#D911BD" : "#222";
-            box.innerHTML += `<p><b style="color:${color}">${m.sender}:</b> ${m.content}</p>`;
+            let bubbleClass = m.sender === "agent" ? "agent" : "user";
+            box.innerHTML += `<div class="message-bubble ${bubbleClass}">${m.content}</div>`;
           });
           box.scrollTop = box.scrollHeight;
 
-          // ✅ Play sound if new message arrives
-          if (data.length > lastMessageCount) {
-            const soundEnabled = document.getElementById("sound-toggle").checked;
-            if (soundEnabled && data.length > 0) {
-              document.getElementById("notification-sound").play();
-            }
-          }
-          lastMessageCount = data.length;
+          // ✅ Update counter AFTER rendering
+          lastMessageCount = clientMessages;
         });
     }
 
+    // ✅ Reset when switching chats (sidebar links me call karna hoga)
+    function resetMessageCounter() {
+      lastMessageCount = null;
+    }
 
+    setInterval(loadMessages, 2000);
+    loadMessages();
+
+    // =====================
+    // Typing Status Logic
+    // =====================
+    let typingTimer = null;
+    let isTyping = false;
+
+    function setTyping(state) {
+      fetch("/chat/set-typing/", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({ typing: state })
+      })
+        .then(res => res.json())
+        .then(data => console.log("Typing status updated:", data))
+        .catch(err => console.warn("Typing status error:", err));
+    }
+
+    function handleTyping() {
+      const msgInput = document.getElementById("msg");
+      const value = msgInput.value.trim();
+
+      if (value.length > 0 && !isTyping) {
+        setTyping(true);
+        isTyping = true;
+      }
+
+      if (value.length === 0 && isTyping) {
+        setTyping(false);
+        isTyping = false;
+      }
+
+      // Agar 1 sec tak koi input nahi aaya → typing false
+      clearTimeout(typingTimer);
+      if (value.length > 0) {
+        typingTimer = setTimeout(() => {
+          setTyping(false);
+          isTyping = false;
+        }, 3600000);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const msgInput = document.getElementById("msg");
+      const sendBtn = document.querySelector(".chat-input button");
+
+      if (msgInput) {
+        msgInput.addEventListener("input", handleTyping);
+        console.log("Typing listener attached ✅");
+      }
+
+      if (sendBtn) {
+        sendBtn.addEventListener("click", () => {
+          setTyping(false);
+          isTyping = false;
+        });
+      }
+    });
+
+    // =====================
+    // Send Message
+    // =====================
     function sendMessage() {
       let msg = document.getElementById("msg").value.trim();
       if (!msg) return;
@@ -342,23 +426,34 @@
       fetch("/agent/chat/{{ selected_chat.session_id }}/send/", {
         method: "POST",
         headers: { "X-CSRFToken": "{{ csrf_token }}" },
-        body: new URLSearchParams({ "content": msg })
-      }).then(res => res.json()).then(data => {
-        document.getElementById("msg").value = "";
-        loadMessages();
-      });
+        body: new URLSearchParams({ content: msg })
+      })
+        .then(res => res.json())
+        .then(() => {
+          document.getElementById("msg").value = "";
+          clearTimeout(typingTimer);
+          setTyping(false);  // ✅ send ke baad force stop
+          isTyping = false;
+          loadMessages();
+        });
     }
+    {% endif %}
 
+    // =====================
+    // Dashboard poller
+    // =====================
     function loadDashboard() {
-      fetch("{% url 'agent_dashboard' %}")
+      fetch("{% url 'agent_dashboard' %}?ajax=1", {
+        headers: { "X-Requested-With": "XMLHttpRequest" }
+      })
         .then(res => res.json())
         .then(data => {
-          // Update summary counts
+          // Summary update
           document.querySelector(".summary div:nth-child(1) p").innerText = data.total_chats;
           document.querySelector(".summary div:nth-child(2) p").innerText = data.active_chats.length;
           document.querySelector(".summary div:nth-child(3) p").innerText = data.new_chats.length;
 
-          // Update sidebar lists
+          // Sidebar Active Chats
           let activeList = "";
           if (data.active_chats.length) {
             data.active_chats.forEach(c => {
@@ -367,8 +462,8 @@
           } else {
             activeList = "<span>No active chats</span>";
           }
-          document.querySelector("#chat-dropdown strong:nth-of-type(1)").nextElementSibling.innerHTML = activeList;
 
+          // Sidebar New Chats
           let newList = "";
           if (data.new_chats.length) {
             data.new_chats.forEach(c => {
@@ -377,19 +472,22 @@
           } else {
             newList = "<span>No new chats</span>";
           }
-          document.querySelector("#chat-dropdown strong:nth-of-type(2)").nextElementSibling.innerHTML = newList;
+
+          // Replace whole chat-dropdown safely
+          document.getElementById("chat-dropdown").innerHTML = `
+          <strong style="padding:10px 20px; color:#fff;">Active Chats</strong>
+          ${activeList}
+          <strong style="padding:10px 20px; color:#bbb;">New Chats</strong>
+          ${newList}
+        `;
         });
     }
 
-    // Refresh every 5 sec
+    // Auto refresh
     setInterval(loadDashboard, 5000);
     loadDashboard();
-
-
-    setInterval(loadMessages, 2000);
-    loadMessages();
-    {% endif %}
   </script>
+
 
 </body>
 

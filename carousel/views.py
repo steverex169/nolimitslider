@@ -225,74 +225,52 @@ def agent_dashboard(request):
     status, _ = AgentStatus.objects.get_or_create(agent__user=request.user)
 
     # Base queryset of chats excluding closed
-    chats_qs = ChatSession.objects.filter(closed=False)
-
-    print("chats qa", chats_qs)
-
-    # Annotate counts
-    chats_qs = chats_qs.annotate(
-        total_messages=Count('message'),
-        user_messages=Count('message', filter=Q(message__sender='user')),
-        agent_messages=Count('message', filter=Q(message__sender='agent')),
-    )
-    print("countss", chats_qs)
-    # Active chats: assigned to this agent AND agent has sent message OR both user+agent messages
-    active_chats = chats_qs.filter(
-        assigned_agent=request.user
-    ).filter(
-        Q(agent_messages__gte=1) | Q(agent_messages__gte=0, user_messages__gte=1)
-    )
-    print("activate chats", active_chats)
-
-    # New chats: not assigned OR only user messages (agent hasn't replied yet)
-    new_chats = chats_qs.filter(
-        Q(assigned_agent=None) | Q(agent_messages=0, user_messages__gte=1)
-    )
-
-    # Total chats count
-    total_chats = active_chats.count() + new_chats.count()
-
-    # Optional: selected chat (for chat panel)
-    session_id = request.GET.get("chat")
-    selected_chat = None
-    if session_id:
-        selected_chat = ChatSession.objects.filter(session_id=session_id).first()
-
-    context = {
-        "status": status,
-        "active_chats": active_chats,
-        "new_chats": new_chats,
-        "total_chats": total_chats,
-        "selected_chat": selected_chat,
-    }
-
-    return render(request, "agent_dashboard.html", context)
-
-@login_required
-def dashboard_data(request):
-    # Base queryset excluding closed
     chats_qs = ChatSession.objects.filter(closed=False).annotate(
         total_messages=Count('message'),
         user_messages=Count('message', filter=Q(message__sender='user')),
         agent_messages=Count('message', filter=Q(message__sender='agent')),
     )
 
+    # Active chats
     active_chats = chats_qs.filter(
         assigned_agent=request.user
     ).filter(
         Q(agent_messages__gte=1) | Q(agent_messages__gte=0, user_messages__gte=1)
     )
 
+    # New chats
     new_chats = chats_qs.filter(
-        Q(assigned_agent=None) | Q(agent_messages=0, user_messages__gte=1)
+        Q(assigned_agent__isnull=True) | Q(assigned_agent=request.user) |
+        Q(agent_messages=0, user_messages__gte=1)
     )
 
-    data = {
-        "total_chats": active_chats.count() + new_chats.count(),
-        "active_chats": list(active_chats.values("session_id", "user_name")),
-        "new_chats": list(new_chats.values("session_id", "user_name")),
-    }
-    return JsonResponse(data)
+    # Total chats
+    total_chats = active_chats.count() + new_chats.count()
+
+    # Selected chat
+    session_id = request.GET.get("chat")
+    selected_chat = None
+    if session_id:
+        selected_chat = ChatSession.objects.filter(session_id=session_id).first()
+
+    # 👉 If request is AJAX, return JSON
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return JsonResponse({
+            "status": {"is_online": status.is_online},
+            "total_chats": total_chats,
+            "active_chats": list(active_chats.values("session_id", "user_name")),
+            "new_chats": list(new_chats.values("session_id", "user_name")),
+        })
+
+    # 👉 Otherwise render full page
+    return render(request, "agent_dashboard.html", {
+        "status": status,
+        "active_chats": active_chats,
+        "new_chats": new_chats,
+        "total_chats": total_chats,
+        "selected_chat": selected_chat,
+    })
+
 
 # ---------------- USER SIDE ----------------
 @csrf_exempt
@@ -395,18 +373,21 @@ def close_chat(request, session_id):
 # ✅ Get agent status
 def agent_status(request):
     try:
-        agent = AgentProfile.objects.filter(role="agent").first()
-        if agent:
-            status, _ = AgentStatus.objects.get_or_create(agent=agent)
+        # Get all online agents
+        online_agents = AgentStatus.objects.filter(agent__role="agent", is_online=True).select_related("agent__user")
+        
+        if online_agents.exists():
+            names = [a.agent.user.username for a in online_agents]
             return JsonResponse({
-                "name": agent.user.username,
-                "online": status.is_online,
-                "typing": agent.is_typing
+                "names": names,
+                "online": True,
+                "typing": any(a.agent.is_typing for a in online_agents)
             })
         else:
-            return JsonResponse({"name": "No Agent", "online": False, "typing": False})
-    except:
-        return JsonResponse({"name": "Error", "online": False, "typing": False})
+            return JsonResponse({"names": [], "online": False, "typing": False})
+    except Exception:
+        return JsonResponse({"names": [], "online": False, "typing": False})
+
 
 
 # ✅ Update online/offline (for agents)
@@ -417,27 +398,25 @@ def set_online_status(request):
         agent = get_object_or_404(AgentProfile, user=request.user)
         status, _ = AgentStatus.objects.get_or_create(agent=agent)
 
-        # Map form button values to status
         if action == "go_online":
             status.is_online = True
         elif action == "go_offline":
             status.is_online = False
 
         status.save()
-        return redirect("agent_dashboard")  # Redirect back to dashboard
+        # redirect back to dashboard after update
+        return redirect("agent_dashboard")
 
     return redirect("agent_dashboard")
-
 # ✅ Update typing status (for agents)
 @login_required
 def set_typing_status(request):
     if request.method == "POST":
         typing = request.POST.get("typing") == "true"
-        agent = get_object_or_404(AgentProfile, user=request.user)
-        status, _ = AgentStatus.objects.get_or_create(agent=agent)
+        agent_profile = get_object_or_404(AgentProfile, user=request.user)
+        agent_profile.is_typing = typing
+        agent_profile.save()   # ✅ save profile
 
-        agent.is_typing = typing
-        status.save()
+        return JsonResponse({"success": True, "typing": agent_profile.is_typing})
 
-        return JsonResponse({"success": True, "typing": agent.is_typing})
     return JsonResponse({"success": False})

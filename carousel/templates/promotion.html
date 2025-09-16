@@ -268,129 +268,220 @@
 
     }
 
-    /* Chat box */
-    #chat-box {
-      background: url('/media/promotion/Rectangle 15.png') no-repeat center center;
-      background-size: cover;
-      color: white;
-      width: 360px;
-      height: 480px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+  /* Chat box */
+  #chat-box {
+    background: url('/media/promotion/Rectangle 15.png') no-repeat center center;
+    background-size: cover;
+    color: white;
+    width: 360px;
+    height: 480px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-    /* Messages area */
-    #chat-messages {
-      flex: 1;
-      padding: 12px;
-      overflow-y: auto;
-      background: #000000aa; /* semi-transparent dark overlay */
-    }
+  /* Header */
+  .chat-header {
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #222;
+  }
 
-    /* Typing indicator */
-    #typing-indicator {
-      display: none;
-      font-size: 12px;
-      padding: 5px;
-      color: gray;
-    }
+  .chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chat-menu {
+    display: none;              /* IMPORTANT: default hidden */
+    position: absolute;
+    right: 0;
+    top: 25px;
+    background: #2c2c2c;
+    padding: 6px 12px;
+    border-radius: 40px;
+    align-items: center;
+    gap: 8px;
+    min-width: 165px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
 
-    /* Messages Common */
-    #chat-messages .user-msg,
-    #chat-messages .agent-msg,
-    #chat-messages .bot-msg {
-      display: flex;
-      align-items: flex-start;
-      margin: 8px 0;
-    }
+  /* when visible we will set display:flex from JS */
+  .chat-menu.show {
+    display: flex;
+  }
 
-    #chat-messages .icon {
-      margin-right: 8px;
-      font-size: 18px;
-    }
 
-    #chat-messages .bubble {
-      padding: 10px 14px;
-      border-radius: 14px;
-      max-width: 70%;
-      word-wrap: break-word;
-      font-size: 14px;
-      line-height: 1.4em;
-    }
+  .agent-icon {
+    width: 32px;
+    height: 32px;
+    background: #000;
+    border: 2px solid #444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
 
-    /* User (Right Side) */
-    .user-msg {
-      justify-content: flex-end;
-    }
+  .agent-icon img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+  }
 
-    .user-msg .bubble {
-      background: #00E6E6;
-      color: white;
-      border-radius: 12px 12px 0 12px;
-    }
+  .agent-name {
+    font-weight: bold;
+    font-size: 14px;
+  }
 
-    .user-msg .icon {
-      display: none;
-    }
+  .agent-status {
+    font-size: 11px;
+    color: #bbb;
+  }
 
-    /* Agent (Pink #FF4D94) */
-    .agent-msg .bubble {
-      background: #FF4D94;
-      color: white;
-      border-radius: 12px 12px 12px 0;
-    }
+  .sound-circle {
+    background: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
 
-    .agent-msg .icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: url('/media/promotion/chatbot 2.png') no-repeat center center;
-      background-size: cover;
-    }
+  /* Messages area */
+  #chat-messages {
+    flex: 1;
+    padding: 12px;
+    overflow-y: auto;
+    background: #000000aa; /* semi-transparent overlay */
+  }
 
-    /* Bot (Dark Gray #383838) */
-    .bot-msg .bubble {
-      background: #383838;
-      color: #ccc;
-      border-radius: 12px;
-    }
+  /* Typing indicator */
+  #typing-indicator {
+    display: none;
+    font-size: 12px;
+    padding: 5px;
+    color: gray;
+  }
 
-    .bot-msg .icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: url('/media/promotion/chatbot 2.png') no-repeat center center;
-      background-size: cover;
-    }
+  /* Messages Common */
+  #chat-messages .user-msg,
+  #chat-messages .agent-msg,
+  #chat-messages .bot-msg {
+    display: flex;
+    align-items: flex-start;
+    margin: 8px 0;
+    gap: 6px;
+  }
 
-    /* Input area */
-    .chat-input-box {
-      padding: 10px;
-      display: flex;
-      border-top: 1px solid #222;
-      background: #111;
-    }
+  #chat-messages .bubble {
+    padding: 10px 14px;
+    border-radius: 14px;
+    max-width: 70%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.4em;
+  }
 
-    .chat-input-box input {
-      flex: 1;
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-    }
+  /* User (Right Side) */
+  .user-msg {
+    justify-content: flex-end;
+  }
 
-    .chat-input-box button {
-      margin-left: 8px;
-      background: #FF4D94;
-      color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+  .user-msg .bubble {
+    background: #00E6E6;
+    color: #000;
+    border-radius: 12px 12px 0 12px;
+  }
+
+  /* Agent (Pink) */
+  .agent-msg .bubble {
+    background: #FF4D94;
+    color: white;
+    border-radius: 12px 12px 12px 0;
+  }
+
+  .agent-msg .icon {
+    width: 32px;
+    height: 32px;
+    background: #000;
+    border: 2px solid #444;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/media/promotion/chatbot 2.png');
+    background-size: cover;
+  }
+
+  /* Bot (Gray) */
+  .bot-msg .bubble {
+    background: #383838;
+    color: #fff;
+    border-radius: 12px;
+  }
+
+  .bot-msg .icon {
+    width: 32px;
+    height: 32px;
+    background: #000;
+    border: 2px solid #444;
+    border-radius: 50%;
+    background-image: url('/media/promotion/chatbot 2.png');
+    background-size: cover;
+  }
+
+  /* Input area */
+  .chat-input-box {
+    padding: 10px;
+    display: flex;
+    border-top: 1px solid #222;
+    background: rgba(0,0,0,0.7);
+  }
+
+  .chat-input-box input {
+    flex: 1;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+  }
+
+  .chat-input-box button {
+    margin-left: 8px;
+    background: #FF4D94;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .typing-indicator .bubble {
+    background: #383838;
+    color: #fff;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  .typing-indicator .icon {
+    width: 32px;
+    height: 32px;
+    background: #000;
+    border: 2px solid #444;
+    border-radius: 50%;
+    background-image: url('/media/promotion/chatbot 2.png');
+    background-size: cover;
+  }
+
   </style>
 </head>
 
@@ -527,11 +618,6 @@
             <a href="promotions10/" class="read-more">READ MORE</a>
           </div>
         </div>
-
-
-
-
-
 
       </div>
     </section>
@@ -693,90 +779,97 @@
     }
     customElements.define('custom-footer', CustomFooter);
   </script>
-  <!-- Chat Widget -->
-  <div id="chat-widget" style="position:fixed; bottom:20px; right:20px; z-index:9999; font-family:Arial, sans-serif;">
-    <!-- Floating Button -->
-    <button onclick="toggleChat()" id="chat-btn"
-      style="background:#00E6E6; color:white; border:none; padding:15px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
-      <img src="/media/promotion/chatbot.png" alt="Chat" style="width:24px; height:24px;">
-    </button>
+<!-- Chat Widget -->
+<div id="chat-widget" style="position:fixed; bottom:20px; right:20px; z-index:9999; font-family:Arial, sans-serif;">
+  <!-- Floating Button -->
+  <button onclick="toggleChat()" id="chat-btn"
+    style="background:#00E6E6; color:white; border:none; padding:15px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+    <img src="/media/promotion/chatbot.png" alt="Chat" style="width:24px; height:24px;">
+  </button>
 
-
-    <!-- Chat Box -->
-    <div id="chat-box" style="display:none;">
-      <!-- Header -->
-      <div style="background:#111; color:white; padding:12px; 
-                  display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #222;">
-        <div>
-          <div style="font-weight:bold;">nolimitbet.ag</div>
-          <div id="agent-status" style="font-size:12px; color:#bbb;">Online</div>
+  <!-- Chat Box -->
+  <div id="chat-box" style="display:none;">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="agent-icon">
+          <img src="/media/promotion/chatbot 2.png" alt="Agent">
         </div>
+        <div>
+          <div class="agent-name">nolimitbet.ag</div>
+          <div id="agent-status" class="agent-status">Online</div>
+        </div>
+      </div>
 
-        <!-- 3-dot menu -->
+      <!-- 3-dot menu -->
       <div style="position:relative;">
-        <span onclick="toggleMenu()" style="cursor:pointer; font-size:20px;">...</span>
-        
-        <!-- Popup menu -->
-        <div id="chat-menu" 
-            style="display:none; position:absolute; right:0; top:25px; 
-                    background:#2c2c2c; padding:6px 12px; border-radius:40px; 
-                    display:flex; align-items:center; gap:12px; min-width:160px;">
+        <!-- give the span an id and pass the event -->
+        <span id="three-dots" onclick="toggleMenu(event)" style="cursor:pointer; font-size:20px;">...</span>
 
-          <!-- Button text -->
-          <span id="sound-text" style="color:#fff; font-size:14px;">Enable Sound</span>
-
-          <!-- Icon in white circle -->
-          <div style="background:#fff; border-radius:50%; width:28px; height:28px; 
-                      display:flex; align-items:center; justify-content:center; cursor:pointer;"
-              onclick="toggleSound()">
-            <span id="sound-icon" style="color:#e91e63; font-size:16px;">🔇</span>
+        <!-- Popup menu (no inline display) -->
+        <div id="chat-menu" class="chat-menu" onclick="event.stopPropagation()">
+          <span id="sound-text">Enable Sound</span>
+          <div class="sound-circle" onclick="toggleSound(event)">
+            <span id="sound-icon">🔇</span>
           </div>
         </div>
       </div>
-      </div>
+
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages"></div>
+
+    <!-- Typing Indicator -->
 
 
-      <!-- Messages -->
-      <div id="chat-messages"></div>
 
-      <!-- Typing Indicator -->
-      <div id="typing-indicator">Agent is typing...</div>
-
-      <!-- Input -->
-      <div class="chat-input-box">
-        <input type="text" id="chat-input" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
-      </div>
+    <!-- Input -->
+    <div class="chat-input-box">
+      <input type="text" id="chat-input" placeholder="Type your message...">
+      <button onclick="sendMessage()">Ask ➤</button>
     </div>
   </div>
+</div>
 
-  <audio id="notificationSound" src="https://www.myinstants.com/media/sounds/notification.mp3"></audio>
+<audio id="notificationSound" src="https://www.myinstants.com/media/sounds/notification.mp3"></audio>
 
   <script>
     let soundEnabled = false;
     let lastMessageCount = 0;
+    window.isTyping = false; // global typing flag
 
+    // Toggle chat box
     function toggleChat() {
-      let box = document.getElementById("chat-box");
-      box.style.display = (box.style.display === "none") ? "flex" : "none";
+      const box = document.getElementById("chat-box");
+      const menu = document.getElementById("chat-menu");
+      const isHidden = box.style.display === "none" || getComputedStyle(box).display === "none";
+
+      if (isHidden) {
+        box.style.display = "flex";
+        menu.classList.remove('show'); // ensure menu is hidden when chat opens
+      } else {
+        box.style.display = "none";
+        menu.classList.remove('show');
+      }
     }
 
-    function toggleMenu() {
-      let menu = document.getElementById("chat-menu");
-      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    // Toggle menu
+    function toggleMenu(e) {
+      e.stopPropagation();
+      const menu = document.getElementById("chat-menu");
+      menu.classList.toggle('show');
     }
 
-    function toggleSound() {
+    // Toggle sound
+    function toggleSound(e) {
+      e.stopPropagation();
       soundEnabled = !soundEnabled;
-
-      // Icon change
       document.getElementById("sound-icon").textContent = soundEnabled ? "🔊" : "🔇";
-
-      // Text change
       document.getElementById("sound-text").textContent = soundEnabled ? "Disable Sound" : "Enable Sound";
     }
 
-    // ---- Send message ----
+    // Send chat message
     function sendMessage() {
       let msg = document.getElementById("chat-input").value;
       if (!msg.trim()) return;
@@ -793,31 +886,42 @@
           "sender": "client"
         })
       })
-        .then(res => res.json())
-        .then(() => {
-          loadMessages();
-          document.getElementById("chat-input").value = "";
-        });
+      .then(res => res.json())
+      .then(() => {
+        document.getElementById("chat-input").value = "";
+        loadMessages();
+      });
     }
 
-    // ---- Load messages ----
+    // Load chat messages
     function loadMessages() {
       fetch("/chat/messages/{{ request.session.session_key|default:'guest' }}/")
         .then(res => res.json())
         .then(data => {
           let chat = document.getElementById("chat-messages");
           chat.innerHTML = "";
+
           data.forEach(m => {
             let cls = (m.sender === "client") ? "user-msg" : (m.sender === "agent") ? "agent-msg" : "bot-msg";
+            let icon = (cls === "user-msg") ? "" : '<div class="icon"></div>';
             chat.innerHTML += `
               <div class="${cls}">
-                <div class="icon"></div>
+                ${icon}
                 <div class="bubble">${m.content}</div>
               </div>`;
           });
+
+          // Typing indicator
+          if (window.isTyping) {
+            chat.innerHTML += `
+              <div class="agent-msg typing-indicator">
+                <div class="icon"></div>
+                <div class="bubble">Agent is typing...</div>
+              </div>`;
+          }
+
           chat.scrollTop = chat.scrollHeight;
 
-          // ✅ Only play sound for new agent/bot messages
           if (soundEnabled && data.length > lastMessageCount) {
             let newMsg = data[data.length - 1];
             if (newMsg.sender === "agent" || newMsg.sender === "bot") {
@@ -828,39 +932,48 @@
         });
     }
 
-    // ---- Fetch agent status ----
+    // Fetch agent status and update typing flag
     function fetchAgentStatus() {
       fetch("/chat/agent-status/")
         .then(res => res.json())
         .then(data => {
+          // update typing and online status
+          window.isTyping = data.typing;
           let statusDiv = document.getElementById("agent-status");
           if (data.online) {
-            statusDiv.innerHTML = `
-              <span style="width:8px; height:8px; background:green; border-radius:50%; display:inline-block;"></span>
-              ${data.name} (Online)
-            `;
+            let names = data.names.join(", ");
+            statusDiv.innerHTML = `<span style="width:8px; height:8px; background:green; border-radius:50%; display:inline-block;"></span> ${names} (Online)`;
           } else {
-            statusDiv.innerHTML = `Product Expert`;
+            statusDiv.innerHTML = "Product Expert";
           }
-
-          // Typing indicator
-          let typingDiv = document.getElementById("typing-indicator");
-          typingDiv.style.display = data.typing ? "block" : "none";
         })
         .catch(() => {
           document.getElementById("agent-status").innerHTML = "Product Expert";
+          window.isTyping = false;
         });
     }
 
-    // Refresh loops
+    // Auto-refresh messages and status
     setInterval(loadMessages, 3000);
     setInterval(fetchAgentStatus, 3000);
 
+    // Initial load
     document.addEventListener("DOMContentLoaded", () => {
       loadMessages();
       fetchAgentStatus();
+      document.getElementById('chat-menu').classList.remove('show');
+    });
+
+    // Close menu if click outside
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById("chat-menu");
+      const dots = document.getElementById("three-dots");
+      if (!menu.contains(e.target) && !dots.contains(e.target)) {
+        menu.classList.remove('show');
+      }
     });
   </script>
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

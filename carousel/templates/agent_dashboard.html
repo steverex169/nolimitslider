@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agent Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
@@ -40,13 +41,9 @@
       display: block;
       cursor: pointer;
       white-space: nowrap;
-      /* prevent wrapping */
       overflow: hidden;
-      /* hide overflow */
       text-overflow: ellipsis;
-      /* add "..." at the end */
       max-width: 180px;
-      /* adjust to sidebar width */
     }
 
     .sidebar a:hover {
@@ -203,6 +200,39 @@
     .chat-input button:hover {
       background: #b30fa0;
     }
+
+    /* FAQ styling inside .main */
+    #success-alert,
+    #error-alert {
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    #faq-list tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    #add-faq-form input,
+    #add-faq-form textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    #add-faq-form button {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #add-faq-form button:hover {
+      background: #218838;
+    }
   </style>
 </head>
 
@@ -219,7 +249,6 @@
       <a href="?chat={{ s.session_id }}" onclick="resetMessageCounter()">
         {{ s.session_id }}
       </a>
-
       {% empty %}
       <span>No active chats</span>
       {% endfor %}
@@ -229,17 +258,20 @@
       <a href="?chat={{ s.session_id }}" onclick="resetMessageCounter()">
         {{ s.session_id }}
       </a>
-
       {% empty %}
       <span>No new chats</span>
       {% endfor %}
     </div>
+
+    <!-- FAQs -->
+    <a href="javascript:void(0);" onclick="loadFAQs()">❓ FAQs</a>
   </div>
 
   <!-- Main content -->
   <div class="main">
     <h2>Welcome, {{ request.user.username }}</h2>
 
+    <!-- Status -->
     <div class="status-toggle">
       Current Status:
       {% if status.is_online %}
@@ -257,6 +289,7 @@
       {% endif %}
     </div>
 
+    <!-- Summary cards -->
     <div class="summary">
       <div>
         <h3>Total Chats</h3>
@@ -272,6 +305,7 @@
       </div>
     </div>
 
+    <!-- Chat Panel -->
     {% if selected_chat %}
     <div class="chat-panel">
       <div class="chat-header">
@@ -282,7 +316,6 @@
             Enable Notification Sound
           </label>
         </div>
-
         {% if not selected_chat.closed %}
         <form method="post" action="{% url 'close_chat' selected_chat.session_id %}" style="margin:0;">
           {% csrf_token %}
@@ -301,53 +334,47 @@
           Send
         </button>
       </div>
-
     </div>
     {% else %}
     <p>Select a chat from the sidebar to start messaging.</p>
     {% endif %}
   </div>
+
   <audio id="notification-sound" src="https://www.myinstants.com/media/sounds/notification.mp3" preload="auto"></audio>
 
-
+  <!-- JS -->
   <script>
+    // Sidebar dropdown
     function toggleDropdown(id) {
       let el = document.getElementById(id);
       el.style.display = el.style.display === "block" ? "none" : "block";
     }
 
+    // ===== Chat & messages =====
     {% if selected_chat %}
-    let lastMessageCount = null; // null = means first render, ignore sound
+    let lastMessageCount = null;
 
     function loadMessages() {
       fetch("/agent/chat/{{ selected_chat.session_id }}/messages/")
         .then(res => res.json())
         .then(data => {
           const clientMessages = data.filter(m => m.sender === "client").length;
-
-          // 🔔 Play sound ONLY if not first render AND count increased
           if (lastMessageCount !== null && clientMessages > lastMessageCount) {
             if (document.getElementById("sound-toggle").checked) {
-              let audio = document.getElementById("notification-sound");
-              audio.play().catch(err => console.warn("Sound blocked:", err));
+              document.getElementById("notification-sound").play().catch(() => { });
             }
           }
-
-          // ✅ Render messages
-          let box = document.getElementById("chat-box");
+          const box = document.getElementById("chat-box");
           box.innerHTML = "";
           data.forEach(m => {
-            let bubbleClass = m.sender === "agent" ? "agent" : "user";
-            box.innerHTML += `<div class="message-bubble ${bubbleClass}">${m.content}</div>`;
+            const cls = m.sender === "agent" ? "agent" : "user";
+            box.innerHTML += `<div class="message-bubble ${cls}">${m.content}</div>`;
           });
           box.scrollTop = box.scrollHeight;
-
-          // ✅ Update counter AFTER rendering
           lastMessageCount = clientMessages;
         });
     }
 
-    // ✅ Reset when switching chats (sidebar links me call karna hoga)
     function resetMessageCounter() {
       lastMessageCount = null;
     }
@@ -355,9 +382,6 @@
     setInterval(loadMessages, 2000);
     loadMessages();
 
-    // =====================
-    // Typing Status Logic
-    // =====================
     let typingTimer = null;
     let isTyping = false;
 
@@ -369,125 +393,135 @@
           "Content-Type": "application/x-www-form-urlencoded"
         },
         body: new URLSearchParams({ typing: state })
-      })
-        .then(res => res.json())
-        .then(data => console.log("Typing status updated:", data))
-        .catch(err => console.warn("Typing status error:", err));
+      }).catch(() => { });
     }
 
     function handleTyping() {
       const msgInput = document.getElementById("msg");
       const value = msgInput.value.trim();
-
-      if (value.length > 0 && !isTyping) {
-        setTyping(true);
-        isTyping = true;
-      }
-
-      if (value.length === 0 && isTyping) {
-        setTyping(false);
-        isTyping = false;
-      }
-
-      // Agar 1 sec tak koi input nahi aaya → typing false
+      if (value.length > 0 && !isTyping) { setTyping(true); isTyping = true; }
+      if (value.length === 0 && isTyping) { setTyping(false); isTyping = false; }
       clearTimeout(typingTimer);
-      if (value.length > 0) {
-        typingTimer = setTimeout(() => {
-          setTyping(false);
-          isTyping = false;
-        }, 3600000);
-      }
+      if (value.length > 0) { typingTimer = setTimeout(() => { setTyping(false); isTyping = false; }, 3600000); }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
       const msgInput = document.getElementById("msg");
-      const sendBtn = document.querySelector(".chat-input button");
-
-      if (msgInput) {
-        msgInput.addEventListener("input", handleTyping);
-        console.log("Typing listener attached ✅");
-      }
-
-      if (sendBtn) {
-        sendBtn.addEventListener("click", () => {
-          setTyping(false);
-          isTyping = false;
-        });
-      }
+      if (msgInput) msgInput.addEventListener("input", handleTyping);
     });
 
-    // =====================
-    // Send Message
-    // =====================
     function sendMessage() {
       let msg = document.getElementById("msg").value.trim();
       if (!msg) return;
-
       fetch("/agent/chat/{{ selected_chat.session_id }}/send/", {
         method: "POST",
         headers: { "X-CSRFToken": "{{ csrf_token }}" },
         body: new URLSearchParams({ content: msg })
-      })
-        .then(res => res.json())
-        .then(() => {
-          document.getElementById("msg").value = "";
-          clearTimeout(typingTimer);
-          setTyping(false);  // ✅ send ke baad force stop
-          isTyping = false;
-          loadMessages();
-        });
+      }).then(() => { document.getElementById("msg").value = ""; isTyping = false; clearTimeout(typingTimer); loadMessages(); });
     }
     {% endif %}
 
-    // =====================
-    // Dashboard poller
-    // =====================
-    function loadDashboard() {
-      fetch("{% url 'agent_dashboard' %}?ajax=1", {
-        headers: { "X-Requested-With": "XMLHttpRequest" }
-      })
-        .then(res => res.json())
-        .then(data => {
-          // Summary update
-          document.querySelector(".summary div:nth-child(1) p").innerText = data.total_chats;
-          document.querySelector(".summary div:nth-child(2) p").innerText = data.active_chats.length;
-          document.querySelector(".summary div:nth-child(3) p").innerText = data.new_chats.length;
+    // ===== FAQ management =====
+    function loadFAQs() {
+      console.log("Loading FAQs...");
 
-          // Sidebar Active Chats
-          let activeList = "";
-          if (data.active_chats.length) {
-            data.active_chats.forEach(c => {
-              activeList += `<a href="?chat=${c.session_id}">${c.user_name || c.session_id}</a>`;
-            });
-          } else {
-            activeList = "<span>No active chats</span>";
+      fetch("{% url 'faq_dashboard' %}?ajax=1")
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("Network response was not ok");
+          }
+          console.log("Successfully fetched FAQ HTML content");
+          return res.text();
+        })
+        .then(html => {
+          // Replace main content
+          document.querySelector(".main").innerHTML = html;
+          console.log("Main content updated with FAQ data");
+
+          // Re-select necessary elements after replacing innerHTML
+          const form = document.getElementById('add-faq-form');
+          const successAlert = document.getElementById('success-alert');
+          const errorAlert = document.getElementById('error-alert');
+          const faqList = document.getElementById('faq-list');
+
+          if (!form) {
+            console.warn("❌ FAQ form not found!");
+            return;
           }
 
-          // Sidebar New Chats
-          let newList = "";
-          if (data.new_chats.length) {
-            data.new_chats.forEach(c => {
-              newList += `<a href="?chat=${c.session_id}">${c.user_name || c.session_id}</a>`;
-            });
-          } else {
-            newList = "<span>No new chats</span>";
-          }
+          console.log("✅ FAQ form loaded");
 
-          // Replace whole chat-dropdown safely
-          document.getElementById("chat-dropdown").innerHTML = `
-          <strong style="padding:10px 20px; color:#fff;">Active Chats</strong>
-          ${activeList}
-          <strong style="padding:10px 20px; color:#bbb;">New Chats</strong>
-          ${newList}
-        `;
+          // Attach submit handler
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            console.log("Form submitted");
+
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+              method: 'POST',
+              headers: {
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                'X-Requested-With': 'XMLHttpRequest'
+              },
+              body: formData
+            })
+              .then(res => {
+                if (!res.ok) {
+                  throw new Error("Failed to submit form");
+                }
+                console.log("POST response received, status: 200");
+                return res.json();
+              })
+              .then(data => {
+                console.log("Response JSON:", data);
+
+                if (data.success) {
+                  console.log("✅ FAQ successfully added");
+
+                  // Show success alert (force display block)
+                  successAlert.style.display = "block";
+                  errorAlert.style.display = "none";
+
+                  // Hide success alert after 10 seconds
+                  setTimeout(() => successAlert.style.display = "none", 10000);
+
+                  // Reset the form fields
+                  form.reset();
+
+                  // Append new FAQ row
+                  const newRow = document.createElement('tr');
+                  newRow.innerHTML = `
+                                <td class="fw-medium">${data.faq.question}</td>
+                                <td>${data.faq.answer}</td>
+                                <td>
+                                    <form method="post" action="/faqs/delete/${data.faq.id}/" style="display:inline;">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="${formData.get('csrfmiddlewaretoken')}">
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">🗑 Delete</button>
+                                    </form>
+                                </td>`;
+                  faqList.appendChild(newRow);
+                } else {
+                  console.warn("❌ Error adding FAQ:", data.error);
+                  successAlert.style.display = "none";
+                  errorAlert.style.display = "block";
+                  errorAlert.innerText = data.error || 'Failed to add FAQ';
+                }
+              })
+              .catch(err => {
+                console.error("❌ AJAX error:", err);
+                successAlert.style.display = "none";
+                errorAlert.style.display = "block";
+                errorAlert.innerText = 'Server error: could not save FAQ';
+              });
+          });
+        })
+        .catch(err => {
+          console.error("Failed to load FAQs:", err);
         });
     }
 
-    // Auto refresh
-    setInterval(loadDashboard, 5000);
-    loadDashboard();
   </script>
-
 
 </body>
 

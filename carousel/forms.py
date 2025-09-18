@@ -1,5 +1,5 @@
 from django import forms
-from .models import CarouselImage, AgentProfile
+from .models import CarouselImage, AgentProfile, FAQ
 from django.contrib.auth.models import User
 
 
@@ -49,3 +49,12 @@ class AgentRegisterForm(forms.ModelForm):
             agent.save()
         return agent
 
+
+class FAQForm(forms.ModelForm):
+    class Meta:
+        model = FAQ
+        fields = ['question', 'answer']
+        widgets = {
+            'question': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter question'}),
+            'answer': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter answer'}),
+        }

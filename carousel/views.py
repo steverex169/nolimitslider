@@ -1,6 +1,6 @@
-from .models import CarouselImage, Message, AgentStatus, ChatSession, AgentStatus, AgentProfile
+from .models import CarouselImage, Message, AgentStatus, ChatSession, AgentStatus, AgentProfile, FAQ
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CarouselImageForm, AgentRegisterForm
+from .forms import CarouselImageForm, AgentRegisterForm, FAQForm
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,6 @@ import uuid
 from django.db.models import Q
 from django.db.models import Count
 import difflib
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -566,3 +565,26 @@ def set_typing_status(request):
 def carousel_embed(request):
     images = CarouselImage.objects.all()
     return render(request, "carousel_embed.html", {"images": images})
+def faq_dashboard(request):
+    faqs = FAQ.objects.all().order_by('-created_at')
+    if request.GET.get('ajax'):
+        return render(request, "faq_ajax_content.html", {"faqs": faqs})
+    return render(request, "faq_dashboard.html", {"faqs": faqs})
+
+@csrf_exempt
+def add_faq(request):
+    if request.method == 'POST':
+        question = request.POST.get('question')
+        answer = request.POST.get('answer')
+        if question and answer:
+            faq = FAQ.objects.create(question=question, answer=answer)
+            return JsonResponse({
+                'success': True,
+                'faq': {'id': faq.id, 'question': faq.question, 'answer': faq.answer}
+            })
+        return JsonResponse({'success': False, 'error': 'Both fields are required.'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
+
+def delete_faq(request, faq_id):
+    FAQ.objects.filter(id=faq_id).delete()
+    return redirect('faq_dashboard')

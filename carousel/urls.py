@@ -42,5 +42,8 @@ urlpatterns = [
     path("chat/set-typing/", views.set_typing_status, name="set_typing"),
     path('agent/chat/<str:session_id>/close/', views.close_chat, name='close_chat'),
     path("carousel-embed/", views.carousel_embed, name="carousel_embed"),
-
+    path('faqs/', views.faq_dashboard, name='faq_dashboard'),
+    path('faqs/add/', views.add_faq, name='add_faq'),
+    path('faqs/delete/<int:faq_id>/', views.delete_faq, name='delete_faq'),
+    
 ]

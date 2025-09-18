@@ -420,3 +420,6 @@ def set_typing_status(request):
         return JsonResponse({"success": True, "typing": agent_profile.is_typing})
 
     return JsonResponse({"success": False})
+def carousel_embed(request):
+    images = CarouselImage.objects.all()
+    return render(request, "carousel_embed.html", {"images": images})

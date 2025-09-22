@@ -301,10 +301,10 @@
   </div></div>
   <custom-footer></custom-footer>
 
-  <script>
-    class CustomFooter extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
+<script>
+class CustomFooter extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `
 <style>
 .custom-footer {
   background-color: #11161f;
@@ -320,9 +320,9 @@
   max-width: 1283px;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* Changed from 4 to 3 columns */
   column-gap: 130px; /* EXACT 130px gap between columns */
-  padding: 0 20px;
+  padding: 0 45px;
   align-items: start;
 }
 
@@ -435,27 +435,17 @@
       <p><a href="mailto:support@nolimitbet.ag" style="color:#ff4d94; font-weight:bold;">support@nolimitbet.ag</a></p>
     </div>
 
-    <!-- License -->
-    <div class="footer-section">
-      <h4>License</h4>
-      
-      <!-- ✅ Image added here -->
-      
-      <p><a href="/licence/" style="color:#ff4d94; font-weight:bold;"><img src="/media/promotion/cga-logo.png" alt="License Logo" style="width:120px; margin:10px 0; border-radius:8px;"></a></p>
-    </div>
-
-
   </div>
 
   <div class="footer-bottom">
     All rights reserved © 2025 <strong>nolimitbet.ag</strong>
   </div>
 </footer>
-        `;
-      }
-    }
-    customElements.define('custom-footer', CustomFooter);
-  </script>
+    `;
+  }
+}
+customElements.define('custom-footer', CustomFooter);
+</script>
 
 </body>
 

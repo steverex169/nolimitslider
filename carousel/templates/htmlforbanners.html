@@ -309,3 +309,189 @@
 </body><c98aa2614-da09-4d1b-85cd-44e3155eb010></c98aa2614-da09-4d1b-85cd-44e3155eb010>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- footer section with licence -->
+   <custom-footer></custom-footer>
+
+  <script>
+    class CustomFooter extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+<style>
+.custom-footer {
+  background-color: #11161f;
+  padding: 40px 90px;
+  color: #ccc;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  width: 100%;
+  border-top: 1px solid #00E6E6;
+}
+
+.footer-container {
+  max-width: 1283px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 130px; /* EXACT 130px gap between columns */
+  padding: 0 20px;
+  align-items: start;
+}
+
+.footer-section {
+  text-align: left;
+}
+
+.footer-section h4 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-bottom: 2px solid #00e6e6;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.footer-section a {
+  color: #00e6e6;
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #ff4d94;
+}
+
+.footer-section p {
+  margin: 5px 0;
+  line-height: 1.6;
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 8px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid #00e6e6;
+  border-radius: 50%;
+  color: #00e6e6;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  border-color: #ff4d94;
+  color: #ff4d94;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 20px;
+  padding: 15px 0;
+  font-size: 12px;
+  color: #888;
+  border-top: 1px solid #333;
+}
+
+@media (max-width: 1024px) {
+  .footer-container {
+    column-gap: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+  .footer-section {
+    margin-bottom: 20px;
+  }
+}
+</style>
+
+<footer class="custom-footer">
+  <div class="footer-container">
+
+    <!-- Contact Us -->
+    <div class="footer-section">
+      <h4>Contact Us</h4>
+      <p>Email: support@nolimitbet.ag</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/1G93J4ixnD/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/No_Limit_ag?t=ED_e-sQY5BX2dBP93HU1Lw&s=08" target="_blank" title="X"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://www.instagram.com/nolimitbet_ag?igsh=Zmo3N3RoOHdrOTls" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@nolimitbet.ag?_t=ZS-8yog8g87W23&_r=1" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-section">
+      <h4>Quick Links</h4>
+      <a href="/about-us/">About Us</a>
+      <a href="/terms-conditions/">Terms & Conditions</a>
+      <a href="/promotions/">Promotions</a>
+    </div>
+
+    <!-- Become an Affiliate -->
+    <div class="footer-section">
+      <h4>Become an Affiliate</h4>
+      <p>Join our affiliate program and earn with every referral.</p>
+      <p><a href="mailto:support@nolimitbet.ag" style="color:#ff4d94; font-weight:bold;">support@nolimitbet.ag</a></p>
+    </div>
+
+    <!-- License -->
+    <div class="footer-section">
+      <h4>License</h4>
+      
+      <!-- ✅ Image added here -->
+      
+      <p><a href="/licence/" style="color:#ff4d94; font-weight:bold;"><img src="/media/promotion/cga-logo.png" alt="License Logo" style="width:120px; margin:10px 0; border-radius:8px;"></a></p>
+    </div>
+
+
+  </div>
+
+  <div class="footer-bottom">
+    All rights reserved © 2025 <strong>nolimitbet.ag</strong>
+  </div>
+</footer>
+        `;
+      }
+    }
+    customElements.define('custom-footer', CustomFooter);
+  </script>

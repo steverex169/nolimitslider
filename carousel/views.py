@@ -247,13 +247,18 @@ def agent_dashboard(request):
         total_messages=Count('message'), user_messages=Count('message', 
         filter=Q(message__sender='user')), agent_messages=Count('message', 
         filter=Q(message__sender='agent')), )
-    active_chats = chats_qs.filter( 
-        assigned_agent=request.user ).filter( Q(agent_messages__gte=1) | 
-        Q(agent_messages__gte=0, user_messages__gte=1) ) 
-    new_chats = chats_qs.filter( 
-        Q(assigned_agent__isnull=True) | Q(assigned_agent=request.user) | 
-        Q(agent_messages=0, user_messages__gte=1) )
-    
+    # Active: agent ne kam se kam 1 message bheja
+    active_chats = chats_qs.filter(
+        assigned_agent=request.user,
+        agent_messages__gte=1
+    )
+
+    # New: agent ne koi message nahi bheja, user ne message bheja
+    new_chats = chats_qs.filter(
+        Q(assigned_agent__isnull=True) |
+        Q(agent_messages=0, user_messages__gte=1)
+    )
+        
     total_chats = active_chats.count() + new_chats.count()
 
     session_id = request.GET.get("chat")

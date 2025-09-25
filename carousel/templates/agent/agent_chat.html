@@ -1,0 +1,129 @@
+{% extends 'agent/template.html' %}
+
+{% block content %}
+<div class="main px-4 py-3">
+    <h2 class="mb-4">💬 Chat with {{ chat.user_name|default:"Guest" }}</h2>
+
+    <!-- Chat Box -->
+    <div id="chat-box" class="border rounded p-3 mb-3 bg-light" 
+         style="height: 525px; overflow-y: auto;">
+        <!-- Messages load dynamically -->
+    </div>
+
+    <!-- Input -->
+    <div class="input-group">
+        <input type="text" id="msg" class="form-control" placeholder="Type your message...">
+        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<style>
+/* Bubble base */
+.message {
+    max-width: 70%;
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    position: relative;
+}
+
+/* Timestamp inside bubble */
+.message .time {
+    display: block;
+    font-size: 11px;
+    margin-top: 4px;
+    text-align: right;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+/* Client/User messages (left) */
+.message.user {
+    background-color: #e9ecef;
+    color: #000;
+    text-align: left;
+    align-self: flex-start;
+    border-top-left-radius: 0;
+}
+
+/* Bot messages (left, blue shade) */
+.message.bot {
+    background-color: #d1ecf1;
+    color: #055160;
+    text-align: left;
+    align-self: flex-start;
+    border-top-left-radius: 0;
+}
+
+/* Agent messages (right, primary blue) */
+.message.agent {
+    background-color: #0d6efd;
+    color: #fff;
+    text-align: left;
+    align-self: flex-end;
+    border-top-right-radius: 0;
+}
+
+/* White timestamp for agent */
+.message.agent .time {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Flex container for rows */
+.message-row {
+    display: flex;
+    flex-direction: column;
+}
+</style>
+
+<script>
+function loadMessages() {
+  let box = document.getElementById("chat-box");
+
+  // check if user is already at bottom (50px margin)
+  let isAtBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 50;
+
+  fetch("/agent/chat/{{ chat.session_id }}/messages/")
+    .then(res => res.json())
+    .then(data => {
+      box.innerHTML = "";
+      data.forEach(m => {
+        let roleClass = m.sender === "agent" ? "agent" : 
+                        (m.sender === "bot" ? "bot" : "user");
+        box.innerHTML += `
+          <div class="message-row">
+              <div class="message ${roleClass}">
+                <div><b>${m.sender}:</b> ${m.content}</div>
+                <div class="time">${m.time}</div>
+              </div>
+          </div>`;
+      });
+
+      // only scroll if user was already at bottom
+      if (isAtBottom) {
+        box.scrollTop = box.scrollHeight;
+      }
+    });
+}
+
+
+
+function sendMessage() {
+  let msg = document.getElementById("msg").value;
+  if (!msg.trim()) return;
+  fetch("/agent/chat/{{ chat.session_id }}/send/", {
+    method: "POST",
+    headers: {"X-CSRFToken": "{{ csrf_token }}"},
+    body: new URLSearchParams({"content": msg})
+  }).then(res => res.json()).then(data => {
+    document.getElementById("msg").value = "";
+    loadMessages();
+  });
+}
+
+setInterval(loadMessages, 2000);
+loadMessages();
+</script>
+{% endblock %}

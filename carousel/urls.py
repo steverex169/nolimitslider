@@ -33,6 +33,7 @@ urlpatterns = [
     path("chat/chat/", views.chat_send, name="chat_send"),
     path("chat/messages/<str:session_id>/", views.get_messages, name="get_messages"),
     path("agent/dashboard/", views.agent_dashboard, name="agent_dashboard"),
+    path("agent/chats/", views.agent_chats, name="agent_chats"),
     path("agent/chat/<str:session_id>/", views.agent_chat_view, name="agent_chat"),
     path("agent/chat/<str:session_id>/send/", views.agent_send_message, name="agent_send_message"),
     path("agent/chat/<str:session_id>/messages/", views.agent_get_messages, name="agent_get_messages"),
@@ -42,7 +43,7 @@ urlpatterns = [
     path("chat/set-typing/", views.set_typing_status, name="set_typing"),
     path('agent/chat/<str:session_id>/close/', views.close_chat, name='close_chat'),
     path("carousel-embed/", views.carousel_embed, name="carousel_embed"),
-    path('faqs/', views.faq_dashboard, name='faq_dashboard'),
+    path('agent/faqs/', views.faq_dashboard, name='faq_dashboard'),
     path('faqs/add/', views.add_faq, name='add_faq'),
     path('faqs/delete/<int:faq_id>/', views.delete_faq, name='delete_faq'),
     

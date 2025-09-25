@@ -1,0 +1,6587 @@
+
+
+<style>
+    /* Styling for the popup */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+    }
+
+    .inline-class{
+        /* background-color: red; */
+        display: inline;
+        margin: 15px 0;
+        
+    }
+    
+    .point{
+        display: block;
+        margin: 0;
+        font-weight: 400 !important;
+    }
+
+    p b{
+            font-size: 20px;
+            font-weight: 700;
+            display: block;
+            margin: 10px 0px;
+            /* background-color: yellow !important; */
+        }
+
+        .head{
+            display: block;
+            /* background-color: green !important; */
+            font-weight: 700;
+        } 
+
+    
+
+    .relative-positions{
+        position: relative;
+        margin: 0 auto;
+        max-width: 60vw;
+
+    }
+
+
+    .close-btn-popap{
+        position: absolute;
+        top: 5px ;
+        right: 5px ;
+        background-color: #000;
+        color: white;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 5px 10px;
+        z-index: 100;
+        border-radius: 5px;
+    }
+
+    .reg_form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .reg_form label {
+        margin-top: 10px;
+    }
+
+    .reg_form .horizontal {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .reg_form .vertical {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .reg_form input,
+    .reg_form textarea,
+    .reg_form Select {
+        margin: 5px;
+        border-radius: 8px;
+        /* height: 50px; */
+        outline: none;
+        padding: 10px;
+        /*border: none;*/
+        background: white;
+        border: 1px solid;
+        resize: none;
+
+    }
+
+    .reg_form h3 {
+        margin: 0;
+    }
+    .reg_form button h3{
+        color: white
+    }
+    .reg_form textarea {
+        height: 70px;
+        width: calc(100% - 10px)
+    }
+
+    .reg_form button {
+        background: none;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        text-align: left;
+        padding: 10px;
+        margin: 0;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0px;
+        background: #7c020ca4;
+        color: white !important;
+
+    }
+
+    .reg_form button:hover {
+        background: #7C020C;
+    }
+
+    .fa-caret-down {
+        font-size: 20px;
+        color: white
+    }
+
+    .parent_wrapper,
+    .student_wrapper,
+    .declearation_wrapper {
+        overflow: auto;
+        height: 0px;
+        max-height: calc(100vh - 280px);
+        transition: 1s;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        overflow: auto;
+        margin-top: 20px;
+    }
+
+    .declearation_wrapper {
+        align-items: center;
+    }
+
+    .check1 input {
+        height: auto;
+        width: auto;
+        display: inline;
+
+    }
+
+    .check1 p {
+        display: inline;
+        width: calc(100% - 20px);
+        /* margin-left: 10px; */
+    }
+
+    .submit_button {
+        display: block !important;
+        width: 50%;
+        margin: 30px;
+        height: 50px;
+        background: #7C020C !important;
+        text-align: center !important;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-radius: 8px;
+        margin: 10px 0px;
+        color: white;
+        font-weight: bold;
+    }
+
+    .submit_button:hover {
+        background: #9c0411 !important;
+    }
+
+    .reg_form span {
+        color: red;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    
+    th,
+    td {
+
+        border: 1px solid black;
+        width: 100%;
+    }
+    #addSiblingBtn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 10px auto !important;
+        text-align: center !important;
+        width: 50%;
+        grid-gap:10px;
+        background-color: #000 !important;
+    }
+    .full-width{width: 100%;
+    justify-content: space-between;}
+    .full-width button{width: 100%;}
+
+    .black_class{
+        background-color: #000 !important;
+        color: white !important;
+    }
+
+
+    @media only screen and (max-width: 1000px) {
+        .reg_form .horizontal {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .parent_wrapper,
+        .student_wrapper,
+        .declearation_wrapper {
+            overflow: auto;
+        }
+
+        .popap{
+            max-width: calc(98vw - 20px) !important;
+            height: 95vh !important;
+            /* background-color: #7C020C !important; */
+        }
+
+        .relative-positions{
+            max-width: 98vw;;
+        }
+
+    }
+    
+    .terms_and_conditions{
+    text-decoration: none !important;
+        font-weight: 500;
+        font-size: 16px;
+        background-color: #ccc;
+        border-radius: 2px;
+        padding: 2px 5px;
+        margin-right: 5px;
+        color: #7C020C;
+    }
+    .terms_and_conditions:hover{
+        color: green
+    }
+    
+    
+
+
+        .popap-wrapper{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;z-index: 1000;
+        }
+    
+        .popap{
+            max-width: 60vw;
+            height: 75vh;
+            background-color: white;
+            padding: 20px;
+            overflow-y: scroll;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+
+        .popap::-webkit-scrollbar {
+            width:  5px;
+        }
+
+        .popap::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+
+        .popap::-webkit-scrollbar-thumb {
+            background: #7c020ca4; 
+            border-radius: 10px;
+        }
+
+
+</style>
+
+
+<div style="position: relative;">
+
+<form method="POST" action="https://academisync.com/api/register/9/" class="reg_form">
+    <button onclick="openstudent(); closeparent();closeDeclearation()" type="button">
+        <h3>STUDENT INFORMATION</h3><i class="fa fa-caret-down" aria-hidden="true"></i>
+    </button>
+
+    <div class="student_wrapper" id="student_wrapper" style="height:500px">
+
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="name">First Name<span>*</span></label>
+                <input type="text" name="first_name" id="name_field" placeholder="First Name" required>
+            </div>
+            <div class="vertical">
+                <label for="name">Last Name<span>*</span></label>
+                <input type="text" name="last_name" id="name_field" placeholder="Last Name" required>
+            </div>
+        </div>
+
+        <div class="horizontal">
+        <div class="vertical">
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title_field" placeholder="Title">
+        </div>
+            <div class="vertical">
+                <label for="email">Email<span>*</span></label>
+                <input type="email" name="email" id="email_field" placeholder="Email" required>
+            </div>
+        </div>
+
+
+        <div class="horizontal">
+        
+        <div class="vertical">
+            <label for="nickname">Contact Number<span>*</span></label>
+            <input type="text" name="contact" id="nickname_field" placeholder="Contact Number">
+        </div>
+
+            <div class="vertical">
+                <label for="postcode">Post Code</label>
+                <input type="text" name="postcode" id="postcode_field" placeholder="Post Code">
+            </div>
+        </div>
+
+        <div class="horizontal">
+
+        
+        <div class="vertical">
+            <label for="dob">Date of Birth<span>*</span></label>
+            <input type="date" name="dob" id="dob_field" placeholder="Date of Birth" required>
+        </div>
+
+            <div class="vertical">
+                <label for="gender">Select Gender<span>*</span></label>
+                <select name="gender" id="gender" required>
+                    <option value="">- Select --</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <div class="vertical" style="display: none;">
+                <label for="yeargroup">Year Group in School<span>*</span></label>
+                <select name="yeargroup" id="" required>
+                    <option value="">- select-- </option>
+                    <option value="year1" selected>Year 1</option>
+                    <option value="year2">Year 2</option>
+                    <option value="year3">Year 3</option>
+                    <option value="year4">Year 4</option>
+                    <option value="year5">Year 5</option>
+                    <option value="year6">Year 6</option>
+                    <option value="year7">Year 7</option>
+                    <option value="year8">Year 8</option>
+                    <option value="year9">Year 9</option>
+                    <option value="year10">Year 10</option>
+                    <option value="year11">Year 11</option>
+                    <option value="year12">Year 12</option>
+                </select>
+            </div>
+
+
+        </div>
+
+        <!-- <h3>Family Information</h3>
+
+        <div class="horizontal">
+            <div class="vertical">
+
+        <label for="">If other Family Member(s) that will also be enrolling onto the Programme:
+        </label>
+                <button type="button" id="addSiblingBtn" >Add Member</button>
+            </div>
+        </div>
+
+        <div class="horizontal">
+
+            <table id="siblingTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th style="width:100% ;">Full Name</th>
+                        <th style="width:100% ;">Relation</th>
+                    </tr>
+                </thead>
+                <tbody id="siblingTableBody">
+                    Sibling data will be added here using JavaScript
+                </tbody>
+            </table>
+
+
+        </div> -->
+
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="">Where did you hear about us?</label>
+                <input type="text" name="hear" id="hear_field" placeholder='e.g. "By a Friend ....." '>
+            </div>
+        </div>
+
+        <div class="popup" id="popup">
+            <h2>Add Member</h2>
+            <label for="siblingName">Full Name:</label>
+            <input type="text" id="siblingName"><br>
+            <label for="siblingClass">Relation:</label>
+            <input type="text" id="siblingClass"><br>
+            <div class="horizontal full-width">
+                
+            <button class="black_class" type="button" id="submitSibling">Add</button>
+            <button class="black_class" type="button" id="closePopup">Close</button>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+    <button onclick="expandParent();closeStudent();closeDeclearation()" type="button">
+        <h3>ACADEMIC INFORMATION</h3><i class="fa fa-caret-down" aria-hidden="true"></i>
+    </button>
+
+    <div class="parent_wrapper" id="parent_wrapper">
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="parent_title">What is your highest academic qualification?</label>
+                <input type="text" name="highest_education" id="highest_education_field" placeholder="e.g Bachelor's in Physics ">
+            </div>
+        </div>
+
+        <h3>Islamic Studies</h3>
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="parent_email">Have you studied at An-Nakhlah Institute before?</label>
+                <div>
+                    <input type="radio" name="studied-here-before" id="studied-nakhla-yes" value="yes" > <label for="studied-nakhla-yes">Yes</label>
+                    <input type="radio" name="studied-here-before" id="studied-nakhla-no" value="no" > <label for="studied-nakhla-no">No</label>
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="parent_email">Have you read the entire Quran in a language you understand ?</label>
+                <div>
+                    <input type="radio" name="read-quran-in-own-language" id="read-quran-yes" value="yes" > <label for="read-quran-yes">Yes</label>
+                    <input type="radio" name="read-quran-in-own-language" id="read-quran-yes" value="no" > <label for="read-quran-yes">No</label>
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="parent_email">Have you previously studied Seerah?</label>
+                <div>
+                    <input type="radio" name="studied-seerah" id="studeied-seerah-yes" value="yes" > <label for="studeied-seerah-yes">Yes</label>
+                    <input type="radio" name="studied-seerah" id="studeied-seerah-no" value="no" > <label for="studeied-seerah-no">No</label>
+                </div>
+            
+            </div>
+        </div>
+
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="">If yes, in what format</label>
+                <input type="text" name="seerah-format" id="seerah-format" >
+            </div>
+        </div>
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="">Please list any Islamic books you have studied in the past:</label>
+                <input type="text" name="islamic-books-names" id="books-names" >
+            </div>
+        </div>
+
+        <h3>PROFICIENCY IN ARABIC & QURAN</h3>
+
+
+
+        
+        
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="parent_email">Can you read/write Arabic?</label>
+                <div>
+                    <input type="radio" name="read-write-arabic" id="read-write-arabic-yes" value="yes" > <label for="read-write-arabic-yes">Yes</label>
+                    <input type="radio" name="read-write-arabic" id="read-write-arabic-yes" value="no" > <label for="read-write-arabic-yes">No</label>
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="parent_email">Have you studied Tajweed formally?</label>
+                <div>
+                    <input type="radio" name="studied-tajweed" id="studied-tajweed-yes" value="yes" > <label for="studied-tajweed-yes">Yes</label>
+                    <input type="radio" name="studied-tajweed" id="studied-tajweed-no" value="no" > <label for="studied-tajweed-no">No</label>
+                </div>
+            
+            </div>
+        </div>
+
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="">How many Surahs/Juz have you memorised if any?</label>
+                <input type="text" name="surah-memorized" id="memorized" >
+            </div>
+        </div>
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="">Briefly explain what you hope to achieve through the Alimiyyah Programme:</label>
+                <textarea name="want-to-achieve" id="" cols="1" rows="1" placeholder="Explain..."
+                    ></textarea>
+            </div>
+        </div>
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="">Briefly explain what you intend to do upon graduating from the Alimiyyah Programme:
+                </label>
+                <textarea name="what-you-intend" id="" cols="1" rows="1" placeholder="Explain..."
+                    ></textarea>
+            </div>
+        </div>
+
+
+        <div class="horizontal">
+            <div class="vertical">
+                <label for="medical_info">Medical Information Or Any Learning Difficulty</label>
+                <textarea name="medical_info" id="medical_info_field" cols="1" rows="1"
+                    placeholder="Explain If Any"></textarea>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    <button onclick="closeStudent();closeparent();openDeclearation()" type="button">
+        <h3>DECLARATION</h3><i class="fa fa-caret-down" aria-hidden="true"></i>
+    </button>
+
+    <div class="declearation_wrapper" id="declearation_wrapper"  style="height:650pax">
+        <div class="horizontal">
+            <div class=" check1">
+                <p>By executing this application, you irrevocably agree to be bound by the Institute’s General Terms
+                    and Conditions.<br><br>
+                    As such, you are advised to carefully review and consider the same prior to reserving your place
+                    onto the Programme.<br><br>
+                    For the avoidance of doubt, the General Terms and Conditions shall remain operative for the
+                    entire duration of the course (currently expected to run until September 2025).<br><br>
+                    In formalising our relationship in this manner, we will ensure that the relationship between you
+                    and us remains clear and transparent at all times and provides a mutuality of fair rights and
+                    obligations between both parties.
+                </p>
+                <br>
+                <br>
+
+                
+
+                <p for="parent_title">
+
+                    
+                <!-- <input type="checkbox" name="terms" id="terms_field" placeholder="State Relation " required=""> -->
+                    I  hereby apply for admission onto the Alimiyyah Programme and
+                    agree to be bound by the <a href="https://www.an-nakhlah.com/wp-content/uploads/2024/01/An-Nakhlah-Alimiyyah-Revised-Final-Policies.pdf"
+                    target="_blank" class="terms_and_conditions"
+                    >Terms and Conditions </a> referenced herein.
+                    
+                </p>
+
+            </div>
+        </div>
+        <button type="button" onclick="openTermsAndConditions()"  style="margin-top: 40px;" class="submit_button">Continue</button>
+    </div>
+
+
+
+
+
+    
+
+
+
+<script>
+    function expandParent() {
+        var parent_wrapper = document.getElementById('parent_wrapper');
+        parent_wrapper.style.height = '650px';
+
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+    }
+    function closeparent() {
+        var parent_wrapper = document.getElementById('parent_wrapper');
+        parent_wrapper.style.height = '0px';
+    }
+    function openstudent() {
+        var student_wrapper = document.getElementById('student_wrapper');
+        student_wrapper.style.height = '500px';
+
+        window.scrollTo({ top: 50, behavior: 'smooth' });
+    }
+    function closeStudent() {
+        var student_wrapper = document.getElementById('student_wrapper');
+        student_wrapper.style.height = '0px';
+    }
+    function openDeclearation() {
+        var declearation_wrapper = document.getElementById('declearation_wrapper');
+        declearation_wrapper.style.height = '650px';
+        window.scrollTo({ top: 100, behavior: 'smooth' });
+    }
+    function closeDeclearation() {
+        var declearation_wrapper = document.getElementById('declearation_wrapper');
+        declearation_wrapper.style.height = '0px';
+    }
+    
+
+    function openTermsAndConditions() {
+        var terms_and_conditions_ID = document.getElementById('terms_and_conditions_ID');
+        terms_and_conditions_ID.style.display = 'flex';
+    }
+
+    function closeTermsAndConditions() {
+        var terms_and_conditions_ID = document.getElementById('terms_and_conditions_ID');
+        terms_and_conditions_ID.style.display = 'none';
+    }
+
+</script>
+
+
+
+<script>
+    const addSiblingBtn = document.getElementById("addSiblingBtn");
+    const popup = document.getElementById("popup");
+    const closePopupBtn = document.getElementById("closePopup");
+    const submitSiblingBtn = document.getElementById("submitSibling");
+    const siblingTable = document.getElementById("siblingTable");
+    const siblingTableBody = document.getElementById("siblingTableBody");
+
+    addSiblingBtn.addEventListener("click", () => {
+        popup.style.display = "block";
+    });
+
+    closePopupBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+    });
+
+    submitSiblingBtn.addEventListener("click", () => {
+        const siblingName = document.getElementById("siblingName").value;
+        const siblingClass = document.getElementById("siblingClass").value;
+
+        if (siblingName && siblingClass) {
+            const newRow = siblingTableBody.insertRow();
+            const nameCell = newRow.insertCell(0);
+            const classCell = newRow.insertCell(1);
+
+            nameCell.textContent = siblingName;
+            classCell.textContent = siblingClass;
+
+            popup.style.display = "none";
+            siblingTable.style.display = "block";
+        }
+    });
+</script>
+
+
+</div>
+
+
+
+
+
+
+
+    <div class="popap-wrapper" id="terms_and_conditions_ID" style="display: none;">
+
+
+        <div class="relative-positions" >
+            
+            <button type="button" class="close-btn-popap" onclick="closeTermsAndConditions()">X</button>
+
+        <div class="popap" style="position: relative;" >
+
+
+            
+        
+            <p  class="inline-class ft14" style="text-align: center;"><b>An-Nakhlah  Institute  General  Terms  &amp;  Conditions  </b></p>
+            <p  class="inline-class ft17"> These  terms  together  with  those  terms  contained  in  the  offer  letter  (together  the  “Terms  and Conditions”) set out the contractual terms which apply between An-Nakhlah Institute and students  (“Students”)  in  relation  to  the  Alimiyyah  Programme  and/or  academic  programmes and  any  other  An-Nakhlah  Institute  courses.  Once  an  enrolment  is  accepted  by  An-Nakhlah  Institute,  these  Terms  and  Conditions  become legally  binding. All students  agree  to  be  bound  by  the  regulations,  policies  and  procedures  of An-Nakhlah  Institute  (paper  copies  are  available  on  request).</p>
+            <p  class="inline-class ft15"><b>1. Force  Majeure  </b></p>
+            <p  class="inline-class ft17"> Policy  Statement  An-Nakhlah Institute recognises that unforeseeable events or circumstances, commonly referred  to  as  &#34;force  majeure&#34;  events,  may  disrupt  or  prevent  the  normal  operation  of  the university. This policy outlines the procedures and responsibilities in the event of a force majeure  situation.  Scope  This  policy  applies  to  all students,  faculty,  staff,  contractors,  and  stakeholders  of  An-Nakhlah Institute.  Definition  &#34;Force  Majeure  Event&#34;  refers  to  an  extraordinary  and  unforeseeable  event  or  circumstance beyond  the  control  of  the  university  that  significantly  hinders  its  ability  to  fulfill  its  contractual or  academic  obligations.  Force  majeure  events  may  include,  but  are  not  limited  to,  natural disasters, pandemics, government-imposed restrictions, civil disturbances, or other acts of nature  or  man-made  disasters.</p>
+            
+            
+            
+            <p  class="inline-class head ft21" >Policy  1.1.  Declaration  of  Force  Majeure:  </p>
+            <p  class="inline-class ft20"> Only  the  President,  Vice  President  or  a  Shura  Member  of  An-Nakhlah  Institute  has  the  </p>
+            <p  class="inline-class ft22">authority  and  responsibility  to  declare  a  force  majeure  event  if  it  significantly  impacts the  ability  of  the  university  to  operate  effectively.  </p>
+            <p  class="inline-class ft20"> The declaration shall be communicated to all relevant students and clients through  </p>
+            <p  class="inline-class ft20">official university  channels.  </p>
+            <p  class="inline-class ft20"> An-Nakhlah  Institute  will  not  be  held  responsible  for  any  events  outside  its  reasonable  </p>
+            <p  class="inline-class ft22">control  which  may  cause  the  closure  of  part  or  all  of  the  School  and  the  cancellation  of any  classes,  courses  or  other  services  or  materials  we  provide. </p>
+            <p  class="inline-class head ft22"> 1.2. Suspension  of  Activities:  </p>
+            <p  class="inline-class ft20"> In  the  event  of  a  force  majeure  event,  An-Nakhlah  Institute  may  suspend  or  modify  its  </p>
+            <p  class="inline-class ft22">academic,  administrative,  and  operational  activities  as  necessary  to  ensure  the  safety and  well-being  of  its  community  members.  </p>
+            <p  class="inline-class ft20"> The university will take steps to mitigate the impact on academic progress and  </p>
+            <p  class="inline-class ft20">administrative  functions  to  the  extent possible.  </p>
+            <p  class="inline-class head ft21" > 1.3. Tuition  and  Fee  Adjustments:  </p>
+            <p  class="inline-class ft20"> In  the  case  of  a  force  majeure  event  that leads  to  a  significant disruption  of  educational  </p>
+            <p  class="inline-class ft22">services,  An-Nakhlah  Institute  will  assess  the  need  for  tuition  and  fee  adjustments  for affected  students.  </p>
+            <p  class="inline-class ft20"> Adjustments  will be  made  on  a  case-by-case  basis,  taking  into  consideration  the  nature  </p>
+            <p  class="inline-class ft20">and  duration  of  the  disruption.  </p>
+            <p  class="inline-class head ft21" > 1.4. Communication  and  Transparency:  </p>
+            <p  class="inline-class ft20"> The university will maintain transparent communication with students, faculty, staff, and  other  stakeholders  regarding  the  force  majeure  event,  its  impact,  and  any  changes to  university  operations.  </p>
+            <p  class="inline-class ft20"> Regular  updates  will be  provided through  official university  communication  channels.  </p>
+            <p  class="inline-class  head ft21" > 1.5. Contingency  Planning:  </p>
+            <p  class="inline-class ft20"> An-Nakhlah Institute will develop and maintain contingency plans to prepare for and  </p>
+            <p  class="inline-class ft22">respond to potential force majeure events, including strategies for remote learning, remote  work,  and  emergency  response.  </p>
+            <p  class="inline-class ft22"></p>
+            
+            
+            
+            <p  class="inline-class   head  ft33">1.6. Review  and  Revision:  </p>
+            <p  class="inline-class ft30"> This  force  majeure  policy  will  be  reviewed  periodically  to  ensure  its  effectiveness  and  </p>
+            <p  class="inline-class ft30">relevance  in  responding  to  unforeseen  events.  </p>
+            <p  class="inline-class ft30"> Necessary revisions will be made based on lessons learned from past events and  </p>
+            <p  class="inline-class ft30">changes  in  circumstances.  </p>
+            <p  class="inline-class   head ft33"> 1.7. Compliance:  </p>
+            <p  class="inline-class ft30"> All  members  of  the  university  community  are  expected  to  comply  with  this  policy  and  </p>
+            <p  class="inline-class ft30">any  related procedures  or  directives  issued during  a  force  majeure  event.  </p>
+            <p  class="inline-class   head ft33"> 1.8. Legal and  Contractual Obligations:  </p>
+            <p  class="inline-class ft30"> An-Nakhlah Institute will make reasonable efforts to meet its legal and contractual  </p>
+            <p  class="inline-class ft33">obligations  during  a  force  majeure  event,  but  it  may  not  be  held  liable  for  damages  or penalties  resulting  from  circumstances  beyond  its  control.  </p>
+            <p  class="inline-class   head ft33"> 1.9. Contact Information:  </p>
+            <p  class="inline-class ft30"> Contact  information  for  relevant  university  offices  and  emergency  response  teams  will  </p>
+            <p  class="inline-class ft33">be  made  available  to  all  stakeholders  for  inquiries  and  assistance  during  a  force  majeure event.  </p>
+
+            <p  class="inline-class   heading   ft31"><b>2. Booking  &amp;  Payment  of  Fees  </b></p>
+            <p  class="inline-class ft33"> Introduction  This policy outlines the procedures and regulations related to booking, payment fees, late payments,  and  termly  payments  at  An-Nakhlah  Institute.  All  students  are  expected  to  adhere to  these  guidelines.</p>
+            <p  class="inline-class   head ft33"> 2.1. Course  Registration:  </p>
+            <p  class="inline-class ft30"> All students must complete the course registration process within the specified  </p>
+            <p  class="inline-class ft30">deadlines.  </p>
+            <p  class="inline-class ft30"> Students  must  send  a  completed  application  form  to<a href="mailto:info@an-nakhlah.com">  info@an-nakhlah.com  </a>to  show  </p>
+            <p  class="inline-class ft30">interest  for  their  choice  of  course/program.  </p>
+            <p  class="inline-class ft33"> </p>
+            
+            
+            </head>
+            
+            <p  class="inline-class   head  ft43">2.2. Deposit Requirement:  </p>
+            <p  class="inline-class ft42"> A  non-refundable  deposit is  required to  secure  a  place  in  a  course. - The  deposit  serves  as  a  commitment  from  the  student  to  enrol  in  the  course,  and  it  </p>
+            <p  class="inline-class ft40">ensures  a  seat  is  reserved.  </p>
+            <p  class="inline-class  head  ft43"> 2.3. Deposit Amount:  </p>
+            <p  class="inline-class ft40"> The specific amount of the non-refundable deposit for course registration will be  </p>
+            <p  class="inline-class ft43">determined  by  the  university  and  communicated  to  students  during  the  application process.  </p>
+            <p  class="inline-class ft40"> The  deposit  amount may  vary  based  on  the  type  of  course  and  other  relevant  factors.  </p>
+            <p  class="inline-class  head  ft42"> 2.4. Deposit Time:  </p>
+            <p  class="inline-class ft43"> The  course  registration  deposit is  payable  at the  time  of  application  or  registration. - Failure to pay the deposit may result in the application or registration being  </p>
+            <p  class="inline-class ft43">considered incomplete.</p>
+            <p  class="inline-class  head  ft40">2.4. Non-Refundable  Nature:  </p>
+            <p  class="inline-class ft40"> The  course  registration  deposit  is  entirely  non-refundable,  regardless  of  whether  the  </p>
+            <p  class="inline-class ft42">student  ultimately  enrols  in  the  course  or  not.</p>
+            <p  class="inline-class  head  ft40">2.5. Exceptions:  </p>
+            <p  class="inline-class ft40"> Exceptions to the non-refundable deposit policy may be made only in cases of  </p>
+            <p  class="inline-class ft42">documented extreme and unforeseen circumstances. Such exceptions will be evaluated on a case-by-case basis by An-Nakhlah's head of finance and/or An-  Nakhlah’s  shura  team.  </p>
+
+            <p  class="inline-class   heading  ft41"><b>3. Payment  Fees  </b></p>
+            <p  class="inline-class ft42"><b> </b>Introduction:  This  policy  outlines  the  procedures  and  regulations  related  to  payment  fees,  late  payments, and  termly  and  yearly  payments  at  An-Nakhlah  Institute.  All  students,  staff,  and  individuals associated  with  the  university  are  expected  to  adhere  to  these  guidelines.  </p>
+            <p  class="inline-class   head  ft53">  3.1. Tuition  Fees:  </p>
+            <p  class="inline-class ft40"> Tuition  fees  are  payable  on  a  termly  or  yearly  basis.  </p>
+            
+            
+            </head>
+            
+            <p  class="inline-class ft53"></p>
+            <p  class="inline-class ft54">Detailed  tuition  fee  schedules  and  amounts  can  be  found  on  the  An-Nakhlah  website  and/or student  acceptance  letters.  </p>
+            <p  class="inline-class ft50"> Payment  methods  accepted  include  bank  transfers,  and  other  methods  as  specified  </p>
+            <p  class="inline-class ft50">by  the  university.  </p>
+            <p  class="inline-class   head  ft53"> 3.2.  Submitting  Tuition  Fees  &amp;  Financial Hardship:  </p>
+            <p  class="inline-class ft50"> Termly  or  yearly  payments  are  due  before  the  commencement  of  each  academic  term  </p>
+            <p  class="inline-class ft50">or  year.  </p>
+            <p  class="inline-class ft50"> An-Nakhlah  will  not  accept  payments  for  terms  during  the  term  itself.  All  payments,  </p>
+            <p  class="inline-class ft53">whether  full or  instalment,  must be made  before  the  start  of  the  respective  academic term.  </p>
+            <p  class="inline-class ft50"> Students may request financial aid or payment plans in accordance with the  </p>
+            <p  class="inline-class ft50">university's  financial assistance  policies.  </p>
+            <p  class="inline-class   head ft52"> 3.3. Payment  Options:  </p>
+            <p  class="inline-class ft50"> Students  are  provided with  two  options  for  fee  payment:  </p>
+            <p  class="inline-class ft52"><i>Option  1:  Full Yearly  Payment:</i>  Students  can  choose  to  pay  the  full fees  before the  beginning  of  an  academic  year. This  option  will be  discounted  to  £1100. <i>Option 2: Instalment Termly Payment:</i> Alternatively, students can opt for instalment payments. They are required to pay a total of £1200, with £500 before  the  beginning  of  the  first  term,  £400  before  the  beginning  of  the  second term  and  £300  before  the  beginning  of  the  third  term.  </p>
+            <p  class="inline-class   head ft53"> 3.4.  Late  Payments:  </p>
+            <p  class="inline-class ft53"> Late  payment  of  tuition  fees  will result in  penalties  as  specified  in  the  fee  schedule. - Failure to pay outstanding fees may lead to academic restrictions, including the  </p>
+            <p  class="inline-class ft50">withholding  of  transcripts  and  graduation.  </p>
+            <p  class="inline-class   head ft53"> 3.5. Dispute  Resolution:  </p>
+            <p  class="inline-class ft50"> Any  disputes  related  to  payments,  fees,  or  bookings  should  be  submitted  in  writing  to  </p>
+            <p  class="inline-class ft50">the  university's  finance  or  booking  department  for  resolution.  </p>
+            <p  class="inline-class   head ft53"> 3.6. Policy  Compliance:  </p>
+            <p  class="inline-class ft50"> Non-compliance  with  this  policy  may  result in  disciplinary  actions,  financial penalties,  </p>
+            <p  class="inline-class ft50">or  loss  of  privileges,  as  determined by  the  university  administration.  </p>
+            <p  class="inline-class   head ft53"> 3.7. Review  and  Amendments:</p>
+            
+            
+            </head>
+            
+            <p  class="inline-class ft64"></p>
+            <p  class="inline-class ft60"> This  policy  will  be  periodically  reviewed  and  updated  as  necessary.  Any  amendments  </p>
+            <p  class="inline-class ft60">will be  communicated  to  the  university  community  through  official channels.  </p>
+
+            <p  class="inline-class  heading  ft61"><b>4. Under-16  Students  </b></p>
+
+            <p  class="inline-class   head ft62">4.1 Parental Consent:  </p>
+            <p  class="inline-class ft60"> When  a  Student  is  under  16  years  of  age  at  the  start  of  their  course  at  An-Nakhlah  </p>
+            <p  class="inline-class ft64">Institute, their parents or legal guardians must sign a parental consent form. Confirmation  documents  will  not  be  issued  and  the  student  will  not  be  accepted  on  to a  course  unless  the  parental consent  form  is  returned signed.  </p>
+            <p  class="inline-class ft60"> In  case  of  Students  who  are  under  16  years  of  age,  any  reference  in  these  Terms  and  </p>
+            <p  class="inline-class ft63">Conditions  to  liability  of  Students  shall  also  infer  liability  on  the  parents  or  guardian  of the  Student  and  such  liability  is  joint and  several.  </p>
+
+            <p  class="inline-class   heading  ft61"><b>5. Classroom Policy  for Students  </b></p>
+            <p  class="inline-class  head  ft64"> 5.1.  Attendance:  </p>
+            <p  class="inline-class ft60"> Regular  Attendance:  Students  are  expected  to  attend  all  scheduled  classes  regularly  </p>
+            <p  class="inline-class ft60">and  punctually.  </p>
+            <p  class="inline-class ft60"> Signing In: At the beginning of each class, students must sign their names on the  </p>
+            <p  class="inline-class ft60">attendance  register  provided by  the  instructor.  </p>
+            <p  class="inline-class ft60"> Late  Arrivals:  If  a  student  arrives  late  to  class,  they  must  still  sign  in  on  the  attendance  </p>
+            <p  class="inline-class ft64">register.  Students  are  expected  to  be  punctual to  all  classes. Constant latecomers  will be  considered as  absent  for  the  respected  class/session.  </p>
+            <p  class="inline-class  head  ft63"> 5.2.  Minimum  Attendance  Requirement:  </p>
+            <p  class="inline-class ft60"> Minimum  70%  Attendance:  To  successfully  be  eligible  to  sit  the  exams,  students  must  </p>
+            <p  class="inline-class ft60">maintain  a  minimum  attendance  rate  of  70%. </p>
+            <p  class="inline-class   head ft64"> 5.3. Review  by  Administration:  </p>
+            <p  class="inline-class ft60"> The  administration  will  conduct  monthly  reviews  of  student  attendance  records.  If  a  </p>
+            <p  class="inline-class ft63">student's attendance falls below 70%, they will be contacted by the administrative team  to  discuss  their  situation  and  develop  an  action  plan.  </p>
+            <p  class="inline-class   head ft64"> 5.4.  Conduct and  Behaviour:  </p>
+            <p  class="inline-class ft60"> Respectful Conduct: Students are expected to maintain a respectful and courteous  </p>
+            <p  class="inline-class ft64">demeanour  at  all  times  during  class.  Disruptive  behaviour,  including  but  not  limited  to talking  loudly,  using  electronic  devices  for  non-academic  purposes,  and  engaging  in disrespectful or  offensive  language,  is  not tolerated.  </p>
+            
+            
+            
+            <p  class="inline-class  head  ft72">  5.5.  Academic  Integrity:  </p>
+            <p  class="inline-class ft70"> Honesty: Students are expected to maintain the highest standards of academic  </p>
+            <p  class="inline-class ft72">integrity.  Any  form  of  cheating,  plagiarism,  or  dishonesty  will  be  subject  to  disciplinary action,  which  may  include  course  failure.  </p>
+            <p  class="inline-class ft70"> Notifications: Students must inform the instructor and administrative office in  </p>
+            <p  class="inline-class ft70">advance  if  they  are  unable  to  attend  class  due  to  exceptional circumstances.  </p>
+            <p  class="inline-class  head  ft73"> 5.6.  Dress  Code  &amp;  General Guidelines:  </p>
+            <p  class="inline-class ft70"> Students must maintain appropriate clothing and manners within class, showing  </p>
+            <p  class="inline-class ft70">respect for  the  learning  environment  and  fellow  students.  </p>
+            <p  class="inline-class ft70"> Students  are  responsible  for  their  personal  belongings.  The  school  is  not liable  for  any  </p>
+            <p  class="inline-class ft70">loss  or  damage  to  personal items.  </p>
+            <p  class="inline-class ft70"> Students must maintain the cleanliness of the classroom and common areas by  </p>
+            <p  class="inline-class ft70">disposing  of  trash  properly.  </p>
+            <p  class="inline-class   head ft72"> 5.7.  Gender  Interaction:  </p>
+            <p  class="inline-class ft70"> There shall be absolutely no interaction between non related male and female  </p>
+            <p  class="inline-class ft70">students  within  the  institute  premises  or  during  class  sessions.  </p>
+            <p  class="inline-class ft70"> Any  student  found  breaching  this  rule  will  face  immediate  disciplinary  action,  as  per  </p>
+            <p  class="inline-class ft70">the  institute's  disciplinary  policy.  </p>
+            <p  class="inline-class  head  ft73"> 5.8.  Disciplinary  Measures:  </p>
+            <p  class="inline-class ft70"> Violation Consequences: Violation of any of these classroom policies may result in  </p>
+            <p  class="inline-class ft73">disciplinary  action,  which  may  include  verbal  warnings,  written  warnings,  probation, suspension,  or  expulsion,  depending  on  the  severity  of  the  violation.  </p>
+            <p  class="inline-class  head  ft73"> 5.9.  Review  and  Amendments:  </p>
+            <p  class="inline-class ft70"> Policy  Updates:  This  classroom  policy  is  subject  to  review  and  amendments  as  deemed  </p>
+            <p  class="inline-class ft73">necessary  by  the  institution.  Any  changes  will  be  communicated  to  students  in  a  timely manner.  </p>
+
+            <p  class="inline-class  heading  ft71"><b>6. Holiday  Request  Policy  for  Students  </b></p>
+            <p  class="inline-class   head  ft83"></p>     6.1.  Submission  of  Request: </p>
+            <p  class="inline-class ft70"> Students  who  wish  to  go  on  holiday  during  the  academic  term  must  submit  a  formal  </p>
+            <p  class="inline-class ft73">request  to  the  academic  administration  office  at  least  four  weeks  in  advance  of  the intended holiday  period.  </p>
+            
+            
+            
+
+
+            <p  class="inline-class ft80"> The  request must be made  in  writing  with  &#34;Request for  Holiday  &#34;  as  the  subject of  </p>
+            <p  class="inline-class ft80">the  email.  The  request/email  should  include  the  following  information:  </p>
+            <p  class="inline-class ft82">  -  Name  and  student  ID-  Dates  of  the  intended holiday-  Reason  for  the  holiday-  Contact information  during  the  holiday  </p>
+            <p  class="inline-class   head  ft83"> 6.2. Holidays  and  exams: </p>
+            <p  class="inline-class ft80"> It is  incumbent  on  every  student  to  ensure  that any  intended travel  during  the  </p>
+            <p  class="inline-class ft83">academic  year  does  <strong>not  </strong>conflict  with  or  prevent  them  from  sitting  any  exam(s)  they are  required to  take.  For  the  avoidance  of  doubt, where  a  student  misses  an  exam  as a  result of  a  holiday  (whether  pre-booked before  the  exam  dates  were  known  or otherwise),  this  will  constitute  a  failed  attempt and  no  mitigating  circumstances  with respect to  the  absence  will be  accepted by  the  institute.</p>
+            <p  class="inline-class   head  ft82"> 6.3.  Approval Process: </p>
+            <p  class="inline-class ft80"> The  request  will  be  reviewed  by  the  academic  administration.  Approval  will  be  granted  </p>
+            <p  class="inline-class ft83">based on  the  validity  of  the  reason,  the  timing  of  the  holiday,  and  its  potential  impact on  the  student's  academic  progress.  </p>
+            <p  class="inline-class  head  ft82"> 6.4.  Notification: </p>
+            <p  class="inline-class ft80"> Students  will be  notified  of  the  approval or  denial of  their  holiday  request within  </p>
+            <p  class="inline-class ft80">fourteen  days  of  submission.  </p>
+            <p  class="inline-class   head ft83"> 6.5. Online  Study  Request:  </p>
+            <p  class="inline-class ft80"> Students  requesting  to  study  classes  online  due  to extenuating  circumstances  must  </p>
+            <p  class="inline-class ft82">submit  fees  for  the  entire  remaining  year  of  study  upfront.  Approval  will  be  granted on  a  case-by-case  basis.  </p>
+            <p  class="inline-class ft80"> Students  granted  permission  to  study  online  must attend  the  exam  on  its  given dates  </p>
+            <p  class="inline-class ft80">in  person.  (Please  see  policy  number  13)  </p>
+            <p  class="inline-class ft80"> Students who do not attend their initial exams without approval from the  </p>
+            <p  class="inline-class ft82">administration  will  have  their  grades  capped  at  51%  when  sitting  the  exam  at  its  retake date  </p>
+            <p  class="inline-class ft80"> Students  that  are  absent  for  both  exams  will  be  moved  to  the  non-degree  programme  </p>
+
+            <p  class="inline-class   heading  ft81"><b>7. Services  </b></p>
+            <p  class="inline-class   head  ft83"> 7.1  Changing  advertised  services:</p>
+            
+            
+            </head>
+            
+            <p  class="inline-class ft94"></p>
+            <p  class="inline-class ft90"> An-Nakhlah Institute reserves the right to change details of its advertised services,  </p>
+            <p  class="inline-class ft93">courses, facilities and course dates where circumstances beyond the academies control  necessitate  such  changes  or  where  the  number  of  enrolment’s  is  not  enough to  operate  a  course  viably.  </p>
+            <p  class="inline-class ft90"> In  the  unlikely  event  that An-Nakhlah  Institute  is  unable  to  deliver  your  course  in  full,  </p>
+            <p  class="inline-class ft93">you  may  be  offered  enrolment  on  a  suitable  alternative  course  at  no  extra  cost.  You have  the  right  to  choose  whether  you  would  prefer  to  cancel  the  course  (terms  and conditions  apply),  or  to  accept  a  place  on  another  course.  A  minimum  of  40  students are required for courses to run. If there are fewer than 40 students, alternative arrangements may be made. This may mean reduced hours, or the class may be merged with  another  class.  </p>
+
+            <p  class="inline-class   heading  ft91"><b>8. Course  Entry  Requirement  </b></p>
+            <p  class="inline-class  head  ft94"> 8.1. Course  Entry  Requirements:  </p>
+            <p  class="inline-class ft90"> All  courses  at  An-Nakhlah  Institute  have  entry  requirements  including  minimum  age,  </p>
+            <p  class="inline-class ft90">hifdh,  prior  arabic  study,  ability  to  read the  Quran  etc  -  see  each  course  for  details.  </p>
+            <p  class="inline-class ft90"> If any information provided in the application is incorrect, An-Nakhlah Institute  </p>
+            <p  class="inline-class ft93">reserves  the  rights  to  make  the  necessary  changes  to  the  student's  enrolment  at  the student's  expense  and  if  necessary,  ask  the  students  to  leave  their  course  without  any refunds.  </p>
+
+            <p  class="inline-class   heading  ft91"><b>9. Student  Cancellation  and  Refund  policy  </b></p>
+            <p  class="inline-class   head  ft94"> 9.1. Withdrawal from  Course:  </p>
+            <p  class="inline-class ft90"> Students must inform the university administration if they intend to drop out or  </p>
+            <p  class="inline-class ft90">withdraw  from  their  academic  program. </p>
+            <p  class="inline-class ft90"> Students  who  drop  out  after  the  commencement of  an  academic  year  are  liable  to  </p>
+            <p  class="inline-class ft93">complete all payments for that academic year, even if they have not attended any lessons  during  such  year.  This  includes  tuition  fees,  book  fees  and  any  other  financial obligations  owing  to  the  university. </p>
+            <p  class="inline-class ft90"> It  is  the  responsibility  of  the  student  to  communicate  with  the  university's  financial  </p>
+            <p  class="inline-class ft90">office  to  arrange  for  the  settlement  of  these  outstanding  payments.  </p>
+            <p  class="inline-class  head  ft93"> 9.2  Refunds:</p> 
+            <p  class="inline-class ft90"> Under  no  circumstances  will refunds  be  issued  once  fees  have  been  tendered  </p>
+
+
+            <p  class="inline-class ft94"></p>
+            
+            
+            </head>
+            
+            <p  class="inline-class ft104"></p>
+            <p  class="inline-class   heading ft101"><b>10.  Liability  </b></p>
+            <p  class="inline-class  head  ft104"> 10.1. Liability  on  An-Nakhlah  Institute  </p>
+            <p  class="inline-class ft100"> An-Nakhlah Institute and its staff and representatives will not be liable for loss,  </p>
+            <p  class="inline-class ft103">damage or injury to persons or property however caused, except where liability is expressly  imposed by  law.  </p>
+            <p  class="inline-class ft100"> An-Nakhlah  Institute  will  not  be  liable  in  the  event  of  any  service  contracted  by  An-</p>
+            <p  class="inline-class ft103">Nakhlah  Institute  becoming  impossible  to  supply  for  any  reason  or  any  cause  outside our  control.  </p>
+            <p  class="inline-class  head  ft103"> 10.2. Liability  on  Students  of  An-Nakhlah  Institute  </p>
+            <p  class="inline-class ft100"> Students will be liable for any damage to the property or facilities of An-Nakhlah  </p>
+            <p  class="inline-class ft100">Institute  and  will be  required to  compensate  An-Nakhlah  Institute  against any  loss.  </p>
+            <p  class="inline-class ft100"> Students  will  be  liable  for  any  harm  caused  to  another  student,  member  of  An-Nakhlah  </p>
+            <p  class="inline-class ft103">Institute  staff  or  external  staff  contracted  to  provide  services  on  behalf  of  An-Nakhlah Institute  and  will compensate  An-Nakhlah  Institute  accordingly.  </p>
+
+            <p  class="inline-class   heading  ft101"><b>11. Increase  in  cost  of  fees  payable  by  students</b></p>
+            <p  class="inline-class  head  ft104"> 11.1. Price  Adjustment  Consideration:  </p>
+            <p  class="inline-class ft100"> To  ensure  the  continued  quality  of  education  and  services,  the  university  may  need  to  </p>
+            <p  class="inline-class ft100">adjust tuition  and  fee  rates  in  response  to  inflationary  pressures.  </p>
+            <p  class="inline-class  head  ft104"> 11.2. Notice  of  Price  Increases:  </p>
+            <p  class="inline-class ft100"> An-Nakhlah  Institute  is  committed  to  transparent  communication  with  students  and  </p>
+            <p  class="inline-class ft100">their  families  regarding  any  potential  price  increases.  </p>
+            <p  class="inline-class ft100"> The  Institute  will  inform  all  students  of  any  planned  price  increases  for  the  following  </p>
+            <p  class="inline-class ft100">academic  year  prior  to  the  start of  the  third  term  of  the  current  year.  </p>
+            <p  class="inline-class  head  ft104"> 11.3. Price  Increase  Implementation:  </p>
+            <p  class="inline-class ft100"> Price increases will be proposed, reviewed, and approved through appropriate  </p>
+            <p  class="inline-class ft100">university  channels.  </p>
+            <p  class="inline-class ft100"> Approved price  increases  will take  effect at  the  beginning  of  the  next academic  year.  </p>
+
+            <p  class="inline-class   heading ft101"><b>12.  University  Financial  Hardship  &amp;  Scholarship  Policy  </b></p>
+            <p  class="inline-class ft104"> Introduction </p>
+            
+            
+            
+            <p  class="inline-class ft113">  This  policy  outlines  the  guidelines  and  procedures  for  addressing  financial  hardship  among students  at  An-Nakhlah  Institute.  We  are  committed  to  supporting  students  facing  financial challenges  and  ensuring  that their  access  to  education  is  not unduly  compromised.</p>
+<p  class="inline-class   head ft113">      12.1.  Financial Hardship  Assessment:  </p>
+            <p  class="inline-class ft110"> Financial hardship assistance will be assessed on a termly</p>
+
+            <p  class="inline-class ft110">basis, considering each  </p>
+            <p  class="inline-class ft110">student's  unique  circumstances.  </p>
+            <p  class="inline-class head ft112"> 12.2.  Eligibility  &amp;  Application  Process:  </p>
+            <p  class="inline-class ft110"> Students  must  submit  a  formal  request  for  a  payment  plan  to  the  financial  aid  office,  </p>
+            <p  class="inline-class ft110">providing  relevant financial documentation.  </p>
+            <p  class="inline-class ft110"> Eligibility for financial hardship assistance will be determined by the university's  </p>
+            <p  class="inline-class ft110">financial aid  office,  based on  the  following  criteria:  </p>
+            <p  class="inline-class  head point  ft110">i) Demonstrated  financial need  </p>
+            <p  class="inline-class  head point  ft110">ii)Availability  of  university  resources  </p>
+            <p  class="inline-class ft110"> The financial aid office will assess the student's request and financial situation to  </p>
+            <p  class="inline-class ft110">determine  the  most appropriate payment  plan.  </p>
+            <p  class="inline-class   head ft113"> 12.3.  Payment  Plans  -  Flexible  Payment  Plans:  </p>
+            <p  class="inline-class ft110"> Students facing financial hardship may request to enrol in a flexible payment plan,  </p>
+            <p  class="inline-class ft113">which can include extended payment deadlines, smaller instalment payments, or other  arrangements.  </p>
+            <p  class="inline-class  head  ft113"> 12.4. Fee  Waivers:  </p>
+            <p  class="inline-class ft110"> In  cases  of  severe  financial  hardship,  certain  fees,  such  as  registration  fees  or  course  </p>
+            <p  class="inline-class ft110">material fees,  may  be  partially  or  fully  waived.  </p>
+            <p  class="inline-class ft110"> Students  wishing  to  apply  for  this  must  submit  a  fee  waiver  request  to  the  financial  </p>
+            <p  class="inline-class ft110">aid  office,  along  with  supporting  documentation  detailing  their  financial hardship.  </p>
+            <p  class="inline-class ft110"> The financial aid office will assess the student's request and financial situation to  </p>
+            <p  class="inline-class ft110">determine  the  eligibility  for  fee  waivers.  </p>
+            <p  class="inline-class  head  ft113"> 12.5. Confidentiality:  </p>
+            <p  class="inline-class ft110"> The  university  will maintain  the  privacy  and  confidentiality  of  all  financial information  </p>
+            <p  class="inline-class ft110">provided by  students  during  the  financial hardship  assessment  process.  </p>
+            <p  class="inline-class   head ft112"> 12.6. Renewal and  Reassessment:  </p>
+            <p  class="inline-class ft110"> Financial hardship assistance is subject to yearly review. Students must reapply  for  </p>
+            <p  class="inline-class ft110">assistance  each  academic  year.  </p>
+
+            
+            
+            
+            <p  class="inline-class  head  ft122">  12.7. Change  in  Circumstances:  </p>
+            <p  class="inline-class ft120"> Students  are  encouraged  to  notify  the  financial  aid  office  promptly  if  their  financial  </p>
+            <p  class="inline-class ft120">circumstances  change  during  the  academic  year.  </p>
+            <p  class="inline-class  head  ft123"> 12.8. Appeals:  </p>
+            <p  class="inline-class ft120"> Students have the right to appeal any decisions related to financial hardship  </p>
+            <p  class="inline-class ft120">assistance.  Appeals  should  be  submitted in  writing  to  the  financial aid  office.  </p>
+
+            <p  class="inline-class  heading  ft121"><b>13.  University  Examination  Policy  </b></p>
+            <p  class="inline-class     ft123"> Introduction  This policy outlines the rules, regulations, and procedures governing examinations at An-  Nakhlah Institute. Examinations are an essential component of the academic assessment process,  and  all  students  are  expected  to  adhere  to  these  guidelines  to  maintain  the  integrity and  fairness  of  the  examination  system.  Policy</p>
+            <p  class="inline-class   head  ft123">      13.1.  Examination  Schedule  and  Venue:  </p>
+            <p  class="inline-class ft120"> The  university  will  publish  a  comprehensive  examination  schedule  well  in  advance  </p>
+            <p  class="inline-class ft120">of  the  examination  period.  </p>
+            <p  class="inline-class ft120"> Students  are  responsible  for  checking  the  schedule  and  ensuring  they  are  aware  of  </p>
+            <p  class="inline-class ft120">the  date,  time,  and  venue  of  their  examinations.  </p>
+            <p  class="inline-class ft122"> Students  must report to  the  designated  examination  venue  on  time. - Valid student identification must be presented upon entry to the examination  </p>
+            <p  class="inline-class ft120">venue.  </p>
+            <p  class="inline-class  head  ft123"> 13.2.  Academic  Integrity:  </p>
+            <p  class="inline-class ft120"> All students are expected to uphold the highest standards of academic integrity  </p>
+            <p  class="inline-class ft120">during  examinations.  </p>
+            <p  class="inline-class ft120"> Any  form  of  cheating,  plagiarism,  or  dishonesty  is  strictly  prohibited  and  will  result  </p>
+            <p  class="inline-class ft120">in  disciplinary  action.  </p>
+            <p  class="inline-class  head  ft123"> 13.3. Prohibited  Items  during  examinations:  </p>
+            <p  class="inline-class ft120"> Students  are  not  allowed  to  bring  any  unauthorized  materials,  electronic  devices,  </p>
+            <p  class="inline-class ft122">or communication devices into the examination venue, as specified by the examination  guidelines.  </p>
+
+            
+            
+            
+            <p  class="inline-class   head ft132">  13.4.  Exam  Attempts:  </p>
+            <p  class="inline-class ft130"> Students  will  only  be  given  a  maximum  of  two  opportunities  to  take  an  exam.  The  </p>
+            <p  class="inline-class ft133">first opportunity will be on the original exam date (the &#34;<strong>First Exam Date</strong>&#34;). The second  opportunity  will be  on  the  very  next date  on  which  the  missed exam  is  held by  the  institute  (the  &#34;<strong>Second  Exam Date</strong>&#34;). </p>
+            <p  class="inline-class ft130"> For  the  avoidance  of  doubt,  students  who  miss  the  First  Exam  Date  even  with  a  valid  </p>
+            <p  class="inline-class ft132">extenuating  circumstance  will  only  have  one  further  opportunity  to  resit  the  exam i.e. on  the  Second  Exam  Date.  Failure  to  sit the  exam  on  this  date  will result in  such student(s)  being  transferred onto  the  non-degree  programme. </p>
+            <p  class="inline-class ft130"> Students  who  miss  the  First Exam  Date  and  then fail  the  exam  on  the  Second  Exam  </p>
+            <p  class="inline-class ft130">Date  will also  be  transferred onto  the  non-degree  programme. </p>
+            <p  class="inline-class ft130"> No students in any circumstance will be afforded a third opportunity to take an  </p>
+            <p  class="inline-class ft130">exam  after  the  Second  Exam  Date  has  passed. </p>
+            <p  class="inline-class ft130"> Where  students  fail  to  sit  the  exam  on  the  First  Exam  Date  without  valid  reason  or  </p>
+            <p  class="inline-class ft132">fail  the  exam  on  the  First  Exam  Date  their  results  on  their  second  attempt  will  be capped at 51%.  </p>
+            <p  class="inline-class   head ft132"> 13.5. Missed or  Failed  Exams:  </p>
+            <p  class="inline-class ft130"> Students  who  miss  both  exam  dates  (even  with  extenuating  circumstances)  or  fail  </p>
+            <p  class="inline-class ft130">both  attempts,  will  be  transferred to  the  non-degree  programme.  </p>
+            <p  class="inline-class   head ft133"> 13.6. Attendance  and  Punctuality:  </p>
+            <p  class="inline-class ft130"> Students must attend examinations punctually and remain in the examination  </p>
+            <p  class="inline-class ft130">venue  until  they  have  completed the  examination.  </p>
+            <p  class="inline-class ft130"> Late  arrivals  will not be granted  additional time.  </p>
+            <p  class="inline-class   head ft133"> 13.7. Special Accommodations:  </p>
+            <p  class="inline-class ft130"> Students with documented disabilities may request reasonable accommodations  </p>
+            <p  class="inline-class ft133">for  examinations  through  the  university's  Office  of  Student  Accessibility  Services.  All requests  must be submitted 6  weeks  prior  to  an  exam  sitting. </p>
+            <p  class="inline-class   head ft133"> 13.8. Mitigating  circumstance  </p>
+            <p  class="inline-class ft130"> All mitigating circumstances requests must be submitted to the institute's  </p>
+            <p  class="inline-class ft132">administration  team  (i)  in  writing;  (ii)  immediately  upon  the  mitigating  circumstance event  becoming  known  to  the  student;  and  (iii)  supported  by  documentary  evidence. E.g. medical records. </p>
+            <p  class="inline-class ft130"> Mitigating  circumstance  requests  submitted  after  an  exam  is  missed  will  automatically  </p>
+            <p  class="inline-class ft130">be  rejected.  </p>
+
+            
+            
+            </head>
+            
+            <p  class="inline-class ft143"></p>
+            <p  class="inline-class ft140"> The decision on whether to accept a mitigating circumstance will be made by the  </p>
+            <p  class="inline-class ft140">institute  in  its  <strong>absolute  discretion</strong>  taking  into  account:  </p>
+            <p  class="inline-class ft143">(i)  the  nature  and  severity  of  the  mitigating  circumstance/mitigating  event;(ii)  the  proximity  of  such  event  to  the  exam(s). Please  note,  the  longer  the  gap between  such  circumstance  arising  and  the  examination  date,  the  higher  the likelihood  of  such  request being  rejected;(iii)  previous  mitigating  circumstance  requests  applied  for  by  such  student;  and(iv)  the  nature  and  quality  of  the  evidence  provided in  support. </p>
+            <p  class="inline-class ft140"> The institute will communicate their decision regarding mitigating circumstance  </p>
+            <p  class="inline-class ft143">requests  with  students  as  soon  as  possible.  For  the  avoidance  of  all  doubt,  students must proceed on the basis that the request has been rejected unless they receive written confirmation  that the  request has  been  approved. </p>
+            <p  class="inline-class ft140"> Notwithstanding acceptance of a mitigating circumstance/deferral request, the  </p>
+            <p  class="inline-class ft142">missed  exam  will  constitute  a  &#34;First  Exam  Date&#34;  and  such  students  will  only  have  1 (albeit  uncapped)  opportunity  to  resit  the  missed  exam  on  the  very  next  exam  date. I.e.,  on  the  Second  Exam  Date. </p>
+            <p  class="inline-class ft140"> Failure  to  attend  the  Second  Exam  Date  or  failing  the  exam  on  such  date  will result in  </p>
+            <p  class="inline-class ft140">such  student  being  transferred onto  the  non-degree  programme. </p>
+            <p  class="inline-class  head ft143"> 13.9.  Examination  Evaluation  and  Grading:  </p>
+            <p  class="inline-class ft140"> Examination grading will be conducted in accordance with established university  </p>
+            <p  class="inline-class ft140">policies  and  guidelines.  </p>
+            <p  class="inline-class ft140"> Student grades and results will be published on the Universities appropriate  </p>
+            <p  class="inline-class ft140">channels  of  communication  </p>
+            <p  class="inline-class  head  ft142"> 13.10. Examination  Misconduct and  Violations:  </p>
+            <p  class="inline-class ft140"> Suspected examination misconduct or violations will be thoroughly investigated,  </p>
+            <p  class="inline-class ft140">and  appropriate disciplinary  actions  will be  taken.  </p>
+            <p  class="inline-class  head  ft143"> 13.11. Retention  and  Release  of  Examination  Scripts  </p>
+            <p  class="inline-class ft140"> Examination scripts may be retained by the university for a specified period as  </p>
+            <p  class="inline-class ft140">required by  academic  policies.  </p>
+            <p  class="inline-class ft140"> Students  may  not  have  the  opportunity  to  review  their  examination  scripts </p>
+            <p  class="inline-class  heading  ft143"> <b>14. Maternity  Policy  for  Students </b> Definition  of  Maternity  Student </p>
+            
+            
+            
+            
+            <p  class="inline-class  head  ft152">  A  maternity  student  is  defined by  An-Nakhlah  Institute  as  a  student  who  is  in  her  final  month of  pregnancy,  has  recently  given  birth  and/or  within  her  post-natal  bleeding  period,  and/or who  has  delivered a  baby  within  a  three-month  period. </p>
+            <p  class="inline-class  head  ft152"></p> 14.1.  Rights:  </p>
+            <p  class="inline-class ft150"> An-Nakhlah  Institute  prohibits  discrimination  or  harassment  based  on  pregnancy,  </p>
+            <p  class="inline-class ft150">childbirth,  or  related conditions.  </p>
+            <p  class="inline-class  head  ft152"> 14.2. Privacy: The privacy and confidentiality of maternity students discussed with the admin will be respected.</p>
+            <p  class="inline-class  head  ft152"> 14.3.  Parental Leave:  </p>
+            <p  class="inline-class ft150"> Maternity  students  are  eligible  to  take  parental  leave  at  a  total  of  3  months  off  after  </p>
+            <p  class="inline-class ft150">childbirth,  along  with  the  final month  of  their  pregnancy.  </p>
+            <p  class="inline-class ft150"> During  this  time,  maternity  students  are  expected  to  study  online  and  to  keep  up  </p>
+            <p  class="inline-class ft152">with their studies. Their absence from in-person classes will however be overlooked.  </p>
+            <p  class="inline-class  head  ft152"> 14.4.  Examinations  for  Maternity  students:  </p>
+            <p  class="inline-class ft150"> Maternity  students  are  required to  attend  examinations  unless  they  are  in  the  final  </p>
+            <p  class="inline-class ft152">two weeks of pregnancy or within the postnatal period (up to 4 weeks after childbirth).  </p>
+            <p  class="inline-class ft150"> Missing  exams  during  these  specific  periods  will  not  result  in  exam  capping  for  the  </p>
+            <p  class="inline-class ft152">next  attempt,  however  such  students  must  ensure  the  missed  exam(s)  are  sat  at  the earliest opportunity available. Such students will not be permitted to defer their exam  resits  beyond  this  point. </p>
+            <p  class="inline-class ft150"> For  the  avoidance  of  doubt,  such  exam  sitting  with  constitute  a  &#34;Second  Exam  Date&#34;  </p>
+            <p  class="inline-class ft151">for  the  purposes  of  13.4  above  and  thus  represents  such  students  only  attempt  to (re)sit  the  missed exam(s). </p>
+            <p  class="inline-class  head  ft150">14.5. Childcare  Services:  </p>
+            <p  class="inline-class ft150"> An-Nakhlah Institute are unfortunately unable to provide or facilitate access to  </p>
+            <p  class="inline-class ft150">childcare  services  for  maternity  students  to  support their  academic  pursuits. </p>
+            <p  class="inline-class ft150"> Maternity  students  must  plan  in  advance  to  arrange  childcare  during  exams  dates  </p>
+            <p  class="inline-class ft152">and times. An-Nakhlah Institute will not accept extenuating circumstances pertaining  to  childcare  issues.  </p>
+            
+            
+            </head>
+            
+            <p  class="inline-class  head  ft162">  14.6. Open Dialogue:  </p>
+            <p  class="inline-class ft160"> An-Nakhlah Institute expects open communication between maternity students  </p>
+            <p  class="inline-class ft162">and university staff. Feedback and concerns should be addressed through the appropriate university  channels.  </p>
+            <p  class="inline-class ft160"> Maternity  students  must  communicate  with  the  institute's  administration  prior  to  </p>
+            <p  class="inline-class ft163">being  absent  from  classes  or  exams  so  appropriate  and  necessary  arrangements  can be afforded to them during this time. Failure to do so will result them in not receiving  the  appropriate exemptions  normally  offered.  </p>
+            <p  class="inline-class  head  ft163"> 14.7. Fees:  </p>
+            <p  class="inline-class ft160"> Given students are expected to continue with their studies during their  </p>
+            <p  class="inline-class ft162">maternity leave and will have access to all materials and lesson recordings, fees  are  expected  to  be  tended as  per  normal. </p>
+            <p  class="inline-class  heading  ft163"> <b>15. Courses  at  An-Nakhlah  Institute </b> </p> 
+            <p class="  head ">15.1.  Cancelling  Courses:  </p>
+            <p  class="inline-class ft163"> An-Nakhlah  Institute  reserves  the  right to  change  or  cancel  an  advertised  course. - In  the  event  of  a  course  being  cancelled  by  An-Nakhlah  Institute,  the  student  will  be  </p>
+            <p  class="inline-class ft160">offered an  alternative  course  and/or  course  dates. </p>
+            <p  class="inline-class ft160"> If  the  student  chooses  not  to  accept  this  alternative,  in  cases  where  the  course  has  </p>
+            <p  class="inline-class ft160">not already  started,  they  will receive  a  full refund  for  the  course. </p>
+            <p  class="inline-class ft160"> If  the  student  has  already  started  the  course,  they  will  receive  a  refund  covering  the  </p>
+            <p  class="inline-class ft160">remaining  period  of  the  course.  </p>
+            <p  class="inline-class   head ft162"> 15.2.  Offsite Classrooms:  </p>
+            <p  class="inline-class ft160"> An-Nakhlah Institute reserves the right to use off-site classrooms of a suitable  </p>
+            <p  class="inline-class ft160">standard.  </p>
+            <p  class="inline-class  head  ft163"> 15.3. Changing  Student  Timetables/Instructors:  </p>
+            <p  class="inline-class ft160"> An-Nakhlah  Institute  reserves  the  right  to  change  student  timetables  and  instructors  </p>
+            <p  class="inline-class ft160">as  required.  </p>
+            <p  class="inline-class  head  ft163"> 15.4. Monitoring  Students  Progression  </p>
+            <p  class="inline-class ft160"> An-Nakhlah Institute monitors students’ progression and places students in classes  </p>
+            <p  class="inline-class ft160">appropriate for  their  level. </p>
+            <p  class="inline-class ft160"> Progression  to  another  level  is  at  the  discretion  of  An-Nakhlah  Institute  based  on  their  </p>
+            <p  class="inline-class ft163">assessments.</p>
+            
+            
+            </style>
+            </head>
+            
+            <p  class="inline-class ft173"></p>
+            <p  class="inline-class  heading ft173"><b>16. Expulsion  and  Suspension </b> </p>
+            
+            <p class="  head "> 16.1.  Suspension:  </p>
+            <p  class="inline-class ft170"> A  reasonable  standard  of  conduct  is  expected  on  all  programmes.  A  student  may  be  </p>
+            <p  class="inline-class ft172">suspended or expelled without refund in case of illegal, anti-social or dangerous behaviour.  An-Nakhlah  Institute  will not accept:  </p>
+            <p  class="inline-class ft172"> Poor  attendance  (lower  than  70%); - Disrespect to  members  of  An-Nakhlah  Institute  staff  or  other  students; - Foul, inappropriate or abusive language, violence, intimidating or insulting  </p>
+            <p  class="inline-class ft170">behaviour,  bullying,  any  form  of  discrimination  or  </p>
+            <p  class="inline-class ft170"> Any  other  act  or  behaviour  that  does  or  may  bring  An-Nakhlah  Institute  into  </p>
+            <p  class="inline-class ft172">disrepute  or  cause  any  harm  or  suffering  to  staff,  other  students  or  members of  the  public.  </p>
+            <p  class="inline-class   head ft173"> 16.2.  Further  Action:  </p>
+            <p  class="inline-class ft170"> If  a  student  has  unacceptable  conduct,  At-Nakhlah  reserves  the  right  to  expel  them.  </p>
+            <p  class="inline-class ft173">An-Nakhlah  may  also  take  any  further  action  it  deems  appropriate  including  informing the  students  parent(s)  or  guardian  (if  they  are  under  16  years  of  age),  local  Imams  or spouses.  </p>
+            <p  class="inline-class   head ft172"> 16.3. Refunds:  </p>
+            <p  class="inline-class ft170"> In  the  event  of  expulsion  due  to  inappropriate  conduct,  there  will  be  no  refund  of  fees  </p>
+            <p  class="inline-class ft170">and  any  outstanding  fees  will become  payable  immediately.  </p>
+            <p  class="inline-class   heading ft173"> <b>17. Cleanliness  &amp;  Hygiene:  </b></p>
+            <p  class="inline-class  head  ft172">17.1. Students are expected to maintain cleanliness and hygiene standards on university premises. This  includes:  </p>
+            <p  class="inline-class    ft173">1.  Cleaning  up  after  themselves  in  common  areas,  including  disposing  of  food  waste in  designated  bins. <br> 2. Keeping  restrooms  and  other  shared facilities  clean and  tidy  after  use. <br> 3. Adhering  to  waste  disposal guidelines  and  recycling  practices  as  established by  the university. <br> 4. Reporting any facility-related issues or maintenance needs promptly to the appropriate university  personnel.  </p>
+            <p  class="inline-class   heading  ft173"> <b>18.  Privacy  Policy  &amp;  Data  Protection: </b> </p>
+            <p class="  head "> 18.1. Date  Storage:  </p>
+            <p  class="inline-class ft180"> By submitting an application to An-Nakhlah Institute, the Student agrees to the  </p>
+            <p  class="inline-class ft181">storage of their personal details, including sensitive personal data, apple in An-Nakhlah Institute’s  administrative  systems,  whether  on  paper,  computer  or  any  other  medium and  to  the  usage  of  that information  for  An-Nakhlah  Institute’s  purposes  only.  </p>
+            <p  class="inline-class   head  ft181"> 18.2.  Processing  Personal Information:  </p>
+            <p  class="inline-class ft180"> An-Nakhlah process personal information to enable us to provide education and  </p>
+            <p  class="inline-class ft181">training, welfare, safety and educational support services, to administer school property, to maintain our own accounts and records, for administration and the organisation  of  events.  Our  processing  also  includes  the  use  of  CCTV  to  maintain  the security  of  the  premises  and  for  preventing  and  investigating  crime.  </p>
+            <p  class="inline-class ft180"> Personal  information  about  Students  processed  by  An-Nakhlah  Institute  will  include  </p>
+            <p  class="inline-class ft182">their full name, contact details and, where appropriate, those of their parents or guardian.  </p>
+            <p  class="inline-class ft180"> An-Nakhlah will keep this information secure at all times as necessary to run its  </p>
+            <p  class="inline-class ft180">business,  deliver  their  education  and  ensure  their  welfare  and  safety.  </p>
+            <p  class="inline-class  head  ft181"> 18.3.  Sharing  Information:  </p>
+            <p  class="inline-class ft180"> An-Nakhlah  will  sometimes  need  to  share  the  personal  information  it  processes  with  </p>
+            <p  class="inline-class ft181">other organisations in the UK. An-Nakhlah will only share all or part of a Student’s personal information  when:  </p>
+            <p  class="inline-class ft181">– It  is  legally  required or  lawful to  do  so. – In  the  event  of  a  medical  emergency  if  it  is  necessary  to  protect  their  health  or  </p>
+            <p  class="inline-class ft180">the  health  of  others.  </p>
+            <p  class="inline-class   head ft181"> 18.4.  Consents:  </p>
+            <p  class="inline-class ft180"> The  student  consents  to  their  personal  data  being  stored,  processed  and  shared  by  </p>
+            <p  class="inline-class ft182">An-Nakhlah Institute in this way. They consent to their sensitive personal data including  health,  welfare,  nationality,  ethnicity,  religious  and  other  data being  stored, processed and  shared by  An-Nakhlah  Institute.  </p>
+            <p  class="inline-class   head ft182"> 18.5. Records  Available  to  Parents:  </p>
+            <p  class="inline-class ft180"> Students under the age of 16 agree that copies of their regular reports on their  </p>
+            <p  class="inline-class ft182">academic  progress  and  performance  (including  attendance  and  absence  records)  can be  supplied  to  parents  without prior  notification.  </p>
+            <p  class="inline-class   head ft182"> 18.6. Amendments  to  Personal Information: </p>
+            
+            
+            
+            <p  class="inline-class ft193"></p>
+            <p  class="inline-class ft190"> An-Nakhlah  will  ask  its  students  to  provide  certain  specific  personal  information.  It  is  </p>
+            <p  class="inline-class ft193">the  student’s  responsibility  to  advise  An-Nakhlah  Institute  of  any  amendments  to  that information  while  they  are  enrolled  with  An-Nakhlah  Institute.  </p>
+            <p  class="inline-class  head  ft193"> 18.7.  Filming:  </p>
+            <p  class="inline-class ft190"> An-Nakhlah  Institute  may  take  photographs  and  films  of  students  for  promotional  and  </p>
+            <p  class="inline-class ft192">marketing purposes (printed and online) without written consent or notification. Students,  and  their  parents  or  guardians  where  applicable,  must  let  us  know  if  they do  not wish  to  be  photographed or  filmed.  </p>
+            <p  class="inline-class  head  ft192"> 18.8.  Data Protection  Act 2018:  </p>
+            <p  class="inline-class ft190"> An-Nakhlah Institute will process and share personal information provided by  </p>
+            <p  class="inline-class ft193">Students  in  accordance  with  the  Data  Protection  Act  2018  and  any  other  applicable data protection  legislation.  </p>
+            
+            <p  class="inline-class  heading  ft191"><b>19.  Equal  Opportunities  </b></p>
+            <p  class="inline-class ft193"> Introduction  An-Nakhlah Institute is committed to providing equal opportunities for all students, employees, and stakeholders regardless of race, colour, gender, disability, age, or other characteristics  protected  by  applicable  Islamic  law.  This  policy  reaffirms  our  commitment  to fostering  an  inclusive  and  diverse  environment.</p>
+            <p  class="inline-class  head  ft190">19.1.  Equal Opportunities  Principles:  </p>
+            
+            <p  class="inline-class ft190"> Discrimination  or  harassment  of  any  kind,  including  but  not  limited  to  race, colour,  </p>
+            <p  class="inline-class ft193">gender, disability,  age, or other protected characteristics in Islamic law, will not be tolerated  within  the  university  community.  </p>
+            
+            <p  class="inline-class   heading ft191"><b>20.  Complaints  Policy  </b></p>
+            <p  class="inline-class ft192"> Introduction  An-Nakhlah Institute acknowledges the importance of providing a transparent process for addressing complaints related to discrimination, harassment, or other inappropriate behaviour. This  policy  outlines  procedures  for  lodging  and  resolving  complaints.</p>
+            <p  class="inline-class   head  ft190">20.1.  Complaint Categories:  </p>
+            
+            
+            
+            <p  class="inline-class ft203"></p>
+            <p  class="inline-class  head point  ft200">20.1.1. Discrimination:  </p>
+            <p  class="inline-class ft200">– Complaints  related  to  discrimination  based  on  race,  colour,  gender,  disability,  </p>
+            <p  class="inline-class ft200">age,  or  other  protected  characteristics.  </p>
+            <p  class="inline-class   head point ft200">20.1.2. Mannerisms  and  Rudeness  of  Staff:  </p>
+            <p  class="inline-class ft200">– Complaints  regarding  inappropriate  or  unprofessional  behaviour,  mannerisms,  </p>
+            <p  class="inline-class ft200">or  rudeness  displayed by  university  staff.  </p>
+            <p  class="inline-class  head   ft203"> 20.2. Complaint Procedure:  </p>
+            <p  class="inline-class   head point ft200">20.2.1  Complaint Submission:  </p>
+            <p  class="inline-class ft200">– Any individual who believes they have experienced discrimination,  </p>
+            <p  class="inline-class ft203">inappropriate  behaviour,  or  rudeness  should  submit  a  written  complaint  to  the university.  </p>
+            <p  class="inline-class  head point  ft200">20.2.2. President  or  Vice  President:  </p>
+            <p  class="inline-class ft200">– Complaints  related  to  discrimination,  inappropriate behaviour,  or  rudeness  by  </p>
+            <p  class="inline-class ft202">university staff should be directed to the President or Vice President of the university.  </p>
+            <p  class="inline-class   head point ft200">20.2.3. Investigation:  </p>
+            <p  class="inline-class ft200">– The  university  will  conduct  a  thorough  investigation  of  the  complaint,  ensuring  </p>
+            <p  class="inline-class ft200">confidentiality  and  impartiality.  </p>
+            <p  class="inline-class  head point  ft200">20.2.4. Resolution:  </p>
+            <p  class="inline-class ft200">– Upon completion of the investigation, appropriate actions will be taken to  </p>
+            <p  class="inline-class ft202">address  the  complaint,  which  may  include  disciplinary  measures,  counselling, training,  or  other  remedies  as  deemed necessary.  </p>
+            <p  class="inline-class   head ft203"> 20.3. Non-Retaliation:</p>
+            <p>  Retaliation  against  individuals  who  file  complaints  or  participate  in  the  complaint  process is  strictly  prohibited  and  will result in  disciplinary  action.</p> 
+            <p  class="inline-class   head ft203">    20.4.  Email:  </p>
+            <p  class="inline-class ft200"> For  complaints,  please  refer  to  the  headteacher  or  email<a href="mailto:info@an-nakhlah.com">  info@an-nakhlah.com  </a></p>
+        <button style="margin-top: 40px;width: 100%;" onclick="closeTermsAndConditions()" class="submit_button">Agree & Submit</button>
+        <div>    
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            <p></p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+</form>
+

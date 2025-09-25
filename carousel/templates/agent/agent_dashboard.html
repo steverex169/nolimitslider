@@ -1,0 +1,102 @@
+{% extends 'agent/template.html' %}
+
+{% block content %}
+<div class="main px-4 py-3">
+    <h2 class="mb-4">Welcome, {{ request.user.username }}</h2>
+
+    <!-- Status -->
+    <div class="status-toggle mb-4">
+        Current Status:
+        {% if status.is_online %}
+            <span style="color:green;">🟢 Online</span>
+            <form method="post" style="display:inline;" action="{% url 'set_online' %}">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-danger" type="submit" name="action" value="go_offline">Go Offline</button>
+            </form>
+        {% else %}
+            <span style="color:red;">🔴 Offline</span>
+            <form method="post" style="display:inline;" action="{% url 'set_online' %}">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-success" type="submit" name="action" value="go_online">Go Online</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">💬 Total Chats</h5>
+                    <p class="display-6">{{ total_chats }}</p>
+                    <a href="{% url 'agent_chats' %}" class="btn btn-outline-primary btn-sm">View All</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">⚡ Active Chats</h5>
+                    <p class="display-6">{{ active_chats|length }}</p>
+                    <a href="{% url 'agent_chats' %}?type=active" class="btn btn-outline-success btn-sm">View Active</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">🆕 New Chats</h5>
+                    <p class="display-6">{{ new_chats|length }}</p>
+                    <a href="{% url 'agent_chats' %}?type=new" class="btn btn-outline-warning btn-sm">View New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Statistics Chart -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">📊 Chat Statistics</h5>
+            <canvas id="chatChart" height="120"></canvas>
+        </div>
+    </div>
+
+    <!-- Tabs for Chats -->
+    <!-- <ul class="nav nav-tabs" id="chatTabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="{% url 'agent_chats' %}">All Chats</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'agent_chats' %}?type=active">Active</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'agent_chats' %}?type=new">New</a>
+        </li>
+    </ul> -->
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ctx = document.getElementById('chatChart').getContext('2d');
+const chatChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ last_7_days_labels|safe }},
+        datasets: [{
+            label: "Chats",
+            data: {{ chat_counts|safe }}, // ✅ real data from backend
+            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            borderColor: "rgba(54, 162, 235, 1)",
+            borderWidth: 1,
+            borderRadius: 5
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+    }
+});
+
+</script>
+{% endblock %}

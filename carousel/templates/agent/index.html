@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"
+        integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <div class="nav-top">
+        <img src="./assets/logo.png" alt="logo">
+        <div class="logo">Feedme.bet</div>
+    </div>
+
+    <div class="main_wrapper">
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a href="/" class="dashboard"><i class="bi bi-menu-up"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle Products" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-house-fill"></i>
+                        <p class="d-inline">User Subscriptions</p>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item" href="UserRecord.html">NewsFeed Users</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="PlaysUserRecord.html">Plays Users</a>
+                        </li>
+                    </ul>
+                </li>
+
+                 <li>
+                    <a href="affiliate_register.html" class="Products">
+                        <i class="bi bi-house-fill"></i>
+                        <p>Affiliates</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="Products.html" class="Products">
+                        <i class="bi bi-house-fill"></i>
+                        <p>Products</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="Records.html" class="Records">
+                        <i class="bi bi-card-checklist"></i>
+                        <p>Records</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="NewsFeed.html" class="NewsFeed">
+                        <i class="bi bi-newspaper"></i>
+                        <p>NewsFeed</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout" class="dashboard">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <p>Log Out</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="right_container">
+            <div class="horizontal space-between gap-10">
+                <div class="vertical margin_top number_cards gap-10">
+                    <h4 class="sub_heading">Overview</h4>
+                    <div class="overview_card_wrapper">
+                        <div class="overview_card">
+                            <div class="card_title horizontal">
+                                <div class="small_avatar"> <img src="./assets/school.png" alt=""></div>
+                                <p>User Registered</p>
+                            </div>
+                            <p class="card_value">300</p>
+                        </div>
+                        <div class="overview_card">
+                            <div class="card_title horizontal">
+                                <div class="small_avatar"> <img src="./assets/emoji_objects.png" alt=""></div>
+                                <p>Newsfeed Revenue</p>
+                            </div>
+                            <p class="card_value">$ 3000</p>
+                        </div>
+                        <div class="overview_card">
+                            <div class="card_title horizontal">
+                                <div class="small_avatar"> <img src="./assets/schedule.png" alt=""></div>
+                                <p>Revenue By Products</p>
+                            </div>
+                            <p class="card_value">$ 5000</p>
+                        </div>
+                        <div class="overview_card">
+                            <div class="card_title horizontal">
+                                <div class="small_avatar"> <img src="./assets/sports_score.png" alt=""></div>
+                                <p>Bots Running</p>
+                            </div>
+                            <p class="card_value">240</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="vertical justify-start latest_play gap-20">
+                    <h4 class="sub_heading">Latest Play</h4>
+                    <div class="latest_play_wrapper">
+                        <div class="horizontal_flex ">
+                            <div class="user_avatar">
+                                <img src="./assets/Frame 1167.png" alt="">
+                            </div>
+                            <div class="vertical">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                                <div class="horizontal_flex">
+                                    <i class="bi bi-person-fill"></i>
+                                    <p class="user_name">User Name</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vertical">
+                            <p class="">Live</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content_wrapper">
+
+                <div class="graph box">
+                    <div class="horizontal_flex space-between fullwidth">
+                        <h4 class="box_title">Subscriber</h4>
+                        <div class="horizontal_flex">
+                            <button class="graph_btn">Week</button>
+                            <button class="graph_btn">Month</button>
+                        </div>
+                    </div>
+                    <canvas id="barchart" style="min-height: 200px; min-width: 200px;"></canvas>
+
+                </div>
+                <div class="progressdiv box">
+                    <h4 class="box_title">Progress</h4>
+                    <div class="vertical align-center fullwidth">
+                        <div class="progress_card">
+                            <div class="percent">
+                                <svg>
+                                    <circle cx="105" cy="105" r="100"></circle>
+                                    <circle cx="105" cy="105" r="100" style="--percent: 45"></circle>
+                                </svg>
+                                <div class="number">
+                                    <h3>45%</h3>
+                                </div>
+                            </div>
+                            <div class="horizontal space-between fullwidth">
+                                <p style="font-size: 14px; font-weight: 600; color:#184B4B">Courses</p>
+                                <p style="font-size: 14px; font-weight: 600; color:#e50ebe">Learning</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="activity box horizontal">
+                    <h4 class="box_title">Recent Activity</h4>
+                    <div class="recent_activity">
+                        <div class="recent_avatar">
+                            <img src="./assets/Ellipse 284.png" alt="" class="user_img">
+                            <div class="small_avatar">
+                                <img src="./assets/person.png" alt="">
+                            </div>
+                        </div>
+                        <div class="vertical">
+                            <p class="top_recent_text">
+                                Felix
+                                <span>
+                                    has replied on
+                                </span>
+                            </p>
+                            <p class="sub_recent_head">At aliquam enim in cras arcu</p>
+                            <p class="sub_recent_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                                eiusmod tempor incididunt ut labo...</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="views box">
+                    <div class="horizontal fullwidth space-between">
+                        <h4 class="box_title">Views</h4>
+                        <select>
+                            <option value="" selected>This Week</option>
+                            <option value="" selected>This Month</option>
+                        </select>
+                    </div>
+                    <canvas id="linechart" style="min-width: 500px; min-height: 350px;"></canvas>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script src="linechart.js"></script>
+</body>
+
+</html>

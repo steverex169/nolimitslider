@@ -9,10 +9,18 @@ from django.contrib.auth import logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.contrib.gis.geoip2 import GeoIP2
+from django.db.models import Exists, OuterRef
 import uuid
+import os
 from django.db.models import Q
 from django.db.models import Count
+from django.contrib import messages
 import difflib
+from datetime import datetime
+from django.views.decorators.http import require_http_methods
+
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -217,9 +225,11 @@ def agent_register(request):
         form = AgentRegisterForm()
     return render(request, "agent_register.html", {"form": form})
 
-from django.db.models.functions import TruncDay
-from django.db.models import Count
-from datetime import timedelta, date
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count, Q
+from django.http import JsonResponse
+from django.shortcuts import render
+from datetime import date, timedelta
 
 @login_required
 @csrf_exempt
@@ -230,42 +240,62 @@ def agent_dashboard(request):
 
     status, _ = AgentStatus.objects.get_or_create(agent=agent_profile)
 
-    # Base queryset of chats excluding closed
+    # All open chat sessions
     chats_qs = ChatSession.objects.filter(closed=False)
 
-    # Get counts per day for the last 7 days
+    # Ongoing chats (all not closed sessions)
+    ongoing_chats = chats_qs.count()
+
+    # Logged in agents
+    logged_agents = AgentStatus.objects.filter(is_online=True).count()
+    total_agents = AgentStatus.objects.count()
+
+    # Last 7 days chat counts
     today = date.today()
-    last_7_days = [today - timedelta(days=i) for i in reversed(range(7))]  # Mon..Sun
+    last_7_days = [today - timedelta(days=i) for i in reversed(range(7))]
 
     chat_counts = []
     for d in last_7_days:
         count = chats_qs.filter(created_at__date=d).count()
         chat_counts.append(count)
 
-    # Base queryset of chats excluding closed 
-    chats_qs = ChatSession.objects.filter(closed=False).annotate( 
-        total_messages=Count('message'), user_messages=Count('message', 
-        filter=Q(message__sender='user')), agent_messages=Count('message', 
-        filter=Q(message__sender='agent')), )
-    # Active: agent ne kam se kam 1 message bheja
+    # Annotated chats
+    chats_qs = chats_qs.annotate(
+        total_messages=Count('message'),
+        user_messages=Count('message', filter=Q(message__sender='user')),
+        agent_messages=Count('message', filter=Q(message__sender='agent')),
+    )
+
+    # Active chats: agent sent at least 1 message
     active_chats = chats_qs.filter(
         assigned_agent=request.user,
         agent_messages__gte=1
     )
 
-    # New: agent ne koi message nahi bheja, user ne message bheja
+    
+    # Customers online (users with active sessions)
+    customers_online = active_chats.count()
+
+    # New chats: no agent msg yet but user msg exists
     new_chats = chats_qs.filter(
         Q(assigned_agent__isnull=True) |
         Q(agent_messages=0, user_messages__gte=1)
     )
-        
+
     total_chats = active_chats.count() + new_chats.count()
 
+    # Optional: selected chat
     session_id = request.GET.get("chat")
-    selected_chat = None
-    if session_id:
-        selected_chat = ChatSession.objects.filter(session_id=session_id).first()
+    selected_chat = ChatSession.objects.filter(session_id=session_id).first() if session_id else None
+    now = datetime.now().hour
+    if now < 12:
+        greeting = "Good Morning"
+    elif 12 <= now < 18:
+        greeting = "Good Afternoon"
+    else:
+        greeting = "Good Evening"
 
+    # Ajax request → return JSON only
     if request.headers.get("x-requested-with") == "XMLHttpRequest":
         return JsonResponse({
             "status": {"is_online": status.is_online},
@@ -273,17 +303,31 @@ def agent_dashboard(request):
             "active_chats": list(active_chats.values("session_id", "user_name")),
             "new_chats": list(new_chats.values("session_id", "user_name")),
             "chat_counts": chat_counts,
+            "customers_online": customers_online,
+            "ongoing_chats": ongoing_chats,
+            "logged_agents": logged_agents,
+            "total_agents": total_agents,
+            "greeting": greeting,
         })
 
+    # Normal render → pass to template
     return render(request, "agent/agent_dashboard.html", {
         "status": status,
         "active_chats": active_chats,
         "new_chats": new_chats,
         "total_chats": total_chats,
         "selected_chat": selected_chat,
-        "chat_counts": chat_counts,  # 🔑 pass to template
-        "last_7_days_labels": [d.strftime("%a") for d in last_7_days],  # Mon, Tue…
+        "chat_counts": chat_counts,
+        "last_7_days_labels": [d.strftime("%a") for d in last_7_days],  # Mon..Sun
+        "customers_online": customers_online,
+        "ongoing_chats": ongoing_chats,
+        "logged_agents": logged_agents,
+        "total_agents": total_agents,
+        "greeting": greeting,
     })
+
+
+
 
 # ---------------- USER SIDE ----------------
 FAQ_DATA = {
@@ -416,6 +460,15 @@ FAQ_DATA = {
 }
 
 
+import os
+import uuid
+import geoip2.database
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+GEOIP_DB_PATH = r"C:\Users\Lenovo\Documents\nolimit\nolimitslider\geoip\GeoLite2-City.mmdb"
+
+
 @csrf_exempt
 def send_message(request):
     if request.method != "POST":
@@ -428,38 +481,73 @@ def send_message(request):
     if not content:
         return JsonResponse({"error": "Empty message"}, status=400)
 
+    # Get client IP
+    ip = request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[0] or request.META.get("REMOTE_ADDR")
+    if ip == "127.0.0.1":
+        ip = "103.198.154.240"  # test IP
+
+    # GeoIP lookup
+    country, state, country_code = "Unknown", "Unknown", ""
+    try:
+        reader = geoip2.database.Reader(GEOIP_DB_PATH)
+        response = reader.city(ip)
+        country = response.country.name or "Unknown"
+        state = response.subdivisions.most_specific.name or "Unknown"
+        country_code = response.country.iso_code or ""   # ✅ added
+        reader.close()
+    except Exception:
+        pass
+
     # Get or create chat session
-    chat, _ = ChatSession.objects.get_or_create(session_id=session_id)
+    chat, created = ChatSession.objects.get_or_create(
+        session_id=session_id,
+        defaults={
+            "country": country,
+            "country_code": country_code,
+            "state": state
+        }
+    )
+
+    # Optional update
+    if not chat.country or not chat.state or not chat.country_code:
+        chat.country = chat.country or country
+        chat.country_code = chat.country_code or country_code
+        chat.state = chat.state or state
+        chat.save()
 
     # Save user message
     msg = Message.objects.create(chat=chat, sender=sender, content=content)
 
     reply = None
 
-    # Assign agent if none assigned
+    # Assign agent if none
     if not chat.assigned_agent:
         online_agents = AgentStatus.objects.filter(is_online=True)
         if online_agents.exists():
             chat.assigned_agent = online_agents.first().agent.user
             chat.save()
         else:
-            # BOT fallback → ✅ Exact match only
             try:
                 faq = FAQ.objects.get(question__iexact=content)
                 reply = faq.answer
             except FAQ.DoesNotExist:
-                reply = "Sorry, I don’t have an answer for that. Please contact support at support@nolimitbet.ag."
-
-            # Save bot reply
+                reply = "Sorry, I don’t have an answer. Contact support."
             Message.objects.create(chat=chat, sender="bot", content=reply)
+
+    # ✅ update time spent
+    chat.update_time_spent()
 
     return JsonResponse({
         "status": "ok",
         "message": msg.content,
         "reply": reply,
         "session_id": chat.session_id,
+        "ip": ip,
+        "country": chat.country,
+        "country_code": chat.country_code,   # ✅ new field in response
+        "state": chat.state,
+        "time_spent": str(chat.time_spent)
     })
-
 
 
 def get_messages(request, session_id):
@@ -472,27 +560,80 @@ def get_messages(request, session_id):
 
 
 # ---------------- AGENT SIDE ----------------
+
 @login_required
 def agent_chat_view(request, session_id):
+    # Current session
     chat = get_object_or_404(ChatSession, session_id=session_id)
-    return render(request, "agent/agent_chat.html", {"chat": chat})
+
+    # All sessions assigned to this agent
+    my_chats = ChatSession.objects.filter(assigned_agent=request.user).order_by("-created_at")
+    agent = AgentProfile.objects.get(user=request.user)
+    status, _ = AgentStatus.objects.get_or_create(agent=agent)
+
+
+    return render(
+        request,
+        "agent/agent_chat.html",
+        {
+            "chat": chat,
+            "my_chats": my_chats,
+            "status": status,
+        }
+    )
 
 @login_required
 def agent_chats(request):
-    session_type = request.GET.get("type")  # "new", "active", or None
+    session_type = request.GET.get("type")  
+    chats_qs = ChatSession.objects.filter(closed=False).order_by('-created_at')
 
-    chats_qs = ChatSession.objects.filter(closed=False)
+    # All + New + Active
+    all_chats = chats_qs
+    active_chats = chats_qs.filter(assigned_agent=request.user)
+    new_chats = chats_qs.filter(assigned_agent__isnull=True)
 
+    # --- Custom filters ---
+    # Chatting = assigned to this agent
+    chatting_chats = active_chats  
+
+    # Supervised = chats where this user has at least 1 reply
+    supervised_chats = chats_qs.annotate(
+        has_reply=Exists(
+            Message.objects.filter(chat=OuterRef("pk"), sender=request.user)
+        )
+    ).filter(has_reply=True)
+
+    # Waiting = only bot replied (no agent replies)
+    waiting_chats = chats_qs.filter(assigned_agent__isnull=True)
+
+    # Selection logic
     if session_type == "new":
-        selected_chats = chats_qs.filter(assigned_agent__isnull=True)
+        selected_chats = new_chats
     elif session_type == "active":
-        selected_chats = chats_qs.filter(assigned_agent=request.user)
+        selected_chats = active_chats
+    elif session_type == "chatting":
+        selected_chats = chatting_chats
+    elif session_type == "supervised":
+        selected_chats = supervised_chats
+    elif session_type == "waiting":
+        selected_chats = waiting_chats
     else:
-        selected_chats = chats_qs
+        selected_chats = all_chats
+
+    agent = AgentProfile.objects.get(user=request.user)
+    status, _ = AgentStatus.objects.get_or_create(agent=agent)
+
 
     return render(request, "agent/agent_chats.html", {
         "session_type": session_type,
+        "all_chats": all_chats,
+        "active_chats": active_chats,
+        "new_chats": new_chats,
+        "chatting_chats": chatting_chats,
+        "supervised_chats": supervised_chats,
+        "waiting_chats": waiting_chats,
         "selected_chats": selected_chats,
+        "status": status,
     })
 
 @csrf_exempt
@@ -521,16 +662,34 @@ def agent_get_messages(request, session_id):
     return JsonResponse(data, safe=False)
 
 @login_required
+def agent_chat_detail(request, session_id):
+    chat = get_object_or_404(ChatSession, session_id=session_id)
+
+    # Reuse same queryset logic
+    chats_qs = ChatSession.objects.filter(closed=False).order_by('-created_at')
+    active_chats = chats_qs.filter(assigned_agent=request.user)
+
+    return render(request, "agent/agent_chat.html", {
+        "chat": chat,
+        "active_chats": active_chats,
+    })
+
+
+@login_required
 def close_chat(request, session_id):
     chat = get_object_or_404(ChatSession, session_id=session_id)
-    
-    # Only assigned agent can close
-    if chat.assigned_agent == request.user:
-        chat.closed = True
-        chat.assigned_agent = None
-        chat.save()
-    
-    return redirect('agent_dashboard')
+    print("Deleting chat with session:", session_id)
+
+    if request.method == "POST":
+        # Guest ya koi bhi session (even "guest") delete ho jaye
+        if not chat.assigned_agent or chat.assigned_agent == request.user or session_id == "guest":
+            chat.delete()  # Messages bhi cascade se delete ho jayenge
+            messages.success(request, f"Chat {session_id} closed and deleted successfully.")
+        else:
+            messages.error(request, "You are not allowed to close this chat.")
+
+    return redirect("agent_chats")
+
 
 
 # ✅ Get agent status
@@ -555,23 +714,24 @@ def agent_status(request):
 
 # ✅ Update online/offline (for agents)
 @login_required
+@require_http_methods(["GET", "POST"])
 def set_online_status(request):
-    if request.method == "POST":
-        action = request.POST.get("action")
-        agent = get_object_or_404(AgentProfile, user=request.user)
-        status, _ = AgentStatus.objects.get_or_create(agent=agent)
+    agent = get_object_or_404(AgentProfile, user=request.user)
+    status, _ = AgentStatus.objects.get_or_create(agent=agent)
 
-        if action == "go_online":
-            status.is_online = True
-        elif action == "go_offline":
-            status.is_online = False
+    action = request.POST.get("action") if request.method == "POST" else request.GET.get("action")
 
-        status.save()
-        # redirect back to dashboard after update
-        return redirect("agent_dashboard")
+    if action == "go_online":
+        status.is_online = True
+    elif action == "go_offline":
+        status.is_online = False
 
-    return redirect("agent_dashboard")
-# ✅ Update typing status (for agents)
+    status.save()
+
+    return JsonResponse({
+        "success": True,
+        "is_online": status.is_online
+    })
 @login_required
 def set_typing_status(request):
     if request.method == "POST":
@@ -588,7 +748,10 @@ def carousel_embed(request):
     return render(request, "carousel_embed.html", {"images": images})
 def faq_dashboard(request):
     faqs = FAQ.objects.all().order_by('-created_at')
-    return render(request, "agent/faq_content.html", {"faqs": faqs})
+    agent = AgentProfile.objects.get(user=request.user)
+    status, _ = AgentStatus.objects.get_or_create(agent=agent)
+
+    return render(request, "agent/faq_content.html", {"faqs": faqs, "status": status})
 
 @csrf_exempt
 def add_faq(request):

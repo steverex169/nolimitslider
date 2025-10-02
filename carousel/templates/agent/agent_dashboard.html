@@ -2,58 +2,52 @@
 
 {% block content %}
 <div class="main px-4 py-3">
-    <h2 class="mb-4">Welcome, {{ request.user.username }}</h2>
 
-    <!-- Status -->
-    <div class="status-toggle mb-4">
-        Current Status:
-        {% if status.is_online %}
-            <span style="color:green;">🟢 Online</span>
-            <form method="post" style="display:inline;" action="{% url 'set_online' %}">
-                {% csrf_token %}
-                <button class="btn btn-sm btn-danger" type="submit" name="action" value="go_offline">Go Offline</button>
-            </form>
-        {% else %}
-            <span style="color:red;">🔴 Offline</span>
-            <form method="post" style="display:inline;" action="{% url 'set_online' %}">
-                {% csrf_token %}
-                <button class="btn btn-sm btn-success" type="submit" name="action" value="go_online">Go Online</button>
-            </form>
-        {% endif %}
+    <!-- Greeting with circular badge -->
+    <div class="d-flex align-items-center mb-4">
+        <!-- Circular badge -->
+        <div class="circle-badge me-2">
+            {{ request.user.username|slice:":1" }}{{ request.user.username|slice:"1:2"|upper }}
+        </div>
+
+        <!-- Greeting text -->
+        <h4 class="mb-0" style="font-weight: bold; color: black;">{{ greeting }}, {{ request.user.username }}!</h4>
     </div>
 
-    <!-- Summary Cards -->
+
+    <!-- Real-time Overview -->
+     <p style="font-weight: bold; color: black;">Real Time Overview</p>
     <div class="row g-3 mb-4">
         <div class="col-md-4">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">💬 Total Chats</h5>
-                    <p class="display-6">{{ total_chats }}</p>
-                    <a href="{% url 'agent_chats' %}" class="btn btn-outline-primary btn-sm">View All</a>
+                    <h6 class="text-muted">Customers online</h6>
+                    <h2>{{ customers_online }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">⚡ Active Chats</h5>
-                    <p class="display-6">{{ active_chats|length }}</p>
-                    <a href="{% url 'agent_chats' %}?type=active" class="btn btn-outline-success btn-sm">View Active</a>
+                    <h6 class="text-muted">Ongoing chats</h6>
+                    <h2>{{ active_chats|length }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card text-center shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">🆕 New Chats</h5>
-                    <p class="display-6">{{ new_chats|length }}</p>
-                    <a href="{% url 'agent_chats' %}?type=new" class="btn btn-outline-warning btn-sm">View New</a>
+                    <h6 class="text-muted">Logged in agents</h6>
+                    <h2 class="mb-0">
+                        {{ logged_agents }}
+                        <small class="text-muted" style="font-size: 0.5em;">of {{ total_agents }}</small>
+                    </h2>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Chat Statistics Chart -->
+    <!-- Chat Statistics Chart (your original code kept here) -->
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h5 class="card-title">📊 Chat Statistics</h5>
@@ -61,19 +55,35 @@
         </div>
     </div>
 
-    <!-- Tabs for Chats -->
-    <!-- <ul class="nav nav-tabs" id="chatTabs">
-        <li class="nav-item">
-            <a class="nav-link active" href="{% url 'agent_chats' %}">All Chats</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'agent_chats' %}?type=active">Active</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'agent_chats' %}?type=new">New</a>
-        </li>
-    </ul> -->
 </div>
+<style>
+    .main {
+        margin-left: 32px;
+    }
+    .circle-badge {
+    width: 40px;
+    height: 40px;
+    background-color: #4a90e2;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+@media (max-width: 576px) {
+    .circle-badge {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    .main h4 {
+        font-size: 1.1rem;
+    }
+}
+
+</style>
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -85,7 +95,7 @@ const chatChart = new Chart(ctx, {
         labels: {{ last_7_days_labels|safe }},
         datasets: [{
             label: "Chats",
-            data: {{ chat_counts|safe }}, // ✅ real data from backend
+            data: {{ chat_counts|safe }},
             backgroundColor: "rgba(54, 162, 235, 0.6)",
             borderColor: "rgba(54, 162, 235, 1)",
             borderWidth: 1,
@@ -97,6 +107,5 @@ const chatChart = new Chart(ctx, {
         scales: { y: { beginAtZero: true } }
     }
 });
-
 </script>
 {% endblock %}

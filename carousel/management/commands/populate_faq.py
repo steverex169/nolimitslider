@@ -151,3 +151,53 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.NOTICE(f"Updated: {question}"))
 
         self.stdout.write(self.style.SUCCESS("FAQ population complete!"))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import time
+import os
+import sys
+from datetime import datetime
+
+BASE_DIR = "/home/ubuntu/bet487tonolimit/bet487tonolimit"
+PYTHON_BIN = "/home/ubuntu/bet487tonolimit/venv/bin/python"
+LOG_FILE = "/home/ubuntu/bet487tonolimit/runner.log"
+
+# Redirect stdout and stderr to log file
+sys.stdout = open(LOG_FILE, "a")
+sys.stderr = open(LOG_FILE, "a")
+
+
+def log(message):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"[{timestamp}] {message}")
+    sys.stdout.flush()  # immediately write to file
+
+
+while True:
+    log("Starting bet487complete.py...")
+    os.system(f"{PYTHON_BIN} {os.path.join(BASE_DIR, 'bet487complete.py')}")
+    log("bet487complete.py completed.")
+
+    log("Starting apply_shade_moneys.py...")
+    os.system(f"{PYTHON_BIN} {os.path.join(BASE_DIR, 'apply_shade_moneys.py')}")
+    log("apply_shade_moneys.py completed.")
+
+    log("Waiting 5 seconds before next run...\n")
+    time.sleep(5)

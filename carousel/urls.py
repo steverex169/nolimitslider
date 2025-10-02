@@ -41,10 +41,11 @@ urlpatterns = [
     path("chat/agent-status/", views.agent_status, name="agent_status"),
     path("chat/set-online/", views.set_online_status, name="set_online"),
     path("chat/set-typing/", views.set_typing_status, name="set_typing"),
-    path('agent/chat/<str:session_id>/close/', views.close_chat, name='close_chat'),
+    path("agent/chat/<str:session_id>/close/", views.close_chat, name="close_chat"),
     path("carousel-embed/", views.carousel_embed, name="carousel_embed"),
     path('agent/faqs/', views.faq_dashboard, name='faq_dashboard'),
     path('faqs/add/', views.add_faq, name='add_faq'),
     path('faqs/delete/<int:faq_id>/', views.delete_faq, name='delete_faq'),
+    path("agent/chat/details/<str:session_id>/", views.agent_chat_detail, name="agent_chat_detail"),
     
 ]

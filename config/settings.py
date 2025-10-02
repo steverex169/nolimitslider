@@ -35,6 +35,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 X_FRAME_OPTIONS = 'ALLOWALL'
+GEOIP_PATH = BASE_DIR / "geoip" / "GeoLite2-City.mmdb"
 
 # Application definition
 

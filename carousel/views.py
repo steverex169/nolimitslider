@@ -528,7 +528,7 @@ def send_message(request):
             chat.save()
         else:
             try:
-                faq = FAQ.objects.get(question__iexact=content)
+                faq = FAQ.objects.filter(question__icontains=content).first()
                 reply = faq.answer
             except FAQ.DoesNotExist:
                 reply = "Sorry, I don’t have an answer. Contact support."

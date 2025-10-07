@@ -1,11 +1,12 @@
 # Register your models here.
 from django.contrib import admin
-from .models import CarouselImage, ChatSession, Message, AgentStatus, AgentProfile
+from .models import CarouselImage, ChatSession, Message, AgentStatus, AgentProfile, FAQ
 
 admin.site.register(CarouselImage)
 admin.site.register(ChatSession)
 admin.site.register(Message)
 admin.site.register(AgentStatus)
+admin.site.register(FAQ)
 
 @admin.register(AgentProfile)
 class AgentProfileAdmin(admin.ModelAdmin):

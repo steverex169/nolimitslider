@@ -25,6 +25,12 @@ urlpatterns = [
     path('promotions/promotions7/', views.promotion7, name='promotions7'),
     path('promotions/promotions8/', views.promotion8, name='promotions8'),
     path('promotions/promotions9/', views.promotion9, name='promotions9'),
+    path('promotions/bet10/', views.bet10, name='bet10'),
+    path('promotions/cbbsteal/', views.cbbsteal, name='cbbsteal'),
+    path('promotions/boonusbash/', views.boonusbash, name='boonusbash'),
+    path('promotions/grab25/', views.grab25, name='grab25'),
+    path('promotions/twolevel/', views.twolevel, name='twolevel'),
+    path('promotions/nbaslamdunk/', views.nbaslamdunk, name='nbaslamdunk'),
     path('promotions/promotions10/', views.promotion10, name='promotions10'),
     path('licence/', views.licence, name='licence'),
     path('carousel/image/<int:image_id>/', views.carousel_image_detail, name='carousel_image_detail'),
@@ -48,5 +54,4 @@ urlpatterns = [
     path('faqs/add/', views.add_faq, name='add_faq'),
     path('faqs/delete/<int:faq_id>/', views.delete_faq, name='delete_faq'),
     path("agent/chat/details/<str:session_id>/", views.agent_chat_detail, name="agent_chat_detail"),
-    
 ]

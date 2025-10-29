@@ -181,6 +181,18 @@ def promotion10(request):
     return render(request, 'promotion10.html')
 def licence(request):
     return render(request, 'licence.html')
+def bet10(request):
+    return render(request, 'bet10.html')
+def cbbsteal(request):
+    return render(request, 'cbbsteal.html')
+def boonusbash(request):
+    return render(request, 'boonusbash.html')
+def grab25(request):
+    return render(request, 'grab25.html')
+def twolevel(request):
+    return render(request, 'twolevel.html')
+def nbaslamdunk(request):
+    return render(request, 'nbaslamdunk.html')
 
 def post_gallery(request):
     images = CarouselImage.objects.filter(image_type="post").order_by('-created_at')

@@ -1,0 +1,194 @@
+<!-- Chat Widget -->
+<div id="chat-widget" style="position:fixed; bottom:20px; right:20px; z-index:9999; font-family:Arial, sans-serif;">
+  <!-- Floating Button -->
+  <button onclick="toggleChat()" id="chat-btn"
+    style="background:#00E6E6; color:white; border:none; padding:15px; border-radius:50%; font-size:22px; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+    <img src="/media/promotion/chatbot.png" alt="Chat" style="width:24px; height:24px;">
+  </button>
+
+  <!-- Chat Box -->
+  <div id="chat-box" style="display:none;">
+    <!-- Header -->
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="agent-icon">
+          <img src="/media/promotion/chatbot 2.png" alt="Agent">
+        </div>
+        <div>
+          <div class="agent-name">nolimitbet.ag</div>
+          <div id="agent-status" class="agent-status">Online</div>
+        </div>
+      </div>
+
+      <!-- 3-dot menu -->
+      <div style="position:relative;">
+        <!-- give the span an id and pass the event -->
+        <span id="three-dots" onclick="toggleMenu(event)" style="cursor:pointer; font-size:20px;">...</span>
+
+        <!-- Popup menu (no inline display) -->
+        <div id="chat-menu" class="chat-menu" onclick="event.stopPropagation()">
+          <span id="sound-text">Enable Sound</span>
+          <div class="sound-circle" onclick="toggleSound(event)">
+            <span id="sound-icon">🔇</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages"></div>
+
+    <!-- Typing Indicator -->
+
+
+
+    <!-- Input -->
+    <div class="chat-input-box">
+      <input type="text" id="chat-input" placeholder="Type your message...">
+      <button onclick="sendMessage()">Ask ➤</button>
+    </div>
+  </div>
+</div>
+
+<audio id="notificationSound" src="https://www.myinstants.com/media/sounds/notification.mp3"></audio>
+
+  <script>
+    let soundEnabled = false;
+    let lastMessageCount = 0;
+    window.isTyping = false; // global typing flag
+
+    // Toggle chat box
+    function toggleChat() {
+      const box = document.getElementById("chat-box");
+      const menu = document.getElementById("chat-menu");
+      const isHidden = box.style.display === "none" || getComputedStyle(box).display === "none";
+
+      if (isHidden) {
+        box.style.display = "flex";
+        menu.classList.remove('show'); // ensure menu is hidden when chat opens
+      } else {
+        box.style.display = "none";
+        menu.classList.remove('show');
+      }
+    }
+
+    // Toggle menu
+    function toggleMenu(e) {
+      e.stopPropagation();
+      const menu = document.getElementById("chat-menu");
+      menu.classList.toggle('show');
+    }
+
+    // Toggle sound
+    function toggleSound(e) {
+      e.stopPropagation();
+      soundEnabled = !soundEnabled;
+      document.getElementById("sound-icon").textContent = soundEnabled ? "🔊" : "🔇";
+      document.getElementById("sound-text").textContent = soundEnabled ? "Disable Sound" : "Enable Sound";
+    }
+
+    // Send chat message
+    function sendMessage() {
+      let msg = document.getElementById("chat-input").value;
+      if (!msg.trim()) return;
+
+      fetch("/chat/send/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: new URLSearchParams({
+          "session_id": "{{ request.session.session_key|default:'guest' }}",
+          "content": msg,
+          "sender": "client"
+        })
+      })
+      .then(res => res.json())
+      .then(() => {
+        document.getElementById("chat-input").value = "";
+        loadMessages();
+      });
+    }
+
+    // Load chat messages
+    function loadMessages() {
+      fetch("/chat/messages/{{ request.session.session_key|default:'guest' }}/")
+        .then(res => res.json())
+        .then(data => {
+          let chat = document.getElementById("chat-messages");
+          chat.innerHTML = "";
+
+          data.forEach(m => {
+            let cls = (m.sender === "client") ? "user-msg" : (m.sender === "agent") ? "agent-msg" : "bot-msg";
+            let icon = (cls === "user-msg") ? "" : '<div class="icon"></div>';
+            chat.innerHTML += `
+              <div class="${cls}">
+                ${icon}
+                <div class="bubble">${m.content}</div>
+              </div>`;
+          });
+
+          // Typing indicator
+          if (window.isTyping) {
+            chat.innerHTML += `
+              <div class="agent-msg typing-indicator">
+                <div class="icon"></div>
+                <div class="bubble">Agent is typing...</div>
+              </div>`;
+          }
+
+          chat.scrollTop = chat.scrollHeight;
+
+          if (soundEnabled && data.length > lastMessageCount) {
+            let newMsg = data[data.length - 1];
+            if (newMsg.sender === "agent" || newMsg.sender === "bot") {
+              document.getElementById("notificationSound").play();
+            }
+          }
+          lastMessageCount = data.length;
+        });
+    }
+
+    // Fetch agent status and update typing flag
+    function fetchAgentStatus() {
+      fetch("/chat/agent-status/")
+        .then(res => res.json())
+        .then(data => {
+          // update typing and online status
+          window.isTyping = data.typing;
+          let statusDiv = document.getElementById("agent-status");
+          if (data.online) {
+            let names = data.names.join(", ");
+            statusDiv.innerHTML = `<span style="width:8px; height:8px; background:green; border-radius:50%; display:inline-block;"></span> ${names} (Online)`;
+          } else {
+            statusDiv.innerHTML = "Product Expert";
+          }
+        })
+        .catch(() => {
+          document.getElementById("agent-status").innerHTML = "Product Expert";
+          window.isTyping = false;
+        });
+    }
+
+    // Auto-refresh messages and status
+    setInterval(loadMessages, 3000);
+    setInterval(fetchAgentStatus, 3000);
+
+    // Initial load
+    document.addEventListener("DOMContentLoaded", () => {
+      loadMessages();
+      fetchAgentStatus();
+      document.getElementById('chat-menu').classList.remove('show');
+    });
+
+    // Close menu if click outside
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById("chat-menu");
+      const dots = document.getElementById("three-dots");
+      if (!menu.contains(e.target) && !dots.contains(e.target)) {
+        menu.classList.remove('show');
+      }
+    });
+  </script>

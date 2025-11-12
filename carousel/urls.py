@@ -26,6 +26,7 @@ urlpatterns = [
     path('promotions/promotions8/', views.promotion8, name='promotions8'),
     path('promotions/promotions9/', views.promotion9, name='promotions9'),
     path('promotions/bet10/', views.bet10, name='bet10'),
+    path('promotions/promorfl/', views.promorfl, name='promorfl'),
     path('promotions/cbbsteal/', views.cbbsteal, name='cbbsteal'),
     path('promotions/boonusbash/', views.boonusbash, name='boonusbash'),
     path('promotions/grab25/', views.grab25, name='grab25'),

@@ -193,7 +193,8 @@ def twolevel(request):
     return render(request, 'twolevel.html')
 def nbaslamdunk(request):
     return render(request, 'nbaslamdunk.html')
-
+def promorfl(request):
+    return render(request, 'promorefferl.html')
 def post_gallery(request):
     images = CarouselImage.objects.filter(image_type="post").order_by('-created_at')
     return render(request, "post_gallery.html", {"images": images})

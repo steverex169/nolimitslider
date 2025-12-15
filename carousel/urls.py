@@ -14,6 +14,7 @@ urlpatterns = [
     path('about-us/', views.general_AboutUs, name='about-us'),
     path('promotions/', views.promotion, name='promotions'),
     path('promotions/promotions1/', views.promotion1, name='promotions1'),
+    path('promotions/jingle/', views.jingle, name='jingle'),
     path('promotions/promotionsNFL/', views.promotionNFL, name='promotionsNFL'),
     path('promotions/promotionsNHL/', views.promotionNHL, name='promotionsNHL'),
     path('promotions/promotionsRELOAD/', views.promotionRELOAD, name='promotionsRELOAD'),

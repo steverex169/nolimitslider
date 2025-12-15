@@ -155,6 +155,8 @@ def promotion(request):
     return render(request, 'promotion.html')
 def promotion1(request):
     return render(request, 'promotion1.html')
+def jingle(request):
+    return render(request, 'jingle.html')
 def promotionNFL(request):
     return render(request, 'promotionNFL.html')
 def promotionNHL(request):
